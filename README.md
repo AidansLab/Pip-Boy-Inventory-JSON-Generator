@@ -3,14 +3,15 @@ A HTML page for generating items.json files for the [Pip-Boy inventory patch](ht
 
 ## Remote Usage (Recommended for most users)
 1. Go to the [HTML tool website](https://aidanslab.github.io/Pip-Boy-Inventory-JSON-Generator/index.html).<BR/>
-   **OPTIONAL:** If you want to use any of the audio and/or image<sup>**1**</sup> files provided, download the DATA folder [provided in releases](https://github.com/AidansLab/Pip-Boy-Inventory-JSON-Generator/releases/tag/DATA) and extract the folder, click "Select DATA Folder" on the website, and select the downloaded DATA folder. If you want to add any custom audio and/or image<sup>**1**</sup> files from commuunity_DATA just move them into DATA. (Image tutorial [here](#image-tutorial), as for custom audio, it's as simple as running
+   **OPTIONAL:** If you want to use any of the audio and/or image<sup>**1**</sup> files provided, download the DATA folder [provided in releases](https://github.com/AidansLab/Pip-Boy-Inventory-JSON-Generator/releases/tag/DATA) and extract the folder, click "Select DATA Folder" on the website, and select the downloaded DATA folder. If you want to add any custom audio and/or image<sup>**1**</sup> files from commuunity_DATA or your own, just move them into DATA. (Image tutorial [here](#image-tutorial), as for custom audio, it's as simple as running
    `mkdir output && for %F in (*.mp3) do ffmpeg -i "%F" -ac 1 -ar 16000 -af "volume=5dB" -sample_fmt s16 -c:a pcm_s16le -f wav "output\%~nF.wav"`  
-   in the directory with the audio you want to add, and putting the output files in the DATA folder.
+   in the directory with the audio you want to add, and putting the output files in the DATA folder.)
 2. Connect to your Pip-Boy by clicking Connect via USB and selecting Pip-Boy.</BR>
    **OPTIONAL:** You can read and edit the items on your device by clicking Load Items from Device.
 4. Select "Add Preset Item" to add predefined items or make custom items with the "+ Base Weapon", "+ Base Apparel", and "+ Base Consumable" buttons.
 5. All stats are fully customizable, so you can name an item anything you want, name any stat whatever you want, have any value you want. There are 6 damage types, 10 apparel slots, and 5 defense types.  
 6. Upload the items list by clicking Upload to Device.<BR/>
+**NOTE:** If you added custom audio or image<sup>**1**</sup> files, either your own or from community_DATA, to the DATA folder, you will need to add those to the DATA folder on your Pip-Boy with the [Pip-Boy mainatanance tool](https://pip-boy.com/3000-mk-v/maintenance). (Easier way coming soon)
 7. Stock up on Stimpaks and Radaway for the wasteland!
 
 
