@@ -28,7 +28,7 @@ A HTML page for generating items.json files for the [Pip-Boy inventory patch](ht
 9. Stock up on Stimpaks and Radaway for the wasteland!
 
 \
-<sup>**1**</sup>Images are not currently recommended for the average user (and most likely never will be) as they can be covered by stats and are quite processer intensive.<br/>
+<sup>**1**</sup>Images are not currently recommended for the average user (and most likely never will be) as they can be covered by stats and take up a noticeable amount of space on your SD card.<br/>
 <sup>**2**</sup>If you have not uploaded the DATA folder that came with the patch, do so now. If you intend to use any community items with sounds or images, these can be found in community_DATA and should also be placed into DATA.
 <br/>
 <br/>
