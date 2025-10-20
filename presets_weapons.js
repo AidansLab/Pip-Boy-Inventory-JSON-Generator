@@ -91,5 +91,105 @@ const weaponPresets = [
       "Weight": "3.9",
       "Value": "157"
     }
+  },
+  {
+    "name": "Classic 10mm Pistol",
+    "type": "weapon",
+    "quantity": 1,
+    "effect": "",
+    "stats": {
+      "Weight": "4.6",
+      "Value": "50",
+      "Fire Rate": "41",
+      "Range": "119",
+      "Magazine Size": "12"
+    },
+    "damages": [
+      {
+        "type": "attack",
+        "value": "28"
+      }
+    ],
+    "ammoType": "10mm Round"
+  },
+  {
+    "name": "Combat Shotgun",
+    "type": "weapon",
+    "quantity": 1,
+    "effect": "",
+    "stats": {
+      "Weight": "7",
+      "Value": "65",
+      "Fire Rate": "20",
+      "Range": "47",
+      "Magazine Size": "8"
+    },
+    "damages": [
+      {
+        "type": "attack",
+        "value": "50"
+      }
+    ],
+    "ammoType": "Shotgun Shell"
+  },
+  {
+    "name": "Kellogg's Pistol",
+    "type": "weapon",
+    "quantity": 1,
+    "effect": "Refills your Action Points on a Critical Hit",
+    "stats": {
+      "Weight": "4.3",
+      "Value": "449",
+      "Fire Rate": "6",
+      "Range": "119",
+      "Magazine Size": "6"
+    },
+    "damages": [
+      {
+        "type": "attack",
+        "value": "48"
+      }
+    ],
+    "ammoType": ".44 Round"
+  },
+  {
+    "name": "Minigun",
+    "type": "weapon",
+    "quantity": 1,
+    "effect": "",
+    "stats": {
+      "Weight": "27.4",
+      "Value": "382",
+      "Fire Rate": "272",
+      "Range": "131",
+      "Magazine Size": "500"
+    },
+    "damages": [
+      {
+        "type": "attack",
+        "value": "8"
+      }
+    ],
+    "ammoType": "5mm Round"
+  },
+  {
+    "name": "Wazer Wifle",
+    "type": "weapon",
+    "quantity": 1,
+    "effect": "Unlimited Ammo Capacity",
+    "stats": {
+      "Weight": "5.8",
+      "Value": "329",
+      "Fire Rate": "90",
+      "Range": "203",
+      "Magazine Size": "INF"
+    },
+    "damages": [
+      {
+        "type": "energy",
+        "value": "20"
+      }
+    ],
+    "ammoType": "None"
   }
 ];

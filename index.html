@@ -2,1531 +2,1690 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Items.json Generator</title>
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-	<script src="presets_consumables.js"></script>
-	<script src="presets_weapons.js"></script>
-	<script src="presets_apparel.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-	<script src="EspruinoWebTools/uart.js"></script>
-	<style>
-		* {
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box;
-		}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Items.json Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <script src="presets_consumables.js"></script>
+    <script src="presets_weapons.js"></script>
+    <script src="presets_apparel.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="EspruinoWebTools/uart.js"></script>
+    <style>
+        /* --- Pip-Boy Theme --- */
+        :root {
+            --pip-green: #00ff00; /* Main text, main button bg */
+            --pip-green-bright: #00cc00; /* Button hover, data file hover */
+            --pip-green-dim: #003300; /* Disabled button bg */
+            --pip-green-dark: #003300; /* Map to disabled */
+            --pip-black: #111111; /* Button text, data file text */
+            --pip-bg-primary: #000;
+            --pip-bg-secondary: #0a0a0a;
+            --pip-bg-tertiary: #050505;
+        }
 
-		body {
-			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-			background: #3a3a3a;
-			min-height: 100vh;
-			color: #e0e0e0;
-		}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-		.container {
-			background: #2b2b2b;
-			height: 100vh;
-			display: flex;
-			flex-direction: column;
-		}
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--pip-bg-primary);
+            min-height: 100vh;
+            color: var(--pip-green); /* Main text color */
+            font-size: 16px;
+        }
 
-		.header {
-			background: #1f1f1f;
-			color: #e0e0e0;
-			padding: 15px 30px;
-			text-align: center;
-			border-bottom: 3px solid #555;
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-		}
+        .container {
+            background: var(--pip-bg-secondary);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
-		.header-buttons {
-			display: flex;
-			gap: 10px;
-		}
+        .header {
+            background: var(--pip-black);
+            color: var(--pip-green);
+            padding: 15px 30px;
+            text-align: center;
+            border-bottom: 3px solid var(--pip-green); /* Accent border */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
 
-		.header h1 {
-			font-size: 1.5em;
-			text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-			margin: 0;
-		}
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+        }
 
-		.export-btn-header {
-			background: #666;
-			color: white;
-			border: none;
-			padding: 12px 30px;
-			border-radius: 6px;
-			font-size: 1em;
-			font-weight: 600;
-			cursor: pointer;
-			transition: background 0.3s;
-		}
+        .header-title-section {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex: 0 0 auto;
+        }
 
-		.export-btn-header:hover {
-			background: #777;
-		}
+        .header h1 {
+            font-size: 1.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin: 0;
+        }
 
-		.export-btn-header:disabled {
-			background: #444;
-			color: #888;
-			cursor: not-allowed;
-		}
+        .help-link {
+            font-size: 0.9em;
+            color: var(--pip-green); /* Dim green for link */
+            text-decoration: none;
+            transition: color 0.3s;
+        }
 
+        .help-link:hover {
+            color: var(--pip-green-bright); /* Brighten on hover */
+        }
+
+        /* --- Main Button Styles (Green BG, Black Text) --- */
+        .export-btn-header,
+        .add-item-btn,
+        .tab-button,
+        .add-base-btn,
+        .delete-btn,
+        .remove-stat-btn,
+        .delete-data-btn {
+            background: var(--pip-green);
+            color: var(--pip-black);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .export-btn-header:hover,
+        .add-item-btn:hover,
+        .tab-button:hover,
+        .add-base-btn:hover,
+        .delete-btn:hover,
+        .remove-stat-btn:hover,
+        .delete-data-btn:hover {
+            background: var(--pip-green-bright);
+            color: var(--pip-black);
+        }
+
+        .export-btn-header:disabled,
+        .tab-button:disabled {
+            background: var(--pip-green-dark);
+            color: var(--pip-black);
+            cursor: not-allowed;
+            opacity: 1;
+        }
+
+        /* Adjust padding for smaller buttons */
         #btnLoadFromDevice {
             width: auto;
             padding: 12px 20px;
         }
+        .add-item-btn {
+            width: 100%;
+            padding: 10px;
+            font-size: 0.95em;
+            margin-bottom: 8px;
+        }
+        .tab-button {
+            padding: 10px 20px;
+            font-size: 0.95em;
+            margin-bottom: 12px;
+            display: block;
+			margin-top: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            width: fit-content;
+        }
+        .delete-btn {
+            padding: 4px 8px;
+            font-size: 0.85em;
+            margin-left: 8px;
+            flex-shrink: 0;
+        }
+        .add-base-btn {
+            flex: 1;
+            padding: 8px;
+            font-size: 0.85em;
+        }
+        .remove-stat-btn {
+            padding: 7px 10px;
+            font-size: 0.8em;
+        }
+         .delete-data-btn {
+            padding: 3px 6px;
+            font-size: 0.8em;
+            flex-shrink: 0;
+            line-height: 1;
+			background: none;
+        }
+		
+		.delete-data-btn:hover {
+			background: var(--pip-green);
+        }
 
+        /* --- Grid layout --- */
+        .main-content {
+            display: grid;
+            grid-template-columns: 260px 308px 1fr 200px;
+            gap: 0;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
 
-		.main-content {
-			display: grid;
-			grid-template-columns: 308px 1fr 306px;
-			gap: 0;
-			flex-grow: 1;
-			overflow: hidden;
-		}
+        /* --- Preset Sidebar Styles --- */
+        .preset-sidebar {
+            background: var(--pip-bg-tertiary); /* Near-black bg */
+            border-right: 2px solid var(--pip-green); /* Green border */
+            padding: 10px;
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            scrollbar-width: thin;
+            scrollbar-color: var(--pip-green) var(--pip-bg-tertiary); /* Green scrollbar */
+        }
 
-		.sidebar {
-			background: #353535;
-			border-right: 2px solid #555;
-			padding: 15px;
-			overflow-y: auto;
-			height: 100%;
-			display: flex;
-			flex-direction: column;
-		}
+        #presetSearch {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 2px solid var(--pip-green); /* Dim green border */
+            border-radius: 6px;
+            font-size: 0.9em;
+            background: var(--pip-black); /* Black bg */
+            color: var(--pip-green); /* Green text */
+            flex-shrink: 0;
+        }
 
-		.item-list {
-			list-style: none;
-			flex-grow: 1;
-			overflow-y: auto;
-			margin-bottom: 12px;
-		}
+        #presetSearch:focus {
+            outline: none;
+            border-color: var(--pip-green); /* Bright green border on focus */
+        }
 
-		.item-list li {
-			background: #2b2b2b;
-			margin-bottom: 6px;
-			padding: 10px;
-			border-radius: 6px;
-			cursor: pointer;
-			border: 2px solid transparent;
-			transition: all 0.2s;
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			color: #e0e0e0;
-		}
+        .preset-tab-nav {
+            display: flex;
+            border-bottom: 2px solid var(--pip-green); /* Dim green border */
+            margin-bottom: 10px;
+            flex-shrink: 0;
+        }
 
-		.item-list li:hover {
-			border-color: #666;
-			background: #3a3a3a;
-		}
+        .preset-tab-link {
+            background: none;
+            border: none;
+            color: var(--pip-green); /* Dim green text */
+            padding: 4px 4px;
+            font-size: 0.9em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            flex: 0 0 auto;
+            text-align: center;
+        }
 
-		.item-list li.active {
-			background: #555;
-			color: white;
-			border-color: #777;
-		}
+        .preset-tab-link:hover {
+            color: var(--pip-green-bright);
+        }
 
-		.item-name-wrapper {
-			display: flex;
-			flex-direction: column;
-			flex: 1;
-		}
-
-		.item-name {
-			font-weight: 600;
-		}
-
-		.item-type {
-			font-size: 0.75em;
-			padding: 2px 8px;
-			border-radius: 10px;
-			background: #4a4a4a;
-			margin-left: 8px;
-		}
-
-		.item-list li.active .item-type {
-			background: rgba(255, 255, 255, 0.3);
-		}
-
-		.delete-btn {
-			background: #f44336;
-			color: white;
-			border: none;
-			padding: 4px 8px;
+        .preset-tab-link.active {
+            color: var(--pip-green); /* Bright green active text */
+            border-bottom-color: var(--pip-green); /* Bright green border */
+			background: var(--pip-green-dim);
 			border-radius: 4px;
-			cursor: pointer;
-			margin-left: 8px;
-			font-size: 0.85em;
-		}
+        }
 
-		.delete-btn:hover {
-			background: #da190b;
-		}
+        .preset-tab-content-area {
+            flex-grow: 1;
+            position: relative;
+            overflow: hidden;
+        }
 
-		.add-item-btn {
-			width: 100%;
-			padding: 10px;
-			background: #555;
-			color: white;
-			border: none;
-			border-radius: 6px;
-			font-size: 0.95em;
-			font-weight: 600;
-			cursor: pointer;
-			margin-bottom: 8px;
-			transition: background 0.3s;
-			flex-shrink: 0;
-		}
+        .preset-tab-content {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow-y: auto;
+        }
 
-		.add-item-btn:hover {
-			background: #666;
-		}
+        .preset-tab-content.active {
+            display: block;
+        }
 
-		.preset-dropdown {
-			width: 100%;
-			padding: 8px;
-			background: #3a3a3a;
-			color: #e0e0e0;
-			border: 2px solid #555;
-			border-radius: 6px;
-			font-size: 0.9em;
-			cursor: pointer;
-			margin-bottom: 12px;
-			flex-shrink: 0;
-		}
+        .preset-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
 
-		.preset-dropdown:hover {
-			border-color: #777;
-		}
+        .preset-list li {
+            background: #101010; /* Very dark grey */
+            color: var(--pip-green); /* Dim green text */
+            padding: 8px 12px;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.2s, color 0.2s;
+            word-break: break-word;
+        }
 
-		.editor {
-			padding: 20px;
-			overflow-y: auto;
-			height: 100%;
-			border-right: 2px solid #555;
-		}
+        .preset-list li:hover {
+            background-color: var(--pip-green-dim); /* Dim green bg on hover */
+            color: var(--pip-green); /* Black text on hover */
+        }
 
-		.form-group {
-			margin-bottom: 12px;
-		}
+        .preset-list .status-message {
+            color: var(--pip-green); /* Dim green text */
+            font-style: italic;
+            text-align: center;
+            padding: 15px;
+            cursor: default;
+        }
 
-		.form-row {
-			display: grid;
-			grid-template-columns: 1fr 2fr;
-			gap: 12px;
-			margin-bottom: 12px;
-		}
+        .preset-list li.status-message:hover {
+            background-color: inherit;
+            color: var(--pip-green);
+        }
 
-		label {
-			display: block;
-			font-weight: 600;
-			margin-bottom: 4px;
-			color: #c0c0c0;
-			font-size: 0.85em;
-		}
 
-		input[type="text"],
-		input[type="number"],
-		textarea,
-		select {
-			width: 100%;
-			padding: 7px;
-			border: 2px solid #555;
-			border-radius: 6px;
-			font-size: 0.9em;
-			transition: border-color 0.3s;
-			background: #3a3a3a;
-			color: #e0e0e0;
-		}
+        /* --- Item List Sidebar --- */
+        .sidebar {
+            background: var(--pip-bg-tertiary); /* Near-black bg */
+            border-right: 2px solid var(--pip-green); /* Green border */
+            padding: 15px;
+            overflow-y: auto;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
 
-		input:focus,
-		textarea:focus,
-		select:focus {
-			outline: none;
-			border-color: #777;
-		}
+        .item-list {
+            list-style: none;
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 12px;
+            padding: 0;
+            scrollbar-width: thin;
+            scrollbar-color: var(--pip-green) var(--pip-bg-tertiary); /* Green scrollbar */
+        }
 
-		textarea {
-			resize: vertical;
-			min-height: 50px;
-			font-family: inherit;
-		}
+        .item-list li {
+            background: #101010; /* Very dark grey */
+            margin-bottom: 6px;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--pip-green); /* Bright green text */
+        }
 
-		.stats-container,
-		.damages-container,
-		.defenses-container {
-			background: #353535;
-			padding: 10px;
-			border-radius: 6px;
-			margin-top: 6px;
-		}
+        .item-list li:hover {
+            border-color: var(--pip-green); /* Green border on hover */
+            background: var(--pip-green-dim); /* Dark bg on hover */
+        }
 
-		.stat-item {
-			display: grid;
-			grid-template-columns: 1fr 1fr auto auto;
-			gap: 6px;
-			margin-bottom: 6px;
-			align-items: end;
-		}
+        .item-list li.active {
+            background: var(--pip-green-bright); /* Dim green bg when active */
+            color: var(--pip-black); /* Black text when active */
+            border-color: var(--pip-green); /* Bright green border */
+        }
 
-		.stat-item.consumable-stat {
-			grid-template-columns: 1fr 1fr auto auto auto;
-		}
+        .item-name-wrapper {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            margin-right: 5px;
+        }
 
-		.damage-item,
-		.defense-item {
-			display: grid;
-			grid-template-columns: 1fr 1fr auto;
-			gap: 6px;
-			margin-bottom: 6px;
-			align-items: end;
-		}
+        .item-name {
+            font-weight: 600;
+            word-break: break-all;
+        }
 
-		.remove-stat-btn {
-			background: #f44336;
-			color: white;
-			border: none;
-			padding: 7px 10px;
-			border-radius: 6px;
-			cursor: pointer;
-			font-size: 0.8em;
-		}
+        .item-type {
+            font-size: 0.75em;
+            padding: 2px 8px;
+            border-radius: 10px;
+            background: var(--pip-green-dark); /* Dark green bg */
+            color: var(--pip-green); /* Bright green text */
+            margin-left: 8px;
+            white-space: nowrap;
+        }
 
-		.add-stat-btn {
-			background: #555;
-			color: white;
-			border: none;
-			padding: 5px 10px;
-			border-radius: 6px;
-			cursor: pointer;
-			margin-top: 6px;
-			font-size: 0.8em;
-		}
+        .item-list li.active .item-type {
+            background: var(--pip-green); /* Bright green bg */
+            color: var(--pip-black); /* Black text */
+        }
 
-		.add-stat-btn:hover {
-			background: #666;
-		}
+        /* --- Editor --- */
+        .editor {
+            padding: 20px;
+            overflow-y: auto;
+            height: 100%;
+            border-right: 2px solid var(--pip-green); /* Green border */
+            scrollbar-width: thin;
+            scrollbar-color: var(--pip-green) var(--pip-bg-secondary); /* Green scrollbar */
+        }
 
-		.checkbox-group {
-			display: flex;
-			align-items: center;
-			margin-top: 10px;
-		}
+        #togglePreviewBtn {
+            position: absolute;
+            top: 50%;
+            right: 200px;
+            transform: translateY(-50%) translateX(50%);
+            width: 20px;
+            height: 70px;
+            background: var(--pip-black); /* Black bg */
+            color: var(--pip-green); /* Green text */
+            border: 2px solid var(--pip-green); /* Green border */
+            border-radius: 6px;
+            cursor: pointer;
+            z-index: 10;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: bold;
+            font-size: 16px;
+        }
 
-		.checkbox-group input[type="checkbox"] {
-			width: auto;
-			margin-right: 8px;
-		}
+        #togglePreviewBtn:hover {
+            background: var(--pip-green-dim); /* Dim green bg on hover */
+            color: var(--pip-black); /* Black text on hover */
+        }
 
-		.sound-list,
-		.equip-slot-list {
-			display: flex;
-			flex-wrap: wrap;
-			gap: 6px;
-			margin-top: 6px;
-		}
+        /* Collapsed State Rules */
+        .main-content.preview-collapsed {
+            grid-template-columns: 260px 308px 1fr;
+        }
+        .main-content.preview-collapsed .pipboy-preview-container {
+            display: none;
+        }
+        .main-content.preview-collapsed #togglePreviewBtn {
+            right: 6px;
+        }
 
-		.sound-tag,
-		.equip-slot-tag {
-			background: #555;
-			color: white;
-			padding: 4px 10px;
-			border-radius: 15px;
-			font-size: 0.8em;
-			display: flex;
-			align-items: center;
-			gap: 5px;
-		}
+        .form-group {
+            margin-bottom: 12px;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
 
-		.sound-tag button,
-		.equip-slot-tag button {
-			background: rgba(255, 255, 255, 0.3);
-			border: none;
-			color: white;
-			border-radius: 50%;
-			width: 18px;
-			height: 18px;
-			cursor: pointer;
-			font-weight: bold;
-			font-size: 0.8em;
-		}
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--pip-green); /* Dim green for labels */
+            font-size: 0.85em;
+        }
 
-		.empty-state {
-			text-align: center;
-			padding: 60px 20px;
-			color: #888;
-		}
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 7px;
+            border: 2px solid var(--pip-green); /* Dim green border */
+            border-radius: 6px;
+            font-size: 0.9em;
+            transition: border-color 0.3s;
+            background: var(--pip-black); /* Black bg */
+            color: var(--pip-green); /* Green text */
+        }
 
-		.empty-state h2 {
-			margin-bottom: 15px;
-		}
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--pip-green); /* Bright green border on focus */
+        }
 
-		.section-header {
-			font-size: 1.1em;
-			color: #e0e0e0;
-			margin-bottom: 12px;
-			padding-bottom: 6px;
-			border-bottom: 2px solid #555;
-		}
+        textarea {
+            resize: vertical;
+            min-height: 50px;
+            font-family: inherit;
+        }
 
-		.pipboy-preview-container {
-			background: #000;
-			color: #14ff72;
-			padding: 15px;
-			font-family: 'VT323', monospace;
-			font-size: 20px;
-			height: 100%;
-			overflow-y: auto;
-		}
+        .stats-container,
+        .damages-container,
+        .defenses-container {
+            background: var(--pip-bg-secondary); /* Dark bg */
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 6px;
+            border: 1px solid var(--pip-green-dark); /* Dark green border */
+        }
 
-		.preview-header {
-			display: flex;
-			justify-content: space-between;
-			border-bottom: 2px solid #14ff72;
-			padding-bottom: 5px;
-			margin-bottom: 5px;
-		}
+        .stat-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto auto;
+            gap: 6px;
+            margin-bottom: 6px;
+            align-items: end;
+        }
+        .stat-item.consumable-stat {
+            grid-template-columns: 1fr 1fr auto auto auto;
+        }
+        .damage-item,
+        .defense-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 6px;
+            margin-bottom: 6px;
+            align-items: end;
+        }
 
-		.preview-stats-list .stat-row {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			padding: 2px 4px;
-			margin-bottom: 2px;
-			height: 24px;
-		}
+        /* --- Secondary Button Style --- */
+        .add-stat-btn {
+            background: var(--pip-green);
+            color: var(--pip-black);
+            font-weight: bold;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 6px;
+            font-size: 0.8em;
+        }
+        .add-stat-btn:hover {
+            background: var(--pip-green-bright);
+        }
 
-		.preview-stats-list .stat-row .stat-name,
-		.preview-stats-list .stat-row .stat-value {
-			display: flex;
-			align-items: center;
-			gap: 6px;
-		}
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin-right: 8px;
+        }
+        /* Label for checkbox should be bright */
+        .checkbox-group label {
+            color: var(--pip-green);
+        }
 
-		.preview-stats-list .bright-bg {
-			background-color: #0d3a1f;
-		}
 
-		.preview-stats-list .dithered-bg {
-			background-image: repeating-linear-gradient(#000 0, #000 1px, #0a2815 1px, #0a2815 2px);
-		}
+        .sound-list,
+        .equip-slot-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 6px;
+        }
 
-		.reorder-arrows {
-			display: flex;
-			flex-direction: column;
-			gap: 2px;
-		}
+        .sound-tag,
+        .equip-slot-tag {
+            background: var(--pip-green-bright); /* Dim green bg */
+            color: var(--pip-black); /* Black text */
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
 
-		.reorder-arrows button {
-			background: #555;
-			color: white;
-			border: none;
-			border-radius: 4px;
-			width: 20px;
-			height: 15px;
-			line-height: 15px;
-			cursor: pointer;
-			font-size: 10px;
-		}
+        .sound-tag button,
+        .equip-slot-tag button {
+            background: var(--pip-green); /* Bright green bg */
+            border: none;
+            color: var(--pip-black); /* Black text */
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.8em;
+        }
 
-		.reorder-arrows button:hover {
-			background: #666;
-		}
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--pip-green); /* Dim green text */
+        }
+        .empty-state h2 {
+            margin-bottom: 15px;
+        }
 
-		.reorder-arrows button:disabled {
-			background: #444;
-			color: #888;
-			cursor: not-allowed;
-		}
+        .section-header {
+            font-size: 1.1em;
+            color: var(--pip-green); /* Bright green text */
+            margin-bottom: 12px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid var(--pip-green); /* Dim green border */
+        }
 
-		hr {
-			border: 1px solid #555;
-			margin: 12px 0;
-			flex-shrink: 0;
-			width: 100%;
-		}
+        /* --- Pipboy Preview (Already themed) --- */
+        .pipboy-preview-container {
+            background: #000;
+            color: #00ff00;
+            padding: 15px;
+            font-family: 'VT323', monospace;
+            font-size: 20px;
+            height: 100%;
+            overflow-y: auto;
+        }
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 2px solid #14ff72;
+            padding-bottom: 5px;
+            margin-bottom: 5px;
+        }
+        .preview-stats-list .stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2px 4px;
+            margin-bottom: 2px;
+            height: 24px;
+        }
+        .preview-stats-list .stat-row .stat-name,
+        .preview-stats-list .stat-row .stat-value {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .preview-stats-list .bright-bg {
+            background-color: #0d3a1f;
+        }
+        .preview-stats-list .dithered-bg {
+            background-image: repeating-linear-gradient(#000 0, #000 1px, #0a2815 1px, #0a2815 2px);
+        }
 
-		.base-item-controls {
-			display: flex;
-			gap: 8px;
-			flex-shrink: 0;
-		}
+        /* --- Reorder Arrows (Secondary Button) --- */
+        .reorder-arrows {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex-shrink: 0;
+        }
+        .reorder-arrows button {
+            background: var(--pip-green);
+            color: var(--pip-black);
+            font-weight: bold;
+            border: none;
+            border-radius: 4px;
+            width: 20px;
+            height: 15px;
+            line-height: 15px;
+            cursor: pointer;
+            font-size: 10px;
+        }
+        .reorder-arrows button:hover {
+            background: var(--pip-green-bright);
+        }
+        .reorder-arrows button:disabled {
+            background: var(--pip-green-dark);
+            color: var(--pip-black);
+            cursor: not-allowed;
+            opacity: 1;
+        }
 
-		.add-base-btn {
-			flex: 1;
-			padding: 8px;
-			font-size: 0.85em;
-			background: #555;
-			color: white;
-			border: none;
-			border-radius: 6px;
-			font-weight: 600;
-			cursor: pointer;
-			transition: background 0.3s;
-		}
+        hr {
+            border: 1px solid var(--pip-green); /* Dim green line */
+            margin: 12px 0;
+            flex-shrink: 0;
+            width: 100%;
+        }
 
-		.add-base-btn:hover {
-			background: #666;
-		}
-	</style>
+        .base-item-controls {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        /* .add-base-btn is already styled */
+
+
+        /* --- Main Tab Styles --- */
+        .tab-nav {
+            display: flex;
+            background: var(--pip-black); /* Black bg */
+            border-bottom: 3px solid var(--pip-green); /* Green border */
+            flex-shrink: 0;
+        }
+
+        .tab-link {
+            background: none;
+            border: none;
+            color: var(--pip-green); /* Dim green text */
+            padding: 12px 20px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -3px;
+        }
+
+        .tab-link:hover {
+            color: var(--pip-green-bright);
+        }
+
+        .tab-link.active {
+            color: var(--pip-green); /* Bright green text */
+            border-bottom-color: var(--pip-green); /* Green border */
+			background: var(--pip-green-dim);
+        }
+
+        .tab-content-area {
+            flex-grow: 1;
+            overflow: hidden;
+            background: var(--pip-bg-secondary); /* Dark bg */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tab-content {
+            display: none;
+            height: 100%;
+            width: 100%;
+            padding: 20px;
+            overflow-y: auto;
+            position: relative;
+            flex-direction: column;
+        }
+
+        .tab-content.active.main-content {
+            display: grid;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .tab-content.active#tab-content-data,
+        .tab-content.active#tab-content-image-maker {
+            display: flex;
+        }
+
+        .tab-content .empty-state {
+            height: auto;
+            padding-top: 20px;
+        }
+
+        /* --- DATA Tab Specific Styles --- */
+        .data-tab-layout {
+            display: flex;
+            flex: 1;
+            gap: 20px;
+        }
+
+        .data-sub-tabs {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            overflow: hidden;
+            background: var(--pip-bg-secondary); /* Dark bg */
+            border-radius: 6px;
+            border: 1px solid var(--pip-green); /* Dim green border */
+            padding: 0;
+        }
+
+        .data-sub-nav {
+            display: flex;
+            border-bottom: 2px solid var(--pip-green); /* Dim green border */
+            flex-shrink: 0;
+            background-color: var(--pip-black); /* Black bg */
+        }
+
+        .data-sub-link {
+            background: none;
+            border: none;
+            color: var(--pip-green); /* Dim green text */
+            padding: 8px 15px;
+            font-size: 0.9em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            flex: 1;
+            text-align: center;
+        }
+
+        .data-sub-link:hover {
+            color: var(--pip-green-bright);
+            background-color: var(--pip-green-dark); /* Dark green bg on hover */
+        }
+
+        .data-sub-link.active {
+            color: var(--pip-green); /* Bright green text */
+            border-bottom-color: var(--pip-green); /* Green border */
+            background-color: var(--pip-green-dim); /* Dark bg */
+        }
+
+        .data-sub-content-area {
+            flex-grow: 1;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .data-sub-content {
+            display: none;
+            height: 100%;
+            width: 100%;
+            padding: 10px;
+            overflow-y: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .data-sub-content.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .data-sub-content h3 {
+            margin-bottom: 10px;
+            text-align: center;
+            color: var(--pip-green); /* Bright green text */
+            flex-shrink: 0;
+        }
+
+        .data-list-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            padding: 10px;
+            background: var(--pip-bg-secondary); /* Dark bg */
+            border-radius: 6px;
+            border: 1px solid var(--pip-green); /* Dim green border */
+        }
+
+        .data-list-container h3 {
+            margin-bottom: 10px;
+            text-align: center;
+            color: var(--pip-green); /* Bright green text */
+            flex-shrink: 0;
+        }
+
+        /* --- DATA FILE LIST STYLES (MODIFIED) --- */
+        .data-file-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+            overflow-y: auto;
+            background: var(--pip-green); /* Green background */
+            border-radius: 4px;
+            padding: 8px;
+            max-height: 260px; /* Limit height to ~6 items */
+			scrollbar-width: thin;
+			scrollbar-color: var(--pip-green) var(--pip-bg-tertiary); /* Green scrollbar */
+        }
+
+         .data-file-list li {
+            background: none; /* No background for items */
+            color: var(--pip-black); /* Default dark text for li */
+            padding: 8px 12px;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            cursor: default;
+            font-size: 0.9em;
+            transition: background-color 0.2s; /* Add transition */
+         }
+
+         /* Apply hover to all LI except status */
+         .data-file-list li:not(.status-message):hover {
+             background-color: var(--pip-green-bright); /* Lighter green on hover */
+         }
+
+         .data-file-list input[type="checkbox"].file-checkbox {
+             margin-right: 10px;
+             flex-shrink: 0;
+             cursor: pointer;
+         }
+
+         .data-filename {
+             flex-grow: 1;
+             margin-right: 10px;
+             word-break: break-all;
+             cursor: inherit;
+             font-size: inherit;
+             color: var(--pip-black); /* *** THIS IS THE FIX *** */
+         }
+         
+         .data-file-list label.data-filename {
+             cursor: pointer;
+         }
+
+         .data-file-list .status-message {
+             color: var(--pip-black); /* Dark text */
+             font-style: italic;
+             text-align: center;
+             padding: 20px;
+             display: block;
+             cursor: default;
+             background: var(--pip-green); /* Match list background */
+         }
+
+         .data-file-list li.status-message:hover {
+             background-color: var(--pip-green); /* No hover effect */
+             color: var(--pip-black);
+         }
+
+        /* .delete-data-btn is already styled */
+    </style>
 </head>
 
 <body>
-	<div class="container">
-		<div class="header">
-			<h1>Items.json Generator</h1>
-			<div class="header-buttons">
-				<button id="btnConnectUSB" class="export-btn-header">Connect via USB</button>
-				<button id="btnUploadUSB" class="export-btn-header" onclick="sendJSONviaUSB()" disabled>Upload to Device</button>
-				<button id="exportBtnHeader" class="export-btn-header" onclick="exportJSON()" disabled>Download Items As ZIP</button>
-			</div>
-		</div>
+    <div class="container">
+        <div class="header">
+            <div class="header-title-section">
+                <h1>Items.json Generator</h1>
+                <a href="https://github.com/AidansLab/Pip-Boy-Inventory-JSON-Generator/blob/main/README.md#remote-usage-recommended-for-most-users" target="_blank" class="help-link" title="View documentation">(?)</a>
+            </div>
+            <div class="header-buttons">
+                <button id="btnConnectUSB" class="export-btn-header">Connect</button>
+                <button id="btnUploadUSB" class="export-btn-header" onclick="sendJSONviaUSB()" disabled>Upload Items to Device</button>
+                <button id="exportBtnHeader" class="export-btn-header" onclick="exportJSON()" disabled>Download Items As ZIP</button>
+            </div>
+        </div>
 
-		<div class="main-content">
-			<div class="sidebar">
-				<button id="btnLoadFromDevice" class="add-item-btn export-btn-header" onclick="loadItemsFromDevice()" style="width:auto;">Load Items from Device</button>
-				
-				<button class="add-item-btn" onclick="document.getElementById('fileInput').click()">Load Items JSONs...</button>
-				<input type="file" id="fileInput" multiple accept=".json" style="display: none;" onchange="loadItemsFromFiles(event)">
+        <div class="tab-nav">
+            <button class="tab-link active" onclick="openTab('items')">ITEMS</button>
+            <button class="tab-link" onclick="openTab('data')">DATA</button>
+            <button class="tab-link" onclick="openTab('image-maker')">Image Maker</button>
+        </div>
 
-				<button class="add-item-btn" onclick="document.getElementById('folderInput').click()">Select DATA Folder</button>
-				<input type="file" id="folderInput" webkitdirectory directory style="display: none;" onchange="loadDataFolder(event)">
+        <div class="tab-content-area">
 
-				<select class="preset-dropdown" id="presetDropdown" onchange="addPresetItem(this.value); this.value='';"></select>
+            <div class="main-content tab-content active" id="tab-content-items">
 
-				<ul class="item-list" id="itemList"></ul>
+                <div class="preset-sidebar">
+                    <input type="text" id="presetSearch" placeholder="Search presets...">
+                    <div class="preset-tab-nav">
+                        <button class="preset-tab-link active" onclick="openPresetTab('apparel', this)">Apparel</button>
+                        <button class="preset-tab-link" onclick="openPresetTab('weapons', this)">Weapons</button>
+                        <button class="preset-tab-link" onclick="openPresetTab('consumables', this)">Consumables</button>
+                    </div>
+                    <div class="preset-tab-content-area">
+                        <div id="preset-tab-content-apparel" class="preset-tab-content active">
+                            <ul id="presetListApparel" class="preset-list">
+                                <li class="status-message">Loading...</li>
+                            </ul>
+                        </div>
+                        <div id="preset-tab-content-weapons" class="preset-tab-content">
+                            <ul id="presetListWeapons" class="preset-list">
+                                <li class="status-message">Loading...</li>
+                            </ul>
+                        </div>
+                        <div id="preset-tab-content-consumables" class="preset-tab-content">
+                            <ul id="presetListConsumables" class="preset-list">
+                                <li class="status-message">Loading...</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar">
+                    <button id="btnLoadFromDevice" class="add-item-btn export-btn-header" onclick="loadItemsFromDevice()" style="width:auto;">Load Items from Device</button>
+                    <button class="add-item-btn" onclick="document.getElementById('fileInput').click()">Load Items JSONs...</button>
+                    <input type="file" id="fileInput" multiple accept=".json" style="display: none;" onchange="loadItemsFromFiles(event)">
+                    <ul class="item-list" id="itemList"></ul>
+                    <hr>
+                    <div class="base-item-controls">
+                        <button class="add-base-btn" onclick="addBaseItem('weapon')">+Base Weapon</button>
+                        <button class="add-base-btn" onclick="addBaseItem('apparel')">+Base Apparel</button>
+                        <button class="add-base-btn" onclick="addBaseItem('consumable')">+Base Consumable</button>
+                    </div>
+                </div>
 
-				<hr>
-				<div class="base-item-controls">
-					<button class="add-base-btn" onclick="addBaseItem('weapon')">+Base Weapon</button>
-					<button class="add-base-btn" onclick="addBaseItem('apparel')">+Base Apparel</button>
-					<button class="add-base-btn" onclick="addBaseItem('consumable')">+Base Consumable</button>
-				</div>
-			</div>
+                <div class="editor" id="editor">
+                    <div class="empty-state">
+                        <h2>No item selected</h2>
+                        <p>Select an item from the list or create a new one</p>
+                    </div>
+                </div>
 
-			<div class="editor" id="editor">
-				<div class="empty-state">
-					<h2>No item selected</h2>
-					<p>Select an item from the list or create a new one</p>
-				</div>
-			</div>
+                <div class="pipboy-preview-container" id="pipboy-preview">
+                    <div class="preview-header"> <span id="preview-name">ITEM NAME</span><span>QTY <span id="preview-qty">0</span></span></div>
+                    <div class="preview-stats-list" id="preview-stats-list"></div>
+                </div>
+				<button id="togglePreviewBtn" onclick="togglePreview()">»</button>
+            </div>
 
-			<div class="pipboy-preview-container" id="pipboy-preview">
-				<div class="preview-header"> <span id="preview-name">ITEM NAME</span><span>QTY <span id="preview-qty">0</span></span></div>
-				<div class="preview-stats-list" id="preview-stats-list"></div>
-			</div>
-		</div>
-	</div>
+            <div id="tab-content-data" class="tab-content">
+                 <div class="data-tab-layout">
+                     <div class="data-sub-tabs">
+                         <div class="data-sub-nav">
+                            <button class="data-sub-link active" onclick="openDataSubTab('community', this)">Community</button>
+                            <button class="data-sub-link" onclick="openDataSubTab('local', this)">Local</button>
+                         </div>
+                         <div class="data-sub-content-area">
+                             <div id="data-sub-content-community" class="data-sub-content active">
+                                <h3>Community Files (from GitHub)</h3>
+                                <ul id="communityDataFileList" class="data-file-list">
+                                    <li class="status-message">Loading Community files...</li>
+                                </ul>
+                                <button id="btnUploadSelectedCommunityFiles" class="tab-button" onclick="uploadSelectedCommunityFiles()" disabled>Upload Selected Files to Device</button>
+                            </div>
+                            <div id="data-sub-content-local" class="data-sub-content">
+                                 <h3>Local Files for Upload</h3>
+                                 <button class="tab-button" onclick="document.getElementById('localDataFolderInput').click()">Select Local DATA Files Folder</button>
+                                 <input type="file" id="localDataFolderInput" webkitdirectory directory style="display: none;" onchange="selectLocalDataFolder(event)">
+                                 <ul id="localDataFileList" class="data-file-list">
+                                    <li class="status-message">Select a folder to list files...</li>
+                                 </ul>
+                                 <button id="btnUploadSelectedDataFiles" class="tab-button" onclick="uploadSelectedDataFiles()" disabled>Upload Selected Files to Device</button>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="data-list-container">
+                         <h3>Files in DATA/ on Device</h3>
+                          <button id="btnScanDataDir" class="tab-button" onclick="scanDataDirectory()" style="margin-top: 0;">Scan DATA Directory</button>
+                         <ul id="dataFileList" class="data-file-list">
+                            <li class="status-message">Connect and Scan to list files...</li>
+                         </ul>
+                     </div>
+                 </div>
+            </div>
 
-	<script>
-		let items = [];
-		let currentIndex = -1;
-		let availableSounds = [];
-		let availableImages = [];
-		let presetItems = {};
+            <div id="tab-content-image-maker" class="tab-content">
+                <div class="empty-state">
+                    <h2>Image Maker</h2>
+                    <p>Coming Soon.</p>
+                     </div>
+            </div>
 
-		const damageTypes = ["attack", "energy", "fire", "frost", "bleed", "rad"];
-		const defenseTypes = ["defense", "energy", "fire", "frost", "rad"];
-		const apparelEquipSlots = ["hat", "eyewear", "mask", "clothing", "chest", "leftArm", "rightArm", "leftLeg", "rightLeg", "accessory"];
+        </div>
+    </div>
+    <script>
+        // ... (Your existing <script> block remains unchanged) ...
+        let items = [];
+        let currentIndex = -1;
+        let deviceSounds = [];      // Sounds/Images scanned from the DEVICE's DATA folder
+        let deviceImages = [];
+        let localDataFiles = []; // Files selected in the LOCAL data tab { file: File, selected: boolean }
+        let communityDataFiles = []; // Files fetched for COMMUNITY data tab { name: string, download_url: string, selected: boolean }
+
+        // --- NEW: Preset data storage ---
+        let presetItems = {}; // Combined lookup { key: itemData }
+        let apparelPresetItems = []; // Array of { key: string, name: string }
+        let weaponPresetItems = []; // Array of { key: string, name: string }
+        let consumablePresetItems = []; // Array of { key: string, name: string }
+        // --- END NEW ---
 
 
-		// --- Upload Function ---
-		function sendJSONviaUSB() {
-			if (!UART.isConnected()) {
-				alert("Please connect to a USB device first.");
-				return;
-			}
+        const damageTypes = ["attack", "energy", "fire", "frost", "bleed", "rad"];
+        const defenseTypes = ["defense", "energy", "fire", "frost", "rad"];
+        const apparelEquipSlots = ["hat", "eyewear", "mask", "clothing", "chest", "leftArm", "rightArm", "leftLeg", "rightLeg", "accessory"];
 
-			// Disable button during upload
-			const uploadBtn = document.getElementById('btnUploadUSB');
-			uploadBtn.disabled = true;
-			uploadBtn.textContent = "Uploading...";
+        const excludeFilesRegex = /^(ICONS\.json|items_meta\.json|items_\d+\.json|EquipDown_\d+\.wav|EquipUp_\d+\.wav|\.keep|\.gitmodules|README\.md)$/i;
 
-			console.log("Cleaning up old item files on device...");
 
-			// Original, simpler cleanup code
-			const cleanupCode = `
-				var fs = require('fs');
-				var files = fs.readdirSync('DATA'); // Read DATA dir
-				files.forEach(function(f) {
-				  // Delete items_X.json files within DATA
-				  if (f.startsWith('items_') && f.endsWith('.json')) {
-					try { fs.unlink('DATA/' + f); console.log('Deleted DATA/'+f); } catch(e) { console.log('Error deleting DATA/'+f, e); }
-				  }
-				});
-				// Delete items_meta.json within DATA
-				if (files.includes('items_meta.json')) {
-				  try { fs.unlink('DATA/items_meta.json'); console.log('Deleted DATA/items_meta.json'); } catch(e) { console.log('Error deleting DATA/items_meta.json', e); }
-				}
-				print('CLEANUP_DONE');
-			`;
-
-            // We need a way to know cleanup is done. We'll use a simple delay and hope for the best,
-            // as the Promise logic was causing timeouts. This is less reliable but avoids the timeout.
-            let cleanupSent = false;
-            let cleanupConfirmed = false; // Flag to prevent multiple uploads
-
-            function onDataCleanup(data) {
-                 console.log("Cleanup Recv: " + data);
-                 if (data.includes('CLEANUP_DONE') && !cleanupConfirmed) {
-                    cleanupConfirmed = true; // Mark as confirmed
-                    console.log("Cleanup confirmation received. Starting file upload.");
-                    UART.getConnection()?.removeListener('data', onDataCleanup); // Remove listener
-                    sendNewItemFiles(); // Start sending files
+        // --- Main Tab Function ---
+        function openTab(tabName) {
+            // ... (no changes needed here) ...
+             const tabcontent = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            const tablinks = document.getElementsByClassName("tab-link");
+            for (let i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            document.getElementById('tab-content-' + tabName).classList.add("active");
+            for (let i = 0; i < tablinks.length; i++) {
+                if (tablinks[i].getAttribute('onclick') === `openTab('${tabName}')`) {
+                    tablinks[i].classList.add("active");
+                    break;
+                }
+            }
+            const isConnected = UART.isConnected();
+            const scanButton = document.getElementById('btnScanDataDir');
+            if (scanButton) scanButton.disabled = !isConnected;
+             const activeSubTab = document.querySelector('.data-sub-content.active');
+             if (activeSubTab) {
+                 if (activeSubTab.id === 'data-sub-content-local') {
+                     const uploadLocalButton = document.getElementById('btnUploadSelectedDataFiles');
+                     const hasSelectedLocal = localDataFiles.some(f => f.selected);
+                     if (uploadLocalButton) uploadLocalButton.disabled = !(isConnected && hasSelectedLocal);
+                 } else if (activeSubTab.id === 'data-sub-content-community') {
+                     const uploadCommunityButton = document.getElementById('btnUploadSelectedCommunityFiles');
+                     const hasSelectedCommunity = communityDataFiles.some(f => f.selected);
+                     if (uploadCommunityButton) uploadCommunityButton.disabled = !(isConnected && hasSelectedCommunity);
                  }
+             }
+        }
+
+        // --- Data Sub-Tab Function ---
+        function openDataSubTab(tabName, clickedButtonElement) {
+            // ... (no changes needed here) ...
+             const subContents = document.getElementsByClassName("data-sub-content");
+             for (let i = 0; i < subContents.length; i++) {
+                 subContents[i].classList.remove("active");
+             }
+             const subLinks = document.getElementsByClassName("data-sub-link");
+             for (let i = 0; i < subLinks.length; i++) {
+                 subLinks[i].classList.remove("active");
+             }
+             const contentToShow = document.getElementById('data-sub-content-' + tabName);
+             if (contentToShow) {
+                contentToShow.classList.add("active");
+             } else {
+                console.error("Sub-content area not found for:", tabName);
+             }
+             if (clickedButtonElement) {
+                 clickedButtonElement.classList.add("active");
+             } else {
+                 let found = false;
+                 for (let i = 0; i < subLinks.length; i++) {
+                     if (subLinks[i].getAttribute('onclick') === `openDataSubTab('${tabName}', this)`) {
+                         subLinks[i].classList.add("active");
+                         found = true;
+                         break;
+                     }
+                 }
+                 if (!found) {
+                     console.error("Could not find sub-tab link for:", tabName);
+                 }
+             }
+             const isConnected = UART.isConnected();
+             if (tabName === 'local') {
+                 const uploadLocalButton = document.getElementById('btnUploadSelectedDataFiles');
+                 const hasSelectedLocal = localDataFiles.some(f => f.selected);
+                 if (uploadLocalButton) uploadLocalButton.disabled = !(isConnected && hasSelectedLocal);
+             } else if (tabName === 'community') {
+                 const uploadCommunityButton = document.getElementById('btnUploadSelectedCommunityFiles');
+                 const hasSelectedCommunity = communityDataFiles.some(f => f.selected);
+                 if (uploadCommunityButton) uploadCommunityButton.disabled = !(isConnected && hasSelectedCommunity);
+             }
+        }
+
+        // --- NEW: Preset Tab Function ---
+        function openPresetTab(tabName, clickedButtonElement) {
+            const tabContents = document.getElementsByClassName("preset-tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
             }
-
-            // Add listener *before* sending command
-            UART.getConnection()?.on('data', onDataCleanup);
-
-			// Send cleanup command
-			UART.write(cleanupCode.trim() + '\n')
-                .then(() => {
-                    cleanupSent = true;
-                    console.log("Cleanup command sent. Waiting briefly for confirmation or timeout...");
-                     // Add a safety timeout in case CLEANUP_DONE is never received
-                     setTimeout(() => {
-                        if (!cleanupConfirmed) {
-                             console.warn("Timeout waiting for CLEANUP_DONE confirmation. Proceeding with upload anyway.");
-                             UART.getConnection()?.removeListener('data', onDataCleanup); // Remove listener
-                             sendNewItemFiles(); // Attempt upload even without confirmation
-                        }
-                     }, 3000); // 3-second timeout for confirmation
-                })
-                .catch((err) => {
-                    console.error("Error sending cleanup command:", err);
-                    alert("Error sending cleanup command. Aborting upload.");
-                    UART.getConnection()?.removeListener('data', onDataCleanup); // Remove listener on error
-                    uploadBtn.disabled = false; // Re-enable button
-                    uploadBtn.textContent = "Upload to Device";
-                });
-		}
-
-		// --- Helper function to generate and send files ---
-        // (Unchanged from previous successful version)
-		function sendNewItemFiles() {
-			// Ensure this isn't called multiple times if cleanup confirmation arrives late after timeout
-            if (document.getElementById('btnUploadUSB').textContent !== "Uploading...") {
-                 console.log("Upload already completed or aborted, skipping sendNewItemFiles.");
-                 return;
+            const tabLinks = document.getElementsByClassName("preset-tab-link");
+            for (let i = 0; i < tabLinks.length; i++) {
+                tabLinks[i].classList.remove("active");
             }
-            console.log("Generating and sending new item files to DATA/ directory...");
-
-			const filesToSend = [];
-			const CHUNK_SIZE = 9;
-			const pageCounts = [];
-			const uploadBtn = document.getElementById('btnUploadUSB');
-
-			for (let i = 0; i < items.length; i += CHUNK_SIZE) {
-				const pageIndex = Math.floor(i / CHUNK_SIZE);
-				const chunk = items.slice(i, i + CHUNK_SIZE);
-				pageCounts.push(chunk.length);
-				filesToSend.push({
-					name: `DATA/items_${pageIndex}.json`,
-					content: JSON.stringify(chunk, null, 2)
-				});
-			}
-
-			const meta = {
-				totalItems: items.length,
-				pageCounts: pageCounts
-			};
-			filesToSend.push({
-				name: 'DATA/items_meta.json',
-				content: JSON.stringify(meta, null, 2)
-			});
-
-			console.log(`Ready to send ${filesToSend.length} files to DATA/ directory.`);
-
-			function sendFile(index) {
-				if (index >= filesToSend.length) {
-					console.log("All files sent successfully!");
-					//alert("All item files have been sent to the DATA/ directory on the device.");
-					uploadBtn.disabled = false;
-					uploadBtn.textContent = "Upload to Device";
-					
-					console.log("Sending reboot command...");
-                    UART.write("E.reboot()\n")
-                    .then(() => console.log("Reboot command sent."))
-                    .catch(err => console.error("Error sending reboot command:", err));
-					
-					return;
-				}
-
-				const file = filesToSend[index];
-				console.log(`Sending ${file.name}...`);
-				// Ensure writeFileSync command is correct
-                const command = `try { require('fs').writeFileSync(${JSON.stringify(file.name)}, ${JSON.stringify(file.content)}); } catch(e) { console.log("Write Error:", e); }\n`;
+            const contentToShow = document.getElementById('preset-tab-content-' + tabName);
+            if (contentToShow) {
+                contentToShow.classList.add("active");
+            } else {
+                console.error("Preset tab content not found for:", tabName);
+            }
+            if (clickedButtonElement) {
+                clickedButtonElement.classList.add("active");
+            } else {
+                 // Find the button programmatically if needed (e.g., for default)
+                 let found = false;
+                 for (let i = 0; i < tabLinks.length; i++) {
+                     if (tabLinks[i].getAttribute('onclick') === `openPresetTab('${tabName}', this)`) {
+                         tabLinks[i].classList.add("active");
+                         found = true;
+                         break;
+                     }
+                 }
+                 if (!found) console.error("Could not find preset tab link for:", tabName);
+            }
+            // Optional: Re-filter list if needed, or clear search?
+            // renderPresetLists(document.getElementById('presetSearch').value);
+        }
+        // --- END NEW ---
 
 
-				UART.write(command)
-					.then(() => {
-						console.log(`Successfully sent command to write ${file.name}.`);
-						// Add a slightly longer delay to allow file system operations
-						setTimeout(() => sendFile(index + 1), 100);
-					})
-					.catch((err) => {
-						console.log(`Error sending write command for ${file.name}: ${err}`);
-						alert(`An error occurred while sending ${file.name}. Aborting.`);
-						uploadBtn.disabled = false;
-						uploadBtn.textContent = "Upload to Device";
-					});
-			}
-			sendFile(0); // Start sending the first file
-		}
-
-        // --- Load items from Device function ---
-        async function loadItemsFromDevice() {
+        // --- Scan DATA Directory function ---
+        async function scanDataDirectory() {
+            // ... (no changes needed here) ...
             if (!UART.isConnected()) {
-                alert("Please connect to a USB device first.");
+                deviceSounds = []; deviceImages = [];
+                if (currentIndex > -1) renderEditor();
+                const dataFileList = document.getElementById('dataFileList');
+                if (dataFileList) dataFileList.innerHTML = '<li class="status-message">Connect device to scan.</li>';
+                console.log("Scan requested but device not connected.");
+                return;
+            }
+            const scanButton = document.getElementById('btnScanDataDir');
+            const dataFileList = document.getElementById('dataFileList');
+            scanButton.disabled = true; scanButton.textContent = 'Scanning...';
+            dataFileList.innerHTML = '<li class="status-message">Scanning DATA directory...</li>';
+            deviceSounds = []; deviceImages = [];
+            try {
+                const files = await UART.getConnection().espruinoEval("require('fs').readdirSync('DATA')");
+                if (!Array.isArray(files)) throw new Error(`Unexpected response: ${typeof files}`);
+                dataFileList.innerHTML = '';
+                const relevantFiles = files.filter(f => f !== '.' && f !== '..' && !excludeFilesRegex.test(f));
+                if (relevantFiles.length > 0) {
+                    relevantFiles.sort().forEach(fileName => {
+                        const li = document.createElement('li');
+                        const nameSpan = document.createElement('span');
+                        nameSpan.className = 'data-filename'; nameSpan.textContent = fileName;
+                        const deleteBtn = document.createElement('button');
+                        deleteBtn.className = 'delete-data-btn'; deleteBtn.textContent = 'X'; deleteBtn.onclick = () => deleteDataFile(fileName);
+                        li.appendChild(nameSpan); li.appendChild(deleteBtn); dataFileList.appendChild(li);
+                        if (fileName.toLowerCase().endsWith('.wav')) deviceSounds.push(fileName);
+                        else if (fileName.toLowerCase().endsWith('.js')) deviceImages.push(fileName);
+                    });
+                    console.log("Device sounds:", deviceSounds); console.log("Device images:", deviceImages);
+                } else { dataFileList.innerHTML = '<li class="status-message">No relevant files in DATA.</li>'; console.log("No relevant files found."); }
+                if (currentIndex > -1) renderEditor();
+            } catch (error) {
+                console.error("Error scanning:", error); dataFileList.innerHTML = `<li class="status-message">Error: ${error.message || error}</li>`;
+                deviceSounds = []; deviceImages = []; if (currentIndex > -1) renderEditor();
+            } finally { scanButton.disabled = !UART.isConnected(); scanButton.textContent = 'Scan DATA Directory'; }
+        }
+
+         // --- Delete DATA file function ---
+         async function deleteDataFile(fileName) {
+             // ... (no changes needed here) ...
+              if (!UART.isConnected()) { alert("Device disconnected."); return; }
+             if (!confirm(`Delete "${fileName}"?`)) return;
+             const fileList = document.getElementById('dataFileList'); const statusLi = document.createElement('li');
+             statusLi.className = 'status-message'; statusLi.textContent = `Deleting ${fileName}...`;
+             if (fileList.firstChild) fileList.insertBefore(statusLi, fileList.firstChild); else fileList.appendChild(statusLi);
+             const filePath = 'DATA/' + fileName; const deleteCommand = `try{require('fs').unlink(${JSON.stringify(filePath)});}catch(e){}\n`;
+             console.log("Sending:", deleteCommand.trim());
+             try { await UART.write(deleteCommand); console.log(`Delete sent. Rescan...`); setTimeout(scanDataDirectory, 300); }
+             catch (error) { console.error(`Delete err ${fileName}:`, error); alert(`Error: ${error.message || error}`); scanDataDirectory(); }
+         }
+
+        // --- Community DATA File Handling ---
+        async function fetchGitHubDataFiles() {
+            // ... (no changes needed here) ...
+             const listElement = document.getElementById('communityDataFileList'); const uploadButton = document.getElementById('btnUploadSelectedCommunityFiles');
+            listElement.innerHTML = '<li class="status-message">Fetching...</li>'; if (uploadButton) uploadButton.disabled = true; communityDataFiles = [];
+            console.log("Starting fetchGitHubDataFiles...");
+            try {
+                const apiUrl = 'https://api.github.com/repos/AidansLab/Pip-Boy-Inventory-JSON-Generator/contents/community_DATA';
+                console.log("Fetching:", apiUrl); const response = await fetch(apiUrl); console.log("Status:", response.status);
+                if (!response.ok) throw new Error(`GitHub API fail: ${response.status}`);
+                const files = await response.json(); console.log("Received:", files);
+                if (!Array.isArray(files)) { console.error("Invalid format:", files); throw new Error('Invalid response'); }
+                listElement.innerHTML = '';
+                const filteredFiles = files.filter(file => file.type === 'file' && !excludeFilesRegex.test(file.name));
+                console.log("Filtered:", filteredFiles);
+                if (filteredFiles.length > 0) {
+                    filteredFiles.sort((a, b) => a.name.localeCompare(b.name)).forEach((file, index) => {
+                         console.log(`Processing: ${file.name}`); communityDataFiles.push({ name: file.name, download_url: file.download_url, selected: false });
+                         const li = document.createElement('li'); li.className = 'selectable-file-item'; li.dataset.fileIndex = index;
+                         const checkbox = document.createElement('input'); checkbox.type = 'checkbox'; checkbox.className = 'file-checkbox'; checkbox.id = `communityFile_${index}`; checkbox.onchange = (e) => toggleCommunityFileSelection(checkbox, index);
+                         const nameSpan = document.createElement('label'); nameSpan.className = 'data-filename'; nameSpan.textContent = file.name; nameSpan.htmlFor = checkbox.id;
+                         li.appendChild(checkbox); li.appendChild(nameSpan);
+                         li.onclick = (e) => { if (e.target !== checkbox && e.target !== nameSpan) { checkbox.checked = !checkbox.checked; toggleCommunityFileSelection(checkbox, index); } };
+                         listElement.appendChild(li);
+                    }); console.log("Populated list.");
+                 } else { listElement.innerHTML = '<li class="status-message">No relevant files found.</li>'; console.log("No relevant files."); }
+            } catch (error) { console.error("Fetch err:", error); listElement.innerHTML = `<li class="status-message">Error: ${error.message || error}</li>`; communityDataFiles = []; }
+             const hasSelectedCommunity = communityDataFiles.some(f => f.selected); if (uploadButton) uploadButton.disabled = !(UART.isConnected() && hasSelectedCommunity);
+             console.log("fetchGitHubDataFiles finished.");
+        }
+
+        function toggleCommunityFileSelection(checkbox, index) {
+            // ... (no changes needed here) ...
+             if (isNaN(index) || index < 0 || index >= communityDataFiles.length) return;
+            communityDataFiles[index].selected = checkbox.checked;
+            const hasSelectedFiles = communityDataFiles.some(f => f.selected);
+            document.getElementById('btnUploadSelectedCommunityFiles').disabled = !(UART.isConnected() && hasSelectedFiles);
+        }
+
+        async function uploadSelectedCommunityFiles() {
+            // ... (No changes needed) ...
+            if (!UART.isConnected()) { alert("Device disconnected."); return; }
+            const connection = UART.getConnection(); if (!connection) { alert("Connection error."); return; }
+            const filesToUpload = communityDataFiles.filter(f => f.selected); if (filesToUpload.length === 0) { alert("No community files selected."); return; }
+            const uploadButton = document.getElementById('btnUploadSelectedCommunityFiles'); uploadButton.disabled = true;
+            let originalButtonText = uploadButton.textContent; let successCount = 0; let errorCount = 0;
+            try { await UART.write(`try{require('fs').mkdirSync('DATA');}catch(e){}\n`); console.log("Ensured DATA dir exists (or ignored error)."); }
+            catch (mkdirError) { console.error("Error ensuring DATA dir:", mkdirError); alert("Error preparing device storage. Aborting."); uploadButton.textContent = originalButtonText; uploadButton.disabled = !filesToUpload.length; return; }
+            for (let i = 0; i < filesToUpload.length; i++) {
+                const fileEntry = filesToUpload[i]; const index = communityDataFiles.indexOf(fileEntry);
+                uploadButton.textContent = `Uploading ${i + 1}/${filesToUpload.length} (${fileEntry.name})...`; console.log(`Fetching: ${fileEntry.name} from ${fileEntry.download_url}`);
+                try {
+                    const response = await fetch(fileEntry.download_url); if (!response.ok) throw new Error(`Download fail: ${response.status}`);
+                    const fileContentBuffer = await response.arrayBuffer(); const fileContentString = String.fromCharCode(...new Uint8Array(fileContentBuffer));
+                    const devicePath = `DATA/${fileEntry.name}`; // Full path including directory
+                    console.log(`Uploading ${fileEntry.name} (${fileContentString.length}b) to ${devicePath} (fs:true)...`);
+                    await connection.espruinoSendFile(devicePath, fileContentString, { fs: true, noACK: true, chunkSize: 1024 * 4,
+                        progress: (bytesSent, totalBytes) => { let percent = totalBytes > 0 ? Math.round((bytesSent / totalBytes) * 100) : 0; uploadButton.textContent = `Uploading ${i + 1}/${filesToUpload.length} (${fileEntry.name} ${percent}%)...`; }
+                    });
+                    console.log(`Upload finished: ${fileEntry.name}`); successCount++;
+                    fileEntry.selected = false; const checkbox = document.getElementById(`communityFile_${index}`); if (checkbox) checkbox.checked = false;
+                } catch (error) {
+                    console.error(`Error ${fileEntry.name}:`, error); errorCount++;
+                    let errorMsg = error.message || error; if (errorMsg.includes("Unable to find")) errorMsg += " - Is DATA dir missing?"; alert(`Error ${fileEntry.name}: ${errorMsg}`);
+                } finally { uploadButton.textContent = `Uploading ${i + 1}/${filesToUpload.length}...`; }
+            }
+            uploadButton.textContent = originalButtonText; const hasSelectedFiles = communityDataFiles.some(f => f.selected); uploadButton.disabled = !(UART.isConnected() && hasSelectedFiles);
+            alert(`Community upload: ${successCount} sent, ${errorCount} failed.`); console.log("Rescanning..."); scanDataDirectory();
+        }
+
+         // --- Local DATA File Handling ---
+         function selectLocalDataFolder(event) {
+             // ... (no changes needed here) ...
+             const files = event.target.files; const fileList = document.getElementById('localDataFileList'); fileList.innerHTML = ''; localDataFiles = [];
+             if (files.length === 0) { fileList.innerHTML = '<li class="status-message">No folder selected.</li>'; document.getElementById('btnUploadSelectedDataFiles').disabled = true; return; }
+             const fileArray = Array.from(files).filter(file => !file.webkitRelativePath || file.webkitRelativePath.split('/').length <= 2);
+             fileArray.sort((a, b) => a.name.localeCompare(b.name));
+             if (fileArray.length === 0) { fileList.innerHTML = '<li class="status-message">No files in folder.</li>'; document.getElementById('btnUploadSelectedDataFiles').disabled = true; return; }
+             fileArray.forEach((file, index) => {
+                 localDataFiles.push({ file: file, selected: false }); const li = document.createElement('li'); li.className = 'selectable-file-item'; li.dataset.fileIndex = index;
+                 const checkbox = document.createElement('input'); checkbox.type = 'checkbox'; checkbox.className = 'file-checkbox'; checkbox.id = `localFile_${index}`; checkbox.onchange = (e) => toggleLocalFileSelection(checkbox, index);
+                 const nameSpan = document.createElement('label'); nameSpan.className = 'data-filename'; nameSpan.textContent = file.name; nameSpan.htmlFor = checkbox.id;
+                 li.appendChild(checkbox); li.appendChild(nameSpan);
+                 li.onclick = (e) => { if (e.target !== checkbox && e.target !== nameSpan) { checkbox.checked = !checkbox.checked; toggleLocalFileSelection(checkbox, index); } };
+                 fileList.appendChild(li);
+             });
+             document.getElementById('btnUploadSelectedDataFiles').disabled = true; event.target.value = '';
+         }
+
+         function toggleLocalFileSelection(checkbox, index) {
+             // ... (no changes needed here) ...
+              if (isNaN(index) || index < 0 || index >= localDataFiles.length) return; localDataFiles[index].selected = checkbox.checked;
+             const hasSelectedFiles = localDataFiles.some(f => f.selected); document.getElementById('btnUploadSelectedDataFiles').disabled = !(UART.isConnected() && hasSelectedFiles);
+         }
+
+         function readFileAsBinaryString(file) {
+             // ... (no changes needed here) ...
+              return new Promise((resolve, reject) => { const reader = new FileReader(); reader.onload = (event) => { const buffer = event.target.result; const binaryString = String.fromCharCode(...new Uint8Array(buffer)); resolve(binaryString); }; reader.onerror = (event) => reject(reader.error); reader.readAsArrayBuffer(file); });
+         }
+
+         async function uploadSelectedDataFiles() {
+            // ... (No changes needed) ...
+            if (!UART.isConnected()) { alert("Device disconnected."); return; }
+            const connection = UART.getConnection(); if (!connection) { alert("Connection error."); return; }
+            const filesToUpload = localDataFiles.filter(f => f.selected); if (filesToUpload.length === 0) { alert("No local files selected."); return; }
+            const uploadButton = document.getElementById('btnUploadSelectedDataFiles'); uploadButton.disabled = true;
+            let originalButtonText = uploadButton.textContent; let successCount = 0; let errorCount = 0;
+            try { await UART.write(`try{require('fs').mkdirSync('DATA');}catch(e){}\n`); console.log("Ensured DATA dir exists."); }
+            catch (mkdirError) { console.error("Error DATA dir:", mkdirError); alert("Error storage prep. Abort."); uploadButton.textContent = originalButtonText; uploadButton.disabled = !filesToUpload.length; return; }
+            for (let i = 0; i < filesToUpload.length; i++) {
+                const fileEntry = filesToUpload[i]; const file = fileEntry.file; const index = localDataFiles.indexOf(fileEntry);
+                uploadButton.textContent = `Uploading ${i + 1}/${filesToUpload.length} (${file.name})...`; console.log(`Reading: ${file.name}`);
+                try {
+                    const fileContentString = await readFileAsBinaryString(file); const devicePath = `DATA/${file.name}`; // Full path
+                    console.log(`Uploading ${file.name} (${fileContentString.length}b) to ${devicePath} (fs:true)...`);
+                    await connection.espruinoSendFile(devicePath, fileContentString, { fs: true, noACK: true, chunkSize: 1024 * 4,
+                        progress: (bytesSent, totalBytes) => { let percent = totalBytes > 0 ? Math.round((bytesSent / totalBytes) * 100) : 0; uploadButton.textContent = `Uploading ${i + 1}/${filesToUpload.length} (${file.name} ${percent}%)...`; }
+                    });
+                    console.log(`Upload finished: ${file.name}`); successCount++;
+                    fileEntry.selected = false; const checkbox = document.getElementById(`localFile_${index}`); if (checkbox) checkbox.checked = false;
+                } catch (error) {
+                    console.error(`Error ${file.name}:`, error); errorCount++;
+                    let errorMsg = error.message || error; if (errorMsg.includes("Unable to find")) errorMsg += " - Is DATA dir missing?"; alert(`Error ${file.name}: ${errorMsg}`);
+                } finally { uploadButton.textContent = `Uploading ${i + 1}/${filesToUpload.length}...`; }
+            }
+            uploadButton.textContent = originalButtonText; const hasSelectedFiles = localDataFiles.some(f => f.selected); uploadButton.disabled = !(UART.isConnected() && hasSelectedFiles);
+            alert(`Local upload: ${successCount} sent, ${errorCount} failed.`); console.log("Rescanning..."); scanDataDirectory();
+         }
+
+        // --- Upload Items Function ---
+        function sendJSONviaUSB() {
+            // ... (no changes needed here) ...
+            if (!UART.isConnected()) { alert("Please connect."); return; }
+            const uploadBtn = document.getElementById('btnUploadUSB'); uploadBtn.disabled = true; uploadBtn.textContent = "Uploading Items..."; console.log("Cleaning old items...");
+            const cleanupCode = `var fs=require('fs'),f=fs.readdirSync('DATA');f.forEach(function(n){if(n.startsWith('items_')&&n.endsWith('.json'))try{fs.unlink('DATA/'+n)}catch(e){}});if(f.includes('items_meta.json'))try{fs.unlink('DATA/items_meta.json')}catch(e){}print('CLEANUP_DONE');\n`;
+            let cleanupConfirmed = false; function onDataCleanup(data) { if (data.includes('CLEANUP_DONE') && !cleanupConfirmed) { cleanupConfirmed = true; console.log("Cleanup confirm. Uploading items..."); UART.getConnection()?.removeListener('data', onDataCleanup); sendNewItemFiles(); } }
+            UART.getConnection()?.on('data', onDataCleanup); UART.write(cleanupCode)
+                .then(() => { console.log("Cleanup sent. Wait..."); setTimeout(() => { if (!cleanupConfirmed) { console.warn("Timeout CLEANUP_DONE. Proceeding."); UART.getConnection()?.removeListener('data', onDataCleanup); sendNewItemFiles(); } }, 3000); })
+                .catch((err) => { console.error("Cleanup err:", err); alert("Cleanup err. Abort."); UART.getConnection()?.removeListener('data', onDataCleanup); uploadBtn.disabled = !(UART.isConnected() && items.length > 0); uploadBtn.textContent = "Upload Items to Device"; });
+        }
+		
+        async function sendNewItemFiles() {
+            const uploadBtn = document.getElementById('btnUploadUSB');
+            if (uploadBtn.textContent !== "Uploading Items...") return;
+            console.log("Generating/sending item files...");
+
+            const connection = UART.getConnection();
+            if (!connection) {
+                alert("Connection lost! Please reconnect.");
+                uploadBtn.disabled = !(UART.isConnected() && items.length > 0);
+                uploadBtn.textContent = "Upload Items to Device";
                 return;
             }
 
-            const loadBtn = document.getElementById('btnLoadFromDevice');
-            loadBtn.disabled = true;
-            loadBtn.textContent = "Loading from Device...";
-            console.log("Attempting to load items from device using items_meta.json...");
+            // 1. Generate all file data
+            const filesToSend = [];
+            const CHUNK_SIZE = 9;
+            const pageCounts = [];
+            for (let i = 0; i < items.length; i += CHUNK_SIZE) {
+                const pageIndex = Math.floor(i / CHUNK_SIZE);
+                const chunk = items.slice(i, i + CHUNK_SIZE);
+                pageCounts.push(chunk.length);
+                filesToSend.push({ name: `DATA/items_${pageIndex}.json`, content: JSON.stringify(chunk, null, 2) });
+            }
+            const meta = { totalItems: items.length, pageCounts: pageCounts };
+            filesToSend.push({ name: 'DATA/items_meta.json', content: JSON.stringify(meta, null, 2) });
 
-            let allItems = [];
-            const dataDir = 'DATA/';
-            const metaFileName = dataDir + 'items_meta.json';
-            let metaData;
+            console.log(`Sending ${filesToSend.length} item files.`);
+            const originalButtonText = "Upload Items to Device";
 
-            // --- Helper to send command and wait for specific response ---
-            function sendCommandAndWait(command, endMarker, timeout = 7000) {
-                return new Promise((resolve, reject) => {
-                    let currentCommandResponse = "";
-                    let dataListenerTimeout;
+            // 2. Ensure DATA directory exists
+            try {
+                await UART.write(`try{require('fs').mkdirSync('DATA');}catch(e){}\n`);
+                console.log("Ensured DATA dir exists (or ignored error).");
+            } catch (mkdirError) {
+                console.error("Error ensuring DATA dir:", mkdirError);
+                alert("Error preparing device storage. Aborting.");
+                uploadBtn.textContent = originalButtonText;
+                uploadBtn.disabled = !(UART.isConnected() && items.length > 0);
+                return;
+            }
 
-                    function onDataRead(data) {
-                        currentCommandResponse += data;
-                        // console.log("Raw Read chunk: " + data); // Verbose log if needed
+            // 3. Loop and upload files with progress
+            try {
+                for (let i = 0; i < filesToSend.length; i++) {
+                    const file = filesToSend[i];
+                    const devicePath = file.name;
+                    const fileContentString = file.content;
+                    const shortName = devicePath.replace('DATA/', ''); // For display
 
-                        const markerIndex = currentCommandResponse.indexOf(endMarker);
-                        if (markerIndex !== -1) {
-                            if (dataListenerTimeout) clearTimeout(dataListenerTimeout);
-                            UART.getConnection()?.removeListener('data', onDataRead);
+                    console.log(`Uploading ${devicePath} (${fileContentString.length}b) to ${devicePath} (fs:true)...`);
 
-                            let relevantResponse = currentCommandResponse.substring(0, markerIndex);
+                    // Use espruinoSendFile with progress callback
+                    await connection.espruinoSendFile(devicePath, fileContentString, {
+                        fs: true,
+                        noACK: true,
+                        chunkSize: 1024 * 4,
+                        progress: (bytesSent, totalBytes) => {
+                            let percent = totalBytes > 0 ? Math.round((bytesSent / totalBytes) * 100) : 0;
+                            // This is the new progress counter
+                            uploadBtn.textContent = `Uploading ${i + 1}/${filesToSend.length} (${shortName} ${percent}%)...`;
+                        }
+                    });
+                    console.log(`Upload finished: ${devicePath}`);
+                }
 
-                            // **FIXED**: More robust cleaning for echo and prompts
-                            const lines = relevantResponse.split(/[\r\n]+/); // Split by newline characters
-                            let jsonStartIndex = -1;
+                // 4. Success: Reset button and reboot
+                console.log("All items sent!");
+                uploadBtn.textContent = originalButtonText;
+                uploadBtn.disabled = !(UART.isConnected() && items.length > 0);
+                console.log("Rebooting...");
+                UART.write("E.reboot()\n").catch(err => console.error("Reboot err:", err));
 
-                            // Find the first line that looks like the start of JSON ({ or [)
-                            for(let i = 0; i < lines.length; i++) {
-                                const trimmedLine = lines[i].trim();
-                                if (trimmedLine.startsWith('{') || trimmedLine.startsWith('[')) {
-                                     // Assume JSON starts here, join this and subsequent lines
-                                     jsonStartIndex = i;
-                                     break;
+            } catch (error) {
+                // 5. Failure: Alert user and reset button
+                console.error(`Error during upload:`, error);
+                alert(`Error uploading file: ${error.message || error}. Aborting.`);
+                uploadBtn.textContent = originalButtonText;
+                uploadBtn.disabled = !(UART.isConnected() && items.length > 0);
+            }
+        }
+
+        // --- Load items from Device function ---
+        async function loadItemsFromDevice() {
+            // ... (no changes needed here) ...
+             if (!UART.isConnected()) { alert("Please connect first."); return; }
+            const loadBtn = document.getElementById('btnLoadFromDevice'); loadBtn.disabled = true; loadBtn.textContent = "Loading Items..."; console.log("Loading items..."); let allItems = []; const dataDir = 'DATA/'; const metaFileName = dataDir + 'items_meta.json'; let metaData;
+            async function sendCommandGetJson(filePath, marker, timeout = 7000) { try { const content = await UART.getConnection().espruinoEval(`require('fs').readFileSync(${JSON.stringify(filePath)})`); if (content === undefined) return "READ_ERROR_NO_FILE"; if (content === "") return []; if (typeof content === 'object' && content !== null) return content; if (typeof content === 'string') { try { return JSON.parse(content); } catch (parseError) { console.error(`Manual parse err ${filePath}:`, content, parseError); return "PARSE_ERROR"; } } console.error(`Unexpected type ${filePath}:`, typeof content, content); return "READ_ERROR"; } catch (e) { console.error(`espruinoEval err ${filePath}:`, e); if (e.message && (e.message.includes("Unable to find file") || e.message.includes("ENOENT"))) return "READ_ERROR_NO_FILE"; throw e; } }
+            try { metaData = await sendCommandGetJson(metaFileName, "__META_END__"); if (metaData === "READ_ERROR_NO_FILE") throw new Error(`Meta file (${metaFileName}) not found.`); if (metaData === "READ_ERROR" || metaData === "PARSE_ERROR") throw new Error(`Read/parse err meta file (${metaFileName}).`); if (typeof metaData !== 'object' || !Array.isArray(metaData.pageCounts)) throw new Error("Invalid meta format."); const numPages = metaData.pageCounts.length; console.log(`${numPages} page(s)`); if (numPages > 0) { for (let i = 0; i < numPages; i++) { const itemFileName = `${dataDir}items_${i}.json`; try { const pageItems = await sendCommandGetJson(itemFileName, `__ITEMS_${i}_END__`); if (pageItems === "READ_ERROR_NO_FILE") { console.warn(`${itemFileName} not found.`); continue; } if (pageItems === "READ_ERROR" || pageItems === "PARSE_ERROR") { console.warn(`Read/parse err ${itemFileName}.`); continue; } if (Array.isArray(pageItems)) allItems.push(...pageItems); else console.warn(`${itemFileName} not valid array.`); } catch (error) { throw new Error(`Comm err ${itemFileName}: ${error.message || error}`); } } } console.log(`Loaded: ${allItems.length}`); items = allItems; currentIndex = -1; renderItemList(); if (items.length > 0) selectItem(0); else { document.getElementById('editor').innerHTML = `<div class="empty-state"><h2>No items loaded</h2></div>`; renderPipboyPreview(); } const hasItems = items.length > 0; document.getElementById('exportBtnHeader').disabled = !hasItems; document.getElementById('btnUploadUSB').disabled = !(UART.isConnected() && hasItems); } catch (error) { console.error("Load err:", error); alert("Load err: " + error.message); items = []; currentIndex = -1; renderItemList(); document.getElementById('editor').innerHTML = `<div class="empty-state"><h2>Load Failed</h2><p>${error.message}</p></div>`; renderPipboyPreview(); document.getElementById('exportBtnHeader').disabled = true; document.getElementById('btnUploadUSB').disabled = true; } finally { loadBtn.disabled = !UART.isConnected(); loadBtn.textContent = "Load Items from Device"; }
+        }
+
+
+        // --- Item Rendering, Manipulation, Export Functions ---
+
+        // --- MODIFIED: initializePresets ---
+        function initializePresets() {
+            // Clear previous arrays
+            apparelPresetItems = [];
+            weaponPresetItems = [];
+            consumablePresetItems = [];
+            presetItems = {}; // Clear combined lookup too
+
+            // Process apparel
+            if (typeof apparelPresets !== 'undefined') {
+                apparelPresets.forEach(item => {
+                    const key = item.type + "_" + item.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+                    presetItems[key] = item;
+                    apparelPresetItems.push({ key: key, name: item.name });
+                });
+                apparelPresetItems.sort((a, b) => a.name.localeCompare(b.name)); // Sort alphabetically
+            }
+
+            // Process weapons
+            if (typeof weaponPresets !== 'undefined') {
+                weaponPresets.forEach(item => {
+                    const key = item.type + "_" + item.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+                    presetItems[key] = item;
+                    weaponPresetItems.push({ key: key, name: item.name });
+                });
+                weaponPresetItems.sort((a, b) => a.name.localeCompare(b.name)); // Sort alphabetically
+            }
+
+            // Process consumables
+            if (typeof consumablePresets !== 'undefined') {
+                consumablePresets.forEach(item => {
+                    const key = item.type + "_" + item.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+                    presetItems[key] = item;
+                    consumablePresetItems.push({ key: key, name: item.name });
+                });
+                consumablePresets.sort((a, b) => a.name.localeCompare(b.name)); // Sort alphabetically
+            }
+             console.log("Presets initialized and categorized.");
+        }
+        // --- END MODIFICATION ---
+
+        // --- REMOVED renderPresetDropdown ---
+
+        // --- NEW: renderPresetLists ---
+        function renderPresetLists(searchTerm = '') {
+            const searchTermLower = searchTerm.toLowerCase();
+
+            const lists = {
+                apparel: apparelPresetItems,
+                weapons: weaponPresetItems,
+                consumables: consumablePresetItems
+            };
+
+            for (const type in lists) {
+                const listData = lists[type];
+                const listElementId = `presetList${type.charAt(0).toUpperCase() + type.slice(1)}`; // e.g., presetListApparel
+                const listElement = document.getElementById(listElementId);
+
+                if (!listElement) {
+                     console.error("Preset list element not found:", listElementId);
+                     continue;
+                 }
+
+                listElement.innerHTML = ''; // Clear current list
+
+                const filteredPresets = listData.filter(preset =>
+                    preset.name.toLowerCase().includes(searchTermLower)
+                );
+
+                if (filteredPresets.length > 0) {
+                    filteredPresets.forEach(preset => {
+                        const li = document.createElement('li');
+                        li.textContent = preset.name;
+                        li.setAttribute('data-preset-key', preset.key); // Store key for adding
+                        li.onclick = () => addPresetItem(preset.key); // Add item on click
+                        listElement.appendChild(li);
+                    });
+                } else {
+                    listElement.innerHTML = `<li class="status-message">No presets found${searchTerm ? ' matching "' + searchTerm + '"' : ''}.</li>`;
+                }
+            }
+        }
+        // --- END NEW ---
+
+
+        // --- Helper Function (can remain minified) ---
+        function readFileAsText(a){return new Promise((b,c)=>{const d=new FileReader;d.onload=()=>b(d.result),d.onerror=()=>c(d.error),d.readAsText(a)})}
+        async function loadItemsFromFiles(a){const b=a.target.files;if(!b.length)return;let c=[];for(const d of b)try{const e=await readFileAsText(d),f=JSON.parse(e);Array.isArray(f)?c.push(...f):alert(`Warning: File ${d.name} is not valid.`)}catch(d){console.error(`Error loading file ${d.name}:`,d),alert(`Could not load file: ${d.name}.`)}items=c,currentIndex=-1,renderItemList(),items.length>0?selectItem(0):(document.getElementById("editor").innerHTML='<div class="empty-state"><h2>No item selected</h2></div>',renderPipboyPreview());const d=items.length>0;document.getElementById("exportBtnHeader").disabled=!d,document.getElementById("btnUploadUSB").disabled=!(UART.isConnected()&&d),a.target.value=""}
+
+        // --- Item List & Editor Rendering/Manipulation (can remain minified) ---
+        function renderItemList(){const a=document.getElementById("itemList");a.innerHTML="";items.forEach((b,c)=>{const d=document.createElement("li");d.className=c===currentIndex?"active":"";const e=0===c,f=c===items.length-1;d.innerHTML=`<div class="item-name-wrapper"><span class="item-name">${b.name||"Unnamed"}</span></div> ${b.type?`<span class="item-type">${b.type}</span>`:""} <div class="reorder-arrows"><button ${e?"disabled":""} onclick="moveItemUp(${c},event)">▲</button><button ${f?"disabled":""} onclick="moveItemDown(${c},event)">▼</button></div> <button class="delete-btn" onclick="deleteItem(${c},event)">×</button>`,d.onclick=a=>{a.target.closest("button,.reorder-arrows")||selectItem(c)},a.appendChild(d)})}
+        function renderPipboyPreview(){const a=items[currentIndex],b=document.getElementById("preview-name"),c=document.getElementById("preview-qty"),d=document.getElementById("preview-stats-list");if(!a)return b.textContent="ITEM NAME",c.textContent="0",void(d.innerHTML="");b.textContent=(a.name||"NO NAME").toUpperCase(),c.textContent=a.quantity||0,d.innerHTML="";const e=(a,b)=>{const c=document.createElement("div");c.className="stat-row",c.innerHTML=`<span class="stat-name">${a.toUpperCase()}</span><span class="stat-value bright-bg" style="padding:0 4px">${b}</span>`,d.appendChild(c)};a.damages?.forEach(a=>e(a.type||"?",a.value||"?")),a.defenses?.forEach(a=>e(a.type||"?",a.value||"?")),a.stats&&Object.entries(a.stats).forEach(([b,c])=>{const e=document.createElement("div"),f="object"==typeof c&&null!==c,g=f?c.value:c,h=f&&c.isTimed,i=b===a.ammoType?"bright-bg":"dithered-bg";e.className=`stat-row ${i}`;const j=h?"(T) ":"";e.innerHTML=`<span class="stat-name">${b.toUpperCase()}</span><span class="stat-value">${j}${g}</span>`,d.appendChild(e)})}
+        function selectItem(a){currentIndex=a,renderItemList(),renderEditor(),renderPipboyPreview()}
+        function updateItem(a,b){currentIndex<0||(items[currentIndex][a]=b,("name"===a||"quantity"===a||"type"===a)&&renderItemList(),"type"===a&&renderEditor(),renderPipboyPreview())}
+        function moveItem(a,b){if(!(a<0||a>=items.length||b<0||b>=items.length)){const[c]=items.splice(a,1);items.splice(b,0,c),selectItem(b)}}
+        function moveItemUp(a,b){b.stopPropagation(),moveItem(a,a-1)}
+        function moveItemDown(a,b){b.stopPropagation(),moveItem(a,a+1)}
+        function moveStat(a,b){if(!(currentIndex<0||!items[currentIndex].stats)){const c=items[currentIndex].stats,d=Object.entries(c),e=d.findIndex(b=>b[0]===a),f=e+b;e<0||f<0||f>=d.length||([d[e],d[f]]=[d[f],d[e]],items[currentIndex].stats=Object.fromEntries(d),renderStats(),renderPipboyPreview())}}
+        function moveStatUp(a){moveStat(a,-1)}
+        function moveStatDown(a){moveStat(a,1)}
+        function addDamage(){currentIndex<0||"weapon"!==items[currentIndex].type||(items[currentIndex].damages||(items[currentIndex].damages=[]),items[currentIndex].damages.push({type:"attack",value:"10"}),renderDamages(),renderPipboyPreview())}
+        function removeDamage(a){currentIndex<0||!items[currentIndex].damages||(items[currentIndex].damages.splice(a,1),0===items[currentIndex].damages.length&&delete items[currentIndex].damages,renderDamages(),renderPipboyPreview())}
+        function addDefense(){currentIndex<0||"apparel"!==items[currentIndex].type||(items[currentIndex].defenses||(items[currentIndex].defenses=[]),items[currentIndex].defenses.push({type:"defense",value:"10"}),renderDefenses(),renderPipboyPreview())}
+        function removeDefense(a){currentIndex<0||!items[currentIndex].defenses||(items[currentIndex].defenses.splice(a,1),0===items[currentIndex].defenses.length&&delete items[currentIndex].defenses,renderDefenses(),renderPipboyPreview())}
+        function addStat(){if(!(currentIndex<0)){items[currentIndex].stats||(items[currentIndex].stats={});let a="NewStat",b=1;for(;items[currentIndex].stats.hasOwnProperty(a);)a=`NewStat${b++}`;items[currentIndex].stats[a]="0",renderStats(),renderPipboyPreview()}}
+        function removeStat(a){currentIndex<0||!items[currentIndex].stats||(delete items[currentIndex].stats[a],renderStats(),renderPipboyPreview())}
+        function updateStatKey(a,b){if(!(currentIndex<0||!items[currentIndex].stats||a===b||!b))if(items[currentIndex].stats.hasOwnProperty(b))alert(`Stat key "${b}" exists!`),renderStats();else{const c=items[currentIndex].stats,d={};for(const e in c)e===a?d[b]=c[e]:d[e]=c[e];items[currentIndex].stats=d,renderStats(),renderPipboyPreview()}}
+        function updateStatValue(key, value){if(!(currentIndex<0||!items[currentIndex].stats)){const stat=items[currentIndex].stats[key];"object"==typeof stat&&null!==stat&&stat.hasOwnProperty("isTimed")?stat.value=value:items[currentIndex].stats[key]=value,renderPipboyPreview()}}
+        function toggleStatIsTimed(key, isChecked){if(!(currentIndex<0||!items[currentIndex].stats)){const currentItem=items[currentIndex];if("consumable"!==currentItem.type)return;const currentStat=currentItem.stats[key],currentValue="object"==typeof currentStat&&null!==currentStat?currentStat.value:currentStat;isChecked?currentItem.stats[key]={value:currentValue||"0",isTimed:!0}:currentItem.stats[key]=currentValue,renderStats(),renderPipboyPreview()}}
+        function updateDamage(index, field, value){currentIndex<0||!items[currentIndex].damages||!items[currentIndex].damages[index]||(items[currentIndex].damages[index][field]=value,renderPipboyPreview())}
+        function updateDefense(index, field, value){currentIndex<0||!items[currentIndex].defenses||!items[currentIndex].defenses[index]||(items[currentIndex].defenses[index][field]=value,renderPipboyPreview())}
+        function addBaseItem(type){const CappedType=type.charAt(0).toUpperCase()+type.slice(1);let baseItem={name:`New ${CappedType}`,type:type,quantity:1,effect:"",stats:{Weight:"1.0",Value:"10"}};switch(type){case"weapon":baseItem.damages=[{type:"attack",value:"5"}],baseItem.ammoType="None",baseItem.stats["Fire Rate"]="10",baseItem.stats.Range="50";break;case"apparel":baseItem.defenses=[{type:"defense",value:"5"}],baseItem.equipSlots=[];break;case"consumable":baseItem.stats.Health="10"}items.push(baseItem),selectItem(items.length-1),document.getElementById("exportBtnHeader").disabled=!1,UART.isConnected()&&(document.getElementById("btnUploadUSB").disabled=!1)}
+        function addPresetItem(presetKey){if(presetKey&&presetItems[presetKey]){const preset=presetItems[presetKey],newItem=JSON.parse(JSON.stringify(preset));items.push(newItem),selectItem(items.length-1),document.getElementById("exportBtnHeader").disabled=!1,UART.isConnected()&&(document.getElementById("btnUploadUSB").disabled=!1)}}
+        function deleteItem(index, event){if(event.stopPropagation(),!(index<0||index>=items.length||!confirm(`Delete "${items[index].name}"?`))){items.splice(index,1);let newIndex=-1;items.length>0&&(newIndex=index>=items.length?items.length-1:currentIndex===index?Math.max(0,index-1):index<currentIndex?currentIndex-1:currentIndex),renderItemList(),newIndex>-1?selectItem(newIndex):(currentIndex=-1,document.getElementById("editor").innerHTML='<div class="empty-state"><h2>No item selected</h2></div>',renderPipboyPreview());const hasItems=items.length>0;document.getElementById("exportBtnHeader").disabled=!hasItems,document.getElementById("btnUploadUSB").disabled=!(UART.isConnected()&&hasItems)}}
+        function addSound(sound){!sound||currentIndex<0||(items[currentIndex].sounds||(items[currentIndex].sounds=[]),items[currentIndex].sounds.includes(sound)||(items[currentIndex].sounds.push(sound),renderSounds()))}
+        function removeSound(index){currentIndex<0||!items[currentIndex].sounds||index<0||index>=items[currentIndex].sounds.length||(items[currentIndex].sounds.splice(index,1),0===items[currentIndex].sounds.length&&delete items[currentIndex].sounds,renderSounds())}
+        function addApparelEquipSlot(slot){!slot||currentIndex<0||"apparel"!==items[currentIndex].type||(items[currentIndex].equipSlots||(items[currentIndex].equipSlots=[]),items[currentIndex].equipSlots.includes(slot)||(items[currentIndex].equipSlots.push(slot),renderApparelEquipSlots()))}
+        function removeApparelEquipSlot(index){currentIndex<0||!items[currentIndex].equipSlots||index<0||index>=items[currentIndex].equipSlots.length||(items[currentIndex].equipSlots.splice(index,1),0===items[currentIndex].equipSlots.length&&delete items[currentIndex].equipSlots,renderApparelEquipSlots())}
+        function renderEditor(){if(currentIndex<0)return void(document.getElementById("editor").innerHTML='<div class="empty-state"><h2>No item selected</h2><p>Connect device to select sounds/images.</p></div>');const item=items[currentIndex];let html='<div class="section-header">Edit Item</div>';const currentSounds=deviceSounds,currentImages=deviceImages,soundSourceLabel=UART.isConnected()?"Sounds (from Device)":"Sounds (Connect Device)",imageSourceLabel=UART.isConnected()?"Image File (from Device)":"Image File (Connect Device)";html+=`<div class="form-row"><div class="form-group"><label>Type</label><select onchange="updateItem('type',this.value)"><option value="" ${item.type?"":"selected"}>None</option><option value="weapon" ${"weapon"===item.type?"selected":""}>Weapon</option><option value="apparel" ${"apparel"===item.type?"selected":""}>Apparel</option><option value="consumable" ${"consumable"===item.type?"selected":""}>Consumable</option></select></div><div class="form-group"><label>Name</label><input type="text" value="${item.name||""}" oninput="updateItem('name',this.value)"></div></div> <div class="form-row"><div class="form-group"><label>Quantity</label><input type="number" value="${item.quantity||1}" min="0" step="1" oninput="updateItem('quantity',parseInt(this.value)||0)"></div><div class="form-group"><label>${soundSourceLabel}</label><select onchange="addSound(this.value);this.value='';"><option value="">Select sound...</option>${currentSounds.map(s=>`<option value="${s}">${s}</option>`).join("")}</select><div class="sound-list" id="soundList"></div></div></div> <div class="form-group"><label>${imageSourceLabel}</label><select onchange="updateItem('image',this.value)"><option value="">None</option>${currentImages.map(img=>`<option value="${img}" ${item.image===img?"selected":""}>${img}</option>`).join("")}</select></div>`,"weapon"===item.type&&(html+=`<div class="form-group"><label>Ammo Type</label><input type="text" value="${item.ammoType||"None"}" oninput="updateItem('ammoType',this.value||null)" placeholder="e.g., Fusion Cell"></div><div class="form-group"><label>Damages</label><div class="damages-container" id="damagesContainer"></div><button class="add-stat-btn" onclick="addDamage()">+ Damage</button></div>`),"apparel"===item.type&&(html+=`<div class="form-group"><label>Equip Slots</label><select onchange="addApparelEquipSlot(this.value);this.value='';"><option value="">Add slot...</option>${apparelEquipSlots.map(slot=>`<option value="${slot}">${slot}</option>`).join("")}</select><div class="equip-slot-list" id="equipSlotList"></div></div><div class="form-group"><label>Defenses</label><div class="defenses-container" id="defensesContainer"></div><button class="add-stat-btn" onclick="addDefense()">+ Defense</button></div>`),html+=`<div class="form-group" style="margin-top:15px"><label>Stats</label><div class="stats-container" id="statsContainer"></div><button class="add-stat-btn" onclick="addStat()">+ Stat</button></div><div class="form-group"><label>Effect Desc</label><textarea oninput="updateItem('effect',this.value)">${item.effect||""}</textarea></div>`,document.getElementById("editor").innerHTML=html,renderDamages(),renderDefenses(),renderSounds(),renderApparelEquipSlots(),renderStats()}
+        function renderDamages(){const container=document.getElementById("damagesContainer");container&&(container.innerHTML="",!(currentIndex<0||!items[currentIndex].damages))&&items[currentIndex].damages.forEach((damage,index)=>{const div=document.createElement("div");div.className="damage-item",div.innerHTML=`<div><label>Type</label><select onchange="updateDamage(${index},'type',this.value)">${damageTypes.map(t=>`<option value="${t}" ${damage.type===t?"selected":""}>${t}</option>`).join("")}</select></div><div><label>Value</label><input type="text" value="${damage.value||""}" oninput="updateDamage(${index},'value',this.value)"></div><button class="remove-stat-btn" onclick="removeDamage(${index})">X</button>`,container.appendChild(div)})}
+        function renderDefenses(){const container=document.getElementById("defensesContainer");container&&(container.innerHTML="",!(currentIndex<0||!items[currentIndex].defenses))&&items[currentIndex].defenses.forEach((defense,index)=>{const div=document.createElement("div");div.className="defense-item",div.innerHTML=`<div><label>Type</label><select onchange="updateDefense(${index},'type',this.value)">${defenseTypes.map(t=>`<option value="${t}" ${defense.type===t?"selected":""}>${t}</option>`).join("")}</select></div><div><label>Value</label><input type="text" value="${defense.value||""}" oninput="updateDefense(${index},'value',this.value)"></div><button class="remove-stat-btn" onclick="removeDefense(${index})">X</button>`,container.appendChild(div)})}
+        function renderSounds(){const container=document.getElementById("soundList");container&&(container.innerHTML="",!(currentIndex<0||!items[currentIndex].sounds))&&items[currentIndex].sounds.forEach((sound,index)=>{const tag=document.createElement("div");tag.className="sound-tag",tag.innerHTML=`${sound} <button onclick="removeSound(${index})">×</button>`,container.appendChild(tag)})}
+        function renderApparelEquipSlots(){const container=document.getElementById("equipSlotList");container&&(container.innerHTML="",!(currentIndex<0||!items[currentIndex].equipSlots))&&items[currentIndex].equipSlots.forEach((slot,index)=>{const tag=document.createElement("div");tag.className="equip-slot-tag",tag.innerHTML=`${slot} <button onclick="removeApparelEquipSlot(${index})">×</button>`,container.appendChild(tag)})}
+        function renderStats(){const container=document.getElementById("statsContainer");if(container&&(container.innerHTML="",!(currentIndex<0||!items[currentIndex].stats))){const item=items[currentIndex],statsArray=Object.entries(item.stats);statsArray.forEach(([key,statData],index)=>{const isObject="object"==typeof statData&&null!==statData&&statData.hasOwnProperty("isTimed"),value=isObject?statData.value:statData,isTimed=isObject&&statData.isTimed,isFirst=0===index,isLast=index===statsArray.length-1,div=document.createElement("div");let timedCheckboxHtml="";"consumable"===item.type?(div.className="stat-item consumable-stat",timedCheckboxHtml=`<div class="checkbox-group"><input type="checkbox" id="timed_${key}" ${isTimed?"checked":""} onchange="toggleStatIsTimed('${key}',this.checked)"><label for="timed_${key}">Timed</label></div>`):div.className="stat-item",div.innerHTML=`<div><label>Name</label><input type="text" value="${key}" onchange="updateStatKey('${key}',this.value)"></div><div><label>Value</label><input type="text" value="${value||""}" oninput="updateStatValue('${key}',this.value)"></div>${timedCheckboxHtml}<div class="reorder-arrows"><button ${isFirst?"disabled":""} onclick="moveStatUp('${key}')">▲</button><button ${isLast?"disabled":""} onclick="moveStatDown('${key}')">▼</button></div><button class="remove-stat-btn" onclick="removeStat('${key}')">X</button>`,container.appendChild(div)})}}
+        function exportJSON(){if(0===items.length)return void alert("No items!");const a=new JSZip,b=9,c=[];for(let d=0;d<items.length;d+=b){const e=Math.floor(d/b),f=items.slice(d,d+b);c.push(f.length),a.file(`items_${e}.json`,JSON.stringify(f,null,2),{date:new Date,compression:"DEFLATE"})}const d={totalItems:items.length,pageCounts:c};a.file("items_meta.json",JSON.stringify(d,null,2),{date:new Date,compression:"DEFLATE"}),a.generateAsync({type:"blob",compression:"DEFLATE",compressionOptions:{level:6}}).then(a=>{const b=URL.createObjectURL(a),c=document.createElement("a");c.href=b,c.download="items_export.zip",document.body.appendChild(c),c.click(),document.body.removeChild(c),URL.revokeObjectURL(b)}).catch(a=>{console.error("ZIP err:",a),alert("Error generating ZIP.")})}
+		
+		function togglePreview() {
+            const mainContent = document.querySelector('.main-content');
+            const toggleBtn = document.getElementById('togglePreviewBtn');
+            
+            if (mainContent.classList.toggle('preview-collapsed')) {
+                // Preview is now collapsed
+                toggleBtn.textContent = '«';
+            } else {
+                // Preview is now expanded
+                toggleBtn.textContent = '»';
+            }
+        }
+
+        // --- Initial setup ---
+        window.onload = () => {
+            if (typeof UART !== "undefined") { UART.ports = ["Web Serial"]; UART.baud = 115200; }
+             else { console.error("UART lib not loaded."); alert("Error: UART library missing."); }
+
+            initializePresets(); // Separate presets
+            renderPresetLists(); // Render the new lists
+            renderItemList();
+            renderPipboyPreview();
+            openTab('items'); // Default main tab
+            openPresetTab('apparel', null); // Default preset tab
+            openDataSubTab('community', null); // Default data sub-tab
+            fetchGitHubDataFiles();
+
+            // Add listener to search bar
+            document.getElementById('presetSearch').addEventListener('input', (event) => {
+                renderPresetLists(event.target.value);
+            });
+
+            // Initialize button states
+            const hasItems = items.length > 0;
+            document.getElementById('exportBtnHeader').disabled = !hasItems;
+            document.getElementById('btnUploadUSB').disabled = true;
+            document.getElementById('btnLoadFromDevice').disabled = true;
+            document.getElementById('btnScanDataDir').disabled = true;
+            document.getElementById('btnUploadSelectedDataFiles').disabled = true;
+            document.getElementById('btnUploadSelectedCommunityFiles').disabled = true;
+
+            // Button references
+            let connectButton = document.getElementById("btnConnectUSB");
+            let uploadItemsButton = document.getElementById("btnUploadUSB");
+            let loadFromDeviceButton = document.getElementById("btnLoadFromDevice");
+            let scanDataButton = document.getElementById("btnScanDataDir");
+            let uploadLocalDataButton = document.getElementById("btnUploadSelectedDataFiles");
+            let uploadCommunityDataButton = document.getElementById("btnUploadSelectedCommunityFiles");
+
+            let currentConnection = null;
+
+            if (connectButton) {
+                connectButton.addEventListener("click", function() {
+                    if (typeof UART === "undefined") { alert("Error: UART library missing."); return; }
+                    if (UART.isConnected()) { UART.close(); return; }
+
+                    connectButton.textContent = "Connecting..."; connectButton.disabled = true;
+                    [uploadItemsButton, loadFromDeviceButton, scanDataButton, uploadLocalDataButton, uploadCommunityDataButton].forEach(btn => btn && (btn.disabled = true));
+
+                    UART.connectAsync()
+                        .then(connectionInstance => {
+                            if (!connectionInstance) {
+                                console.log("Connection failed/cancelled."); connectButton.textContent = "Connect"; connectButton.disabled = false;
+                                return;
+                            }
+                            currentConnection = connectionInstance; console.log("Connected!");
+                            connectButton.textContent = "Disconnect"; connectButton.disabled = false;
+
+                            scanDataDirectory().then(() => {
+                                console.log("Automatic scan complete.");
+                                const isConnected = UART.isConnected();
+                                const hasItems = items.length > 0;
+                                const hasSelectedLocal = localDataFiles.some(f => f.selected);
+                                const hasSelectedCommunity = communityDataFiles.some(f => f.selected);
+
+                                if (uploadItemsButton) uploadItemsButton.disabled = !(isConnected && hasItems);
+                                if (loadFromDeviceButton) loadFromDeviceButton.disabled = !isConnected;
+                                if (scanDataButton) scanDataButton.disabled = !isConnected;
+                                const activeSubTab = document.querySelector('.data-sub-content.active');
+                                if (activeSubTab?.id === 'data-sub-content-local') {
+                                     if (uploadLocalDataButton) uploadLocalDataButton.disabled = !(isConnected && hasSelectedLocal);
+                                     if (uploadCommunityDataButton) uploadCommunityDataButton.disabled = true;
+                                } else if (activeSubTab?.id === 'data-sub-content-community') {
+                                     if (uploadCommunityDataButton) uploadCommunityDataButton.disabled = !(isConnected && hasSelectedCommunity);
+                                     if (uploadLocalDataButton) uploadLocalDataButton.disabled = true;
+                                } else {
+                                     if (uploadLocalDataButton) uploadLocalDataButton.disabled = true;
+                                     if (uploadCommunityDataButton) uploadCommunityDataButton.disabled = true;
                                 }
-                            }
 
-                            if (jsonStartIndex !== -1) {
-                                relevantResponse = lines.slice(jsonStartIndex).join('\n').trim();
-                            } else {
-                                // If no JSON start found, check for error markers among non-prompt lines
-                                const cleanLines = lines.filter(line => {
-                                    const trimmedLine = line.trim();
-                                    return !trimmedLine.startsWith('>') && trimmedLine !== '=undefined' && trimmedLine !== '';
-                                });
-                                relevantResponse = cleanLines.join('\n').trim(); // Join remaining lines
-                            }
+                            }).catch(scanError => {
+                                console.error("Error during auto scan:", scanError);
+                                connectButton.disabled = false;
+                                loadFromDeviceButton.disabled = true;
+                                scanDataButton.disabled = false;
+                            });
 
-                            console.log(`Cleaned response (before marker ${endMarker}): '${relevantResponse}'`);
 
-                            // Check for error markers *after* cleaning attempt
-                            if (relevantResponse === "READ_ERROR_NO_FILE" || relevantResponse === "READ_ERROR") {
-                               console.log(`Received error marker: ${relevantResponse}`);
-                               resolve(relevantResponse);
-                            } else if (relevantResponse === "undefined") {
-                                console.log(`Received 'undefined' after cleaning, treating as file not found.`);
-                                resolve("READ_ERROR_NO_FILE");
-                            } else if (!relevantResponse.startsWith('{') && !relevantResponse.startsWith('[')) {
-                                // If after cleaning it STILL doesn't look like JSON, treat as error or non-existent
-                                console.log(`Cleaned response doesn't look like JSON. Treating as file not found or error.`);
-                                resolve("READ_ERROR_NO_FILE"); // Or READ_ERROR depending on desired behavior
-                            }
-                            else {
-                               resolve(relevantResponse); // Assume valid content
-                            }
-                        }
-
-                        // Buffer management (increased size)
-                        if (currentCommandResponse.length > 200000) { // Allow larger buffer for potentially large files
-                            console.warn("Read buffer large, clearing partially.");
-                            currentCommandResponse = currentCommandResponse.slice(-1000); // Keep more of the end
-                        }
-                    }
-
-                    const connection = UART.getConnection();
-                    if (!connection) {
-                       if (dataListenerTimeout) clearTimeout(dataListenerTimeout);
-                       UART.getConnection()?.removeListener('data', onDataRead);
-                       return reject("Device disconnected during read operation.");
-                    }
-                    connection.removeListener('data', onDataRead); // Clear before adding
-                    connection.on('data', onDataRead);
-
-                    dataListenerTimeout = setTimeout(() => {
-                        UART.getConnection()?.removeListener('data', onDataRead);
-                        console.error(`Timeout waiting for response marker: ${endMarker}. Buffer (last 500): ${currentCommandResponse.slice(-500)}`);
-                        reject(`Timeout waiting for response marker: ${endMarker}`);
-                    }, timeout);
-
-                    // Simplified device-side logic using ternary operator
-                    const readCommand = `
-                        var c = require('fs').readFileSync(${JSON.stringify(command)});
-                        print(c===undefined?"READ_ERROR_NO_FILE":c, ${JSON.stringify(endMarker)});
-                    \n`;
-
-                    UART.write(readCommand)
-                        .then(() => console.log(`Sent command to read: ${command}`))
-                        .catch((err) => {
-                            if (dataListenerTimeout) clearTimeout(dataListenerTimeout);
-                            UART.getConnection()?.removeListener('data', onDataRead);
-                            reject(`Error sending read command for ${command}: ${err}`);
+                            currentConnection.on('close', () => { // Disconnect handler
+                                console.log("Disconnected."); connectButton.textContent = "Connect"; connectButton.disabled = false;
+                                [uploadItemsButton, loadFromDeviceButton, scanDataButton, uploadLocalDataButton, uploadCommunityDataButton].forEach(btn => btn && (btn.disabled = true));
+                                const deviceFileList = document.getElementById('dataFileList');
+                                if (deviceFileList) deviceFileList.innerHTML = '<li class="status-message">Device disconnected.</li>';
+                                deviceSounds = []; deviceImages = [];
+                                if (currentIndex > -1) renderEditor();
+                                currentConnection = null;
+                            });
+                        })
+                        .catch(error => { // Connection error handler
+                            console.log("Connection failed:", error); alert("Connection failed: " + error);
+                            connectButton.textContent = "Connect"; connectButton.disabled = false;
+                            [uploadItemsButton, loadFromDeviceButton, scanDataButton, uploadLocalDataButton, uploadCommunityDataButton].forEach(btn => btn && (btn.disabled = true));
+                            currentConnection = null;
                         });
                 });
             }
-
-
-            // --- Main Logic ---
-            try {
-                // 1. Read Meta File
-                console.log("Reading meta file:", metaFileName);
-                const metaEndMarker = "__META_END__";
-                const metaFileContent = await sendCommandAndWait(metaFileName, metaEndMarker);
-
-                if (metaFileContent === "READ_ERROR_NO_FILE") {
-                    throw new Error(`Meta file (${metaFileName}) not found on the device. Cannot load items.`);
-                }
-                if (metaFileContent === "READ_ERROR") {
-                     throw new Error(`Error reading meta file (${metaFileName}) on the device.`);
-                }
-
-                // 2. Parse Meta File
-                try {
-                    metaData = JSON.parse(metaFileContent);
-                    console.log("Parsed Meta Data:", metaData);
-                    if (!metaData || !Array.isArray(metaData.pageCounts)) {
-                        throw new Error("Invalid meta file format. Missing 'pageCounts' array.");
-                    }
-                } catch (e) {
-                    console.error("Error parsing meta file content:", metaFileContent);
-                    // Throw a more specific error including the problematic content
-                    throw new Error(`Failed to parse ${metaFileName} from device. Content received after cleaning: '${metaFileContent}'. Error: ${e.message}`);
-                }
-
-                // 3. Read Item Files Based on Meta Data
-                const numPages = metaData.pageCounts.length;
-                console.log(`Meta file indicates ${numPages} item page(s) to read.`);
-
-                if (numPages === 0) {
-                    console.log("Meta file indicates 0 pages. No item files to load.");
-                } else {
-                    for (let i = 0; i < numPages; i++) {
-                        const itemFileName = `${dataDir}items_${i}.json`;
-                        const endMarker = `__ITEMS_${i}_END__`;
-                        console.log(`Attempting to read item file: ${itemFileName}`);
-
-                        try {
-                            const itemFileContent = await sendCommandAndWait(itemFileName, endMarker);
-
-                            if (itemFileContent === "READ_ERROR_NO_FILE") {
-                                console.warn(`Meta file listed ${itemFileName}, but it was not found on device. Skipping.`);
-                                continue;
-                            }
-                            if (itemFileContent === "READ_ERROR") {
-                                console.warn(`Error reading ${itemFileName} (though listed in meta). Skipping.`);
-                                continue;
-                            }
-
-                            // Try parsing the content
-                            try {
-                                if (itemFileContent === "") {
-                                    console.log(`File ${itemFileName} is empty. Skipping parse.`);
-                                } else {
-                                    const pageItems = JSON.parse(itemFileContent);
-                                    if (Array.isArray(pageItems)) {
-                                        allItems.push(...pageItems);
-                                        console.log(`Successfully parsed ${pageItems.length} items from ${itemFileName}`);
-                                    } else {
-                                        console.warn(`File ${itemFileName} did not contain a valid JSON array after cleaning. Content: '${itemFileContent}'. Skipping.`);
-                                    }
-                                }
-                            } catch (e) {
-                                console.warn(`Failed to parse ${itemFileName} after cleaning. Content: '${itemFileContent}'. Skipping. Error: ${e}`);
-                            }
-
-                        } catch (error) { // Catch errors from sendCommandAndWait
-                            console.error(`Error during read attempt for ${itemFileName}:`, error);
-                            throw new Error(`Communication error while reading ${itemFileName}: ${error.message || error}`);
-                        }
-                    } // End for loop
-                } // End else (numPages > 0)
-
-                // 4. Update UI
-                console.log(`Total items loaded from device: ${allItems.length}`);
-                //alert(`Successfully loaded ${allItems.length} items from the device.`);
-
-                items = allItems;
-                currentIndex = -1;
-                renderItemList();
-                if (items.length > 0) {
-                    selectItem(0);
-                } else {
-                    document.getElementById('editor').innerHTML = `<div class="empty-state"><h2>No items loaded</h2><p>Item files were read, but contained no valid items, or meta file indicated zero pages.</p></div>`;
-                    renderPipboyPreview();
-                }
-
-                const hasItems = items.length > 0;
-                document.getElementById('exportBtnHeader').disabled = !hasItems;
-                document.getElementById('btnUploadUSB').disabled = !(UART.isConnected() && hasItems); // Check connection too
-
-
-            } catch (error) { // Catch errors from reading/parsing meta or communication errors in loop
-                console.error("Error loading items from device:", error);
-                alert("Error loading items from device: " + error.message);
-                 items = [];
-                 currentIndex = -1;
-                 renderItemList();
-                 document.getElementById('editor').innerHTML = `<div class="empty-state"><h2>Load Failed</h2><p>${error.message}</p></div>`;
-                 renderPipboyPreview();
-                 document.getElementById('exportBtnHeader').disabled = true;
-    			 document.getElementById('btnUploadUSB').disabled = true;
-
-            } finally {
-                loadBtn.disabled = false;
-                loadBtn.textContent = "Load Items from Device";
-            }
-        }
-
-
-		// --- START of previously omitted functions ---
-		function initializePresets() {
-			const allPresets = [];
-			if (typeof consumablePresets !== 'undefined') allPresets.push(...consumablePresets);
-			if (typeof weaponPresets !== 'undefined') allPresets.push(...weaponPresets);
-			if (typeof apparelPresets !== 'undefined') allPresets.push(...apparelPresets);
-			const combined = {};
-			allPresets.forEach(item => {
-				const key = item.name.toLowerCase().replace(/\s+/g, '');
-				combined[key] = item;
-			});
-			presetItems = combined;
-		}
-
-		function renderPresetDropdown() {
-			const dropdown = document.getElementById('presetDropdown');
-			let optionsHtml = `<option value="">Add Preset Item...</option>`;
-			for (const key in presetItems) {
-				optionsHtml += `<option value="${key}">${presetItems[key].name}</option>`;
-			}
-			dropdown.innerHTML = optionsHtml;
-		}
-
-		function readFileAsText(file) {
-			return new Promise((resolve, reject) => {
-				const reader = new FileReader();
-				reader.onload = () => resolve(reader.result);
-				reader.onerror = () => reject(reader.error);
-				reader.readAsText(file);
-			});
-		}
-
-		async function loadItemsFromFiles(event) {
-			const files = event.target.files;
-			if (!files.length) return;
-
-			let loadedItems = [];
-			for (const file of files) {
-				try {
-					const fileContent = await readFileAsText(file);
-					const parsedJson = JSON.parse(fileContent);
-					if (Array.isArray(parsedJson)) {
-						loadedItems.push(...parsedJson);
-					} else {
-						alert(`Warning: File ${file.name} is not a valid item array and was skipped.`);
-					}
-				} catch (error) {
-					console.error(`Error reading or parsing file ${file.name}:`, error);
-					alert(`Could not load file: ${file.name}. It may not be a valid JSON file.`);
-				}
-			}
-			items = loadedItems;
-			currentIndex = -1; // Reset selection
-			renderItemList();
-			if (items.length > 0) {
-				selectItem(0); // Select the first new item
-			} else {
-				// Clear UI if no items were loaded
-				document.getElementById('editor').innerHTML = `<div class="empty-state"><h2>No item selected</h2><p>Select an item from the list or create a new one</p></div>`;
-				renderPipboyPreview();
-			}
-
-			// Enable/disable buttons based on whether items exist
-			const hasItems = items.length > 0;
-			document.getElementById('exportBtnHeader').disabled = !hasItems;
-			// Only enable upload if connected AND has items
-            document.getElementById('btnUploadUSB').disabled = !(UART.isConnected() && hasItems);
-
-
-			// Clear the file input value to allow loading the same file again
-			event.target.value = '';
-		}
-
-		function loadDataFolder(event) {
-			const files = event.target.files;
-			if (files.length === 0) return;
-			const soundFiles = [],
-				imageFiles = [];
-			for (const file of files) {
-				const fileName = file.name;
-                const relativePath = file.webkitRelativePath || file.name;
-				if (relativePath.toLowerCase().endsWith('.wav') && !relativePath.includes('EquipUp') && !relativePath.includes('EquipDown')) {
-					soundFiles.push(fileName);
-				}
-				if (relativePath.toLowerCase().endsWith('.js')) {
-					imageFiles.push(fileName);
-				}
-			}
-			availableSounds = soundFiles.sort();
-			availableImages = imageFiles.sort();
-			if (currentIndex > -1) {
-				renderEditor();
-			}
-             console.log("Loaded available sounds:", availableSounds);
-             console.log("Loaded available images:", availableImages);
-		}
-
-
-		function renderItemList() {
-			const list = document.getElementById('itemList');
-			list.innerHTML = '';
-			items.forEach((item, index) => {
-				const li = document.createElement('li');
-				li.className = index === currentIndex ? 'active' : '';
-				const isFirst = index === 0;
-				const isLast = index === items.length - 1;
-				li.innerHTML = `
-            <div class="item-name-wrapper"> <span class="item-name">${item.name || 'Unnamed Item'}</span> </div>
-            ${item.type ? `<span class="item-type">${item.type}</span>` : ''}
-            <div class="reorder-arrows">
-                <button onclick="moveItemUp(${index}, event)" ${isFirst ? 'disabled' : ''}>▲</button>
-                <button onclick="moveItemDown(${index}, event)" ${isLast ? 'disabled' : ''}>▼</button>
-            </div>
-            <button class="delete-btn" onclick="deleteItem(${index}, event)">×</button>
-        `;
-				li.onclick = (event) => {
-					if (event.target.closest('button, .reorder-arrows')) return;
-					selectItem(index);
-				};
-				list.appendChild(li);
-			});
-		}
-
-		function renderPipboyPreview() {
-			const item = items[currentIndex];
-			const previewName = document.getElementById('preview-name');
-			const previewQty = document.getElementById('preview-qty');
-			const statsList = document.getElementById('preview-stats-list');
-			if (!item) {
-				previewName.textContent = 'ITEM NAME';
-				previewQty.textContent = '0';
-				statsList.innerHTML = '';
-				return;
-			}
-			previewName.textContent = (item.name || 'NO NAME').toUpperCase();
-			previewQty.textContent = item.quantity || 0;
-			statsList.innerHTML = '';
-			const createStatValueRow = (label, value) => {
-				const row = document.createElement('div');
-				row.className = 'stat-row';
-				row.innerHTML = `<span class="stat-name">${label.toUpperCase()}</span><span class="stat-value bright-bg" style="padding: 0 4px;">${value}</span>`;
-				statsList.appendChild(row);
-			};
-			if (item.damages && item.damages.length > 0) {
-				item.damages.forEach(d => createStatValueRow(d.type || '?', d.value || '?'));
-			}
-			if (item.defenses && item.defenses.length > 0) {
-				item.defenses.forEach(d => createStatValueRow(d.type || '?', d.value || '?'));
-			}
-			if (item.stats) {
-				for (const statName in item.stats) {
-					const row = document.createElement('div');
-					const statData = item.stats[statName];
-					const isObject = typeof statData === 'object' && statData !== null;
-					const value = isObject ? statData.value : statData;
-					const isTimed = isObject && statData.isTimed;
-					let backgroundClass = (statName === item.ammoType) ? 'bright-bg' : 'dithered-bg';
-					row.className = `stat-row ${backgroundClass}`;
-					const timeIndicator = isTimed ? '(T) ' : '';
-					row.innerHTML = `<span class="stat-name">${statName.toUpperCase()}</span><span class="stat-value">${timeIndicator}${value}</span>`;
-					statsList.appendChild(row);
-				}
-			}
-		}
-
-		function selectItem(index) {
-			currentIndex = index;
-			renderItemList();
-			renderEditor();
-			renderPipboyPreview();
-		}
-
-		function updateItem(field, value) {
-			if (currentIndex < 0) return;
-			items[currentIndex][field] = value;
-			if (field === 'name' || field === 'quantity' || field === 'type') {
-				renderItemList();
-			}
-             if (field === 'type') {
-                 renderEditor(); // Re-render editor if type changes
-             }
-			renderPipboyPreview();
-		}
-
-		function moveItem(fromIndex, toIndex) {
-			if (fromIndex < 0 || fromIndex >= items.length || toIndex < 0 || toIndex >= items.length) return;
-			const [item] = items.splice(fromIndex, 1);
-			items.splice(toIndex, 0, item);
-			selectItem(toIndex);
-		}
-
-		function moveItemUp(index, event) {
-			event.stopPropagation();
-			moveItem(index, index - 1);
-		}
-
-		function moveItemDown(index, event) {
-			event.stopPropagation();
-			moveItem(index, index + 1);
-		}
-
-		function moveStat(key, direction) {
-			if (currentIndex < 0 || !items[currentIndex].stats) return;
-			const stats = items[currentIndex].stats;
-			const statsArray = Object.entries(stats);
-			const fromIndex = statsArray.findIndex(pair => pair[0] === key);
-			const toIndex = fromIndex + direction;
-
-			if (fromIndex < 0 || toIndex < 0 || toIndex >= statsArray.length) return;
-
-			[statsArray[fromIndex], statsArray[toIndex]] = [statsArray[toIndex], statsArray[fromIndex]];
-
-			items[currentIndex].stats = Object.fromEntries(statsArray);
-			renderStats();
-			renderPipboyPreview();
-		}
-
-		function moveStatUp(key) {
-			moveStat(key, -1);
-		}
-
-		function moveStatDown(key) {
-			moveStat(key, 1);
-		}
-
-		function addDamage() {
-			if (currentIndex < 0 || items[currentIndex].type !== 'weapon') return;
-			if (!items[currentIndex].damages) {
-				items[currentIndex].damages = [];
-			}
-			items[currentIndex].damages.push({ type: "attack", value: "10" });
-			renderDamages();
-			renderPipboyPreview();
-		}
-
-		function removeDamage(index) {
-			if (currentIndex < 0 || !items[currentIndex].damages) return;
-			items[currentIndex].damages.splice(index, 1);
-			if (items[currentIndex].damages.length === 0) {
-				delete items[currentIndex].damages;
-			}
-			renderDamages();
-			renderPipboyPreview();
-		}
-
-		function addDefense() {
-			if (currentIndex < 0 || items[currentIndex].type !== 'apparel') return;
-			if (!items[currentIndex].defenses) {
-				items[currentIndex].defenses = [];
-			}
-			items[currentIndex].defenses.push({ type: "defense", value: "10" });
-			renderDefenses();
-			renderPipboyPreview();
-		}
-
-		function removeDefense(index) {
-			if (currentIndex < 0 || !items[currentIndex].defenses) return;
-			items[currentIndex].defenses.splice(index, 1);
-			if (items[currentIndex].defenses.length === 0) {
-				delete items[currentIndex].defenses;
-			}
-			renderDefenses();
-			renderPipboyPreview();
-		}
-
-		function addStat() {
-			if (currentIndex < 0) return;
-			if (!items[currentIndex].stats) {
-				items[currentIndex].stats = {};
-			}
-			let newKey = "NewStat", counter = 1;
-			while (items[currentIndex].stats.hasOwnProperty(newKey)) {
-				newKey = `NewStat${counter++}`;
-			}
-			items[currentIndex].stats[newKey] = "0";
-			renderStats();
-			renderPipboyPreview();
-		}
-
-		function removeStat(key) {
-			if (currentIndex < 0 || !items[currentIndex].stats) return;
-			delete items[currentIndex].stats[key];
-			renderStats();
-			renderPipboyPreview();
-		}
-
-		function updateStatKey(oldKey, newKey) {
-            if (currentIndex < 0 || !items[currentIndex].stats || oldKey === newKey || !newKey) return;
-             if (items[currentIndex].stats.hasOwnProperty(newKey)) {
-                 alert(`Stat key "${newKey}" already exists!`);
-                 renderStats(); // Re-render to show original key
-                 return;
-            }
-            // Create a new object with the desired order (or close to it)
-            const oldStats = items[currentIndex].stats;
-            const newStats = {};
-            for (const key in oldStats) {
-                if (key === oldKey) {
-                    newStats[newKey] = oldStats[oldKey]; // Add with new key
-                } else {
-                    newStats[key] = oldStats[key]; // Keep existing
-                }
-            }
-            items[currentIndex].stats = newStats; // Replace the stats object
-
-            renderStats();
-            renderPipboyPreview();
-        }
-
-		function updateStatValue(key, value) {
-			if (currentIndex < 0 || !items[currentIndex].stats) return;
-			const stat = items[currentIndex].stats[key];
-			if (typeof stat === 'object' && stat !== null && stat.hasOwnProperty('isTimed')) {
-				stat.value = value;
-			} else {
-				items[currentIndex].stats[key] = value;
-			}
-			renderPipboyPreview();
-		}
-
-		function toggleStatIsTimed(key, isChecked) {
-			if (currentIndex < 0 || !items[currentIndex].stats) return;
-            const currentItem = items[currentIndex];
-            if (currentItem.type !== 'consumable') return;
-
-			const currentStat = currentItem.stats[key];
-            const currentValue = (typeof currentStat === 'object' && currentStat !== null) ? currentStat.value : currentStat;
-
-			if (isChecked) {
-				currentItem.stats[key] = { value: currentValue || "0", isTimed: true };
-			} else {
-				currentItem.stats[key] = currentValue;
-			}
-			renderStats();
-			renderPipboyPreview();
-		}
-
-		function updateDamage(index, field, value) {
-			if (currentIndex < 0 || !items[currentIndex].damages || !items[currentIndex].damages[index]) return;
-			items[currentIndex].damages[index][field] = value;
-			renderPipboyPreview();
-		}
-
-		function updateDefense(index, field, value) {
-			if (currentIndex < 0 || !items[currentIndex].defenses || !items[currentIndex].defenses[index]) return;
-			items[currentIndex].defenses[index][field] = value;
-			renderPipboyPreview();
-		}
-
-		function addBaseItem(type) {
-			const CappedType = type.charAt(0).toUpperCase() + type.slice(1);
-			let baseItem = {
-				name: `New ${CappedType}`, type: type, quantity: 1, effect: "",
-				stats: { Weight: "1.0", Value: "10" }
-			};
-			switch (type) {
-				case 'weapon':
-					baseItem.damages = [{ type: "attack", value: "5" }];
-					baseItem.ammoType = "None";
-					baseItem.stats["Fire Rate"] = "10"; baseItem.stats.Range = "50"; break;
-				case 'apparel':
-					baseItem.defenses = [{ type: "defense", value: "5" }];
-					baseItem.equipSlots = []; break;
-				case 'consumable': baseItem.stats.Health = "10"; break;
-			}
-			items.push(baseItem);
-			selectItem(items.length - 1);
-			document.getElementById('exportBtnHeader').disabled = false;
-			if (UART.isConnected()) document.getElementById('btnUploadUSB').disabled = false;
-		}
-
-		function addPresetItem(presetKey) {
-			if (!presetKey || !presetItems[presetKey]) return;
-			const preset = presetItems[presetKey];
-			const newItem = JSON.parse(JSON.stringify(preset)); // Deep copy
-			items.push(newItem);
-			selectItem(items.length - 1);
-			document.getElementById('exportBtnHeader').disabled = false;
-            if (UART.isConnected()) document.getElementById('btnUploadUSB').disabled = false;
-		}
-
-		function deleteItem(index, event) {
-			event.stopPropagation();
-            if (index < 0 || index >= items.length) return;
-             if (!confirm(`Are you sure you want to delete "${items[index].name}"?`)) return;
-
-			items.splice(index, 1);
-            let newIndex = -1;
-            if (items.length > 0) {
-                 if (index >= items.length) newIndex = items.length - 1;
-                 else if (currentIndex === index) newIndex = Math.max(0, index - 1);
-                 else if (index < currentIndex) newIndex = currentIndex - 1;
-                 else newIndex = currentIndex;
-            }
-
-			renderItemList();
-            if (newIndex > -1) { selectItem(newIndex); }
-            else {
-                currentIndex = -1;
-				document.getElementById('editor').innerHTML = `<div class="empty-state"><h2>No item selected</h2><p>Select an item from the list or create a new one</p></div>`;
-				renderPipboyPreview();
-            }
-			const hasItems = items.length > 0;
-			document.getElementById('exportBtnHeader').disabled = !hasItems;
-			document.getElementById('btnUploadUSB').disabled = !(UART.isConnected() && hasItems);
-		}
-
-		function addSound(sound) {
-			if (!sound || currentIndex < 0) return;
-			if (!items[currentIndex].sounds) items[currentIndex].sounds = [];
-			if (!items[currentIndex].sounds.includes(sound)) {
-				items[currentIndex].sounds.push(sound); renderSounds();
-			}
-		}
-
-		function removeSound(index) {
-			if (currentIndex < 0 || !items[currentIndex].sounds || index < 0 || index >= items[currentIndex].sounds.length) return;
-			items[currentIndex].sounds.splice(index, 1);
-			if (items[currentIndex].sounds.length === 0) delete items[currentIndex].sounds;
-			renderSounds();
-		}
-
-		function addApparelEquipSlot(slot) {
-			if (!slot || currentIndex < 0 || items[currentIndex].type !== 'apparel') return;
-			if (!items[currentIndex].equipSlots) items[currentIndex].equipSlots = [];
-			if (!items[currentIndex].equipSlots.includes(slot)) {
-				items[currentIndex].equipSlots.push(slot); renderApparelEquipSlots();
-			}
-		}
-
-		function removeApparelEquipSlot(index) {
-			if (currentIndex < 0 || !items[currentIndex].equipSlots || index < 0 || index >= items[currentIndex].equipSlots.length) return;
-			items[currentIndex].equipSlots.splice(index, 1);
-			if (items[currentIndex].equipSlots.length === 0) delete items[currentIndex].equipSlots;
-			renderApparelEquipSlots();
-		}
-
-		function renderEditor() {
-			if (currentIndex < 0) {
-				document.getElementById('editor').innerHTML = `<div class="empty-state"><h2>No item selected</h2><p>Select an item from the list or create a new one</p></div>`; return;
-			}
-			const item = items[currentIndex];
-			let html = `<div class="section-header">Edit Item</div>`;
-			html += `
-                <div class="form-row">
-                  <div class="form-group"><label>Type</label><select onchange="updateItem('type', this.value)"><option value="" ${!item.type ? 'selected' : ''}>None</option><option value="weapon" ${item.type === 'weapon' ? 'selected' : ''}>Weapon</option><option value="apparel" ${item.type === 'apparel' ? 'selected' : ''}>Apparel</option><option value="consumable" ${item.type === 'consumable' ? 'selected' : ''}>Consumable</option></select></div>
-                  <div class="form-group"><label>Name</label><input type="text" value="${item.name || ''}" oninput="updateItem('name', this.value)"></div>
-                </div>
-                <div class="form-row">
-                  <div class="form-group"><label>Quantity</label><input type="number" value="${item.quantity || 1}" min="0" step="1" oninput="updateItem('quantity', parseInt(this.value) || 0)"></div>
-                  <div class="form-group"><label>Sounds</label><select onchange="addSound(this.value); this.value='';"><option value="">Select a sound file...</option>${availableSounds.map(s => `<option value="${s}">${s}</option>`).join('')}</select><div class="sound-list" id="soundList"></div></div>
-                </div>
-                <div class="form-group"><label>Image File</label><select onchange="updateItem('image', this.value)"><option value="">None</option>${availableImages.map(img => `<option value="${img}" ${item.image === img ? 'selected' : ''}>${img}</option>`).join('')}</select></div>`;
-			if (item.type === 'weapon') {
-				html += `<div class="form-group"><label>Ammo Type</label><input type="text" value="${item.ammoType || 'None'}" oninput="updateItem('ammoType', this.value || null)" placeholder="e.g., Fusion Cell or None"></div><div class="form-group"><label>Damage Values</label><div class="damages-container" id="damagesContainer"></div><button class="add-stat-btn" onclick="addDamage()">+ Add Damage Type</button></div>`;
-			}
-			if (item.type === 'apparel') {
-				html += `<div class="form-group"><label>Equip Slots</label><select onchange="addApparelEquipSlot(this.value); this.value='';"><option value="">Add an equip slot...</option>${apparelEquipSlots.map(st => `<option value="${st}">${st}</option>`).join('')}</select><div class="equip-slot-list" id="equipSlotList"></div></div><div class="form-group"><label>Defense Values</label><div class="defenses-container" id="defensesContainer"></div><button class="add-stat-btn" onclick="addDefense()">+ Add Defense Type</button></div>`;
-			}
-			html += `<div class="form-group" style="margin-top: 15px;"><label>Stats</label><div class="stats-container" id="statsContainer"></div><button class="add-stat-btn" onclick="addStat()">+ Add Stat</button></div><div class="form-group"><label>Effect Description</label><textarea oninput="updateItem('effect', this.value)">${item.effect || ''}</textarea></div>`;
-			document.getElementById('editor').innerHTML = html;
-			renderDamages(); renderDefenses(); renderSounds(); renderApparelEquipSlots(); renderStats();
-		}
-
-		function renderDamages() {
-            const container = document.getElementById('damagesContainer'); if (!container) return; container.innerHTML = ''; if (currentIndex < 0 || !items[currentIndex].damages) return;
-			items[currentIndex].damages.forEach((damage, index) => {
-				const div = document.createElement('div'); div.className = 'damage-item';
-				div.innerHTML = `<div><label>Type</label><select onchange="updateDamage(${index}, 'type', this.value)">${damageTypes.map(t => `<option value="${t}" ${damage.type === t ? 'selected' : ''}>${t}</option>`).join('')}</select></div><div><label>Value</label><input type="text" value="${damage.value || ''}" oninput="updateDamage(${index}, 'value', this.value)"></div><button class="remove-stat-btn" onclick="removeDamage(${index})">Remove</button>`;
-				container.appendChild(div);
-			});
-		}
-
-		function renderDefenses() {
-            const container = document.getElementById('defensesContainer'); if (!container) return; container.innerHTML = ''; if (currentIndex < 0 || !items[currentIndex].defenses) return;
-			items[currentIndex].defenses.forEach((defense, index) => {
-				const div = document.createElement('div'); div.className = 'defense-item';
-				div.innerHTML = `<div><label>Type</label><select onchange="updateDefense(${index}, 'type', this.value)">${defenseTypes.map(t => `<option value="${t}" ${defense.type === t ? 'selected' : ''}>${t}</option>`).join('')}</select></div><div><label>Value</label><input type="text" value="${defense.value || ''}" oninput="updateDefense(${index}, 'value', this.value)"></div><button class="remove-stat-btn" onclick="removeDefense(${index})">Remove</button>`;
-				container.appendChild(div);
-			});
-		}
-
-		function renderSounds() {
-			const container = document.getElementById('soundList'); if (!container) return; container.innerHTML = ''; if (currentIndex < 0 || !items[currentIndex].sounds) return;
-			items[currentIndex].sounds.forEach((sound, index) => {
-				const tag = document.createElement('div'); tag.className = 'sound-tag'; tag.innerHTML = `${sound} <button onclick="removeSound(${index})">×</button>`; container.appendChild(tag);
-			});
-		}
-
-		function renderApparelEquipSlots() {
-			const container = document.getElementById('equipSlotList'); if (!container) return; container.innerHTML = ''; if (currentIndex < 0 || !items[currentIndex].equipSlots) return;
-			items[currentIndex].equipSlots.forEach((slot, index) => {
-				const tag = document.createElement('div'); tag.className = 'equip-slot-tag'; tag.innerHTML = `${slot} <button onclick="removeApparelEquipSlot(${index})">×</button>`; container.appendChild(tag);
-			});
-		}
-
-		function renderStats() {
-			const container = document.getElementById('statsContainer'); if (!container) return; container.innerHTML = ''; if (currentIndex < 0 || !items[currentIndex].stats) return;
-			const item = items[currentIndex]; const statsArray = Object.entries(item.stats);
-			statsArray.forEach(([key, statData], index) => {
-				const isObject = typeof statData === 'object' && statData !== null && statData.hasOwnProperty('isTimed');
-				const value = isObject ? statData.value : statData; const isTimed = isObject && statData.isTimed;
-				const isFirst = index === 0; const isLast = index === statsArray.length - 1;
-				const div = document.createElement('div'); let timedCheckboxHtml = '';
-				if (item.type === 'consumable') {
-					div.className = 'stat-item consumable-stat';
-					timedCheckboxHtml = `<div class="checkbox-group"><input type="checkbox" id="timed_${key}" ${isTimed ? 'checked' : ''} onchange="toggleStatIsTimed('${key}', this.checked)"><label for="timed_${key}">Timed</label></div>`;
-				} else { div.className = 'stat-item'; }
-				div.innerHTML = `<div><label>Stat Name</label><input type="text" value="${key}" onchange="updateStatKey('${key}', this.value)"></div><div><label>Value</label><input type="text" value="${value || ''}" oninput="updateStatValue('${key}', this.value)"></div>${timedCheckboxHtml}<div class="reorder-arrows"><button onclick="moveStatUp('${key}')" ${isFirst ? 'disabled' : ''}>▲</button><button onclick="moveStatDown('${key}')" ${isLast ? 'disabled' : ''}>▼</button></div><button class="remove-stat-btn" onclick="removeStat('${key}')">Remove</button>`;
-				container.appendChild(div);
-			});
-		}
-
-		function exportJSON() {
-            if (items.length === 0) { alert("No items to export!"); return; }
-			const zip = new JSZip(); const CHUNK_SIZE = 9; const pageCounts = [];
-			for (let i = 0; i < items.length; i += CHUNK_SIZE) {
-				const pageIndex = Math.floor(i / CHUNK_SIZE); const chunk = items.slice(i, i + CHUNK_SIZE); pageCounts.push(chunk.length);
-				zip.file(`items_${pageIndex}.json`, JSON.stringify(chunk, null, 2), { date: new Date(), compression: "DEFLATE" });
-			}
-			const meta = { totalItems: items.length, pageCounts: pageCounts };
-			zip.file('items_meta.json', JSON.stringify(meta, null, 2), { date: new Date(), compression: "DEFLATE" });
-			zip.generateAsync({ type: 'blob', compression: "DEFLATE", compressionOptions: { level: 6 } })
-                .then(content => {
-                    const url = URL.createObjectURL(content); const a = document.createElement('a'); a.href = url; a.download = 'items_export.zip';
-                    document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
-                }).catch(err => { console.error("Error generating ZIP:", err); alert("Error generating ZIP."); });
-		}
-		// --- END of previously omitted functions ---
-
-		// --- Initial setup ---
-		window.onload = () => {
-			// Configure UART ports *after* UART object is guaranteed to exist
-            if (typeof UART !== "undefined") {
-                UART.ports = ["Web Serial"];
-            } else {
-                console.error("UART object not found during window.onload configuration.");
-                alert("Error: Failed to load UART library properly. Connection may not work.");
-            }
-
-			initializePresets();
-			renderPresetDropdown();
-			renderItemList();
-			renderPipboyPreview();
-
-			const hasItems = items.length > 0;
-			document.getElementById('exportBtnHeader').disabled = !hasItems;
-			document.getElementById('btnUploadUSB').disabled = true; // Start disabled
-            document.getElementById('btnLoadFromDevice').disabled = true; // Start disabled
-
-
-			// Connection Button Logic
-			let connectButton = document.getElementById("btnConnectUSB");
-			let uploadButton = document.getElementById("btnUploadUSB");
-			let loadFromDeviceButton = document.getElementById("btnLoadFromDevice");
-			let currentConnection = null;
-
-			if (connectButton) {
-				connectButton.addEventListener("click", function() {
-                    if (typeof UART === "undefined") {
-						alert("Error: UART library (uart.js) not loaded. Check file path in <head>.");
-						return;
-					}
-
-					if (UART.isConnected()) {
-						UART.close(); // Triggers the 'close' event handler below
-						return;
-					}
-
-					connectButton.textContent = "Connecting...";
-					connectButton.disabled = true;
-                    if (uploadButton) uploadButton.disabled = true;
-                    if (loadFromDeviceButton) loadFromDeviceButton.disabled = true;
-
-					UART.connectAsync()
-						.then(function(connectionInstance) {
-                            if (!connectionInstance) {
-                                console.log("Connection attempt failed or cancelled by user.");
-                                connectButton.textContent = "Connect via USB";
-							    connectButton.disabled = false;
-                                if (uploadButton) uploadButton.disabled = true;
-                                if (loadFromDeviceButton) loadFromDeviceButton.disabled = true;
-                                return;
-                            }
-							currentConnection = connectionInstance;
-							console.log("Connected!");
-							connectButton.textContent = "Disconnect";
-							connectButton.disabled = false;
-                            const buttonsShouldBeEnabled = items.length > 0;
-                            if (uploadButton) uploadButton.disabled = !buttonsShouldBeEnabled;
-                            if (loadFromDeviceButton) loadFromDeviceButton.disabled = false;
-
-							// Attach the close listener
-							currentConnection.on('close', function() {
-								console.log("Disconnected.");
-								connectButton.textContent = "Connect via USB";
-								connectButton.disabled = false;
-                                if (uploadButton) uploadButton.disabled = true;
-                                if (loadFromDeviceButton) loadFromDeviceButton.disabled = true;
-								currentConnection = null;
-							});
-						})
-						.catch(function(error) {
-							console.log("Connection failed:", error);
-                            alert("Connection failed: " + error);
-							connectButton.textContent = "Connect via USB";
-							connectButton.disabled = false;
-                            if (uploadButton) uploadButton.disabled = true;
-                            if (loadFromDeviceButton) loadFromDeviceButton.disabled = true;
-                            currentConnection = null;
-						});
-				});
-			}
-		};
-	</script>
+        };
+    </script>
 </body>
 
 </html>

@@ -154,6 +154,51 @@ const consumablePresets = [
       "Value": "62"
     },
     "image": "Bottlecap_img.js"
+  },
+  {
+    "name": ".44 Round",
+    "type": "",
+    "quantity": 48,
+    "effect": "",
+    "stats": {
+      "Value": "3"
+    }
+  },
+  {
+    "name": "10mm Round",
+    "type": "",
+    "quantity": 456,
+    "effect": "",
+    "stats": {
+      "Value": "2"
+    }
+  },
+  {
+    "name": "5mm Round",
+    "type": "",
+    "quantity": 1042,
+    "effect": "",
+    "stats": {
+      "Value": "1"
+    }
+  },
+  {
+    "name": "Fusion Cell",
+    "type": "",
+    "quantity": 1,
+    "effect": "",
+    "stats": {
+      "Value": "3"
+    }
+  },
+  {
+    "name": "Shotgun Shell",
+    "type": "",
+    "quantity": 107,
+    "effect": "",
+    "stats": {
+      "Value": "3"
+    }
   }
 ];
 
