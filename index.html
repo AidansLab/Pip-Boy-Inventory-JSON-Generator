@@ -890,6 +890,212 @@
          }
 
         /* .delete-data-btn is already styled */
+
+        /* --- Tutorial Styles --- */
+        .tutorial-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #tutorialGuideOverlay {
+             background: rgba(0, 0, 0, 0.5); /* Less dark for the guide */
+             align-items: initial; /* Don't center this one */
+             z-index: 999; /* Below popup and highlight */
+        }
+
+        .tutorial-modal-content {
+            background: var(--pip-black);
+            border: 3px solid var(--pip-green);
+            border-radius: 8px;
+            padding: 25px;
+            text-align: center;
+            color: var(--pip-green);
+            z-index: 1001;
+            box-shadow: 0 0 20px var(--pip-green-dim);
+        }
+
+        .tutorial-modal-content h2 {
+            margin-bottom: 15px;
+        }
+        .tutorial-modal-content p {
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+        .tutorial-modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .tutorial-btn-skip, .tutorial-btn-next {
+            background: var(--pip-green);
+            color: var(--pip-black);
+            border: none;
+            padding: 10px 25px;
+            border-radius: 6px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .tutorial-btn-skip {
+            background: var(--pip-bg-tertiary); /* Darker */
+            color: var(--pip-green);
+            border: 2px solid var(--pip-green-dim);
+        }
+        .tutorial-btn-skip:hover {
+            background: var(--pip-green-dim);
+            color: var(--pip-green);
+        }
+        .tutorial-btn-next:hover {
+            background: var(--pip-green-bright);
+        }
+
+        /* Tutorial Step Pop-up */
+        #tutorialStepPopup {
+            position: absolute;
+            background: var(--pip-black);
+            border: 2px solid var(--pip-green);
+            border-radius: 6px;
+            padding: 15px;
+            color: var(--pip-green);
+            width: 300px;
+            z-index: 1002;
+            box-shadow: 0 0 15px var(--pip-green-dim);
+        }
+
+        #tutorialStepPopup h3 {
+            margin-bottom: 10px;
+            color: var(--pip-green-bright);
+            border-bottom: 1px solid var(--pip-green-dim);
+            padding-bottom: 5px;
+        }
+        #tutorialStepPopup p {
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+        .tutorial-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--pip-green-dim);
+            padding-top: 10px;
+        }
+        #tutorialStepIndicator {
+            font-size: 0.8em;
+        }
+        .tutorial-nav .tutorial-btn-skip,
+        .tutorial-nav .tutorial-btn-next {
+            padding: 5px 12px;
+            font-size: 0.9em;
+        }
+
+        /* Highlight Class */
+        .tutorial-highlight {
+            position: relative;
+            z-index: 1001;
+            /* A glowing effect */
+            box-shadow: 0 0 12px 4px var(--pip-green-bright);
+            border-radius: 4px;
+            transition: box-shadow 0.3s;
+        }
+        
+        /* Arrow (pseudo-element) */
+        .tutorial-arrow {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+        }
+        #tutorialStepPopup.arrow-top .tutorial-arrow {
+            bottom: 100%;
+            left: 50%;
+            margin-left: -10px;
+            border-width: 0 10px 10px 10px;
+            border-color: transparent transparent var(--pip-green) transparent;
+        }
+        #tutorialStepPopup.arrow-bottom .tutorial-arrow {
+            top: 100%;
+            left: 50%;
+            margin-left: -10px;
+            border-width: 10px 10px 0 10px;
+            border-color: var(--pip-green) transparent transparent transparent;
+        }
+        #tutorialStepPopup.arrow-left .tutorial-arrow {
+            right: 100%;
+            top: 50%;
+            margin-top: -10px;
+            border-width: 10px 10px 10px 0;
+            border-color: transparent var(--pip-green) transparent transparent;
+        }
+        #tutorialStepPopup.arrow-right .tutorial-arrow {
+            left: 100%;
+            top: 50%;
+            margin-top: -10px;
+            border-width: 10px 0 10px 10px;
+            border-color: transparent transparent transparent var(--pip-green);
+        }
+
+        #replayTutorialBtn {
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        #replayTutorialBtn:hover {
+            color: var(--pip-green-bright);
+        }
+		.help-icon {
+			filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%); /* Example filter for green */
+			opacity: 0.7; /* Optional: Make it slightly dimmer like other help text */
+			transition: filter 0.3s, opacity 0.3s;
+		}
+		
+		.help-link:hover .help-icon {
+			/* Optional: Make it brighter on hover */
+			filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(130%) contrast(130%);
+			opacity: 1;
+		}
+		.header-title-section {
+        display: flex;
+        align-items: baseline; /* Keep baseline alignment for the initial layout */
+        gap: 8px;
+        flex: 0 0 auto;
+    }
+
+    /* Target the link containing the help icon */
+    .header-title-section > a.help-link {
+        position: relative; /* Enable manual positioning */
+        top: -3px; /* Move it DOWN slightly (adjust this value as needed) */
+        line-height: 1; /* Keep line height tight */
+		margin-left: 4px;
+    }
+
+    /* Target the Replay Tour button specifically */
+    .header-title-section > button#replayTutorialBtn {
+        position: relative; /* Enable manual positioning */
+        top: -3.5px; /* Move it UP slightly (adjust this value as needed) */
+        line-height: 1; /* Keep line height tight */
+    }
+
+    .help-icon {
+        vertical-align: middle; /* Middle align the icon within its link container */
+        /* --- Add back your filter/fill rules --- */
+        filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%);
+        opacity: 0.7;
+        transition: filter 0.3s, opacity 0.3s;
+    }
+
+    .help-link:hover .help-icon {
+       filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(130%) contrast(130%);
+       opacity: 1;
+    }
     </style>
 </head>
 
@@ -897,9 +1103,12 @@
     <div class="container">
         <div class="header">
             <div class="header-title-section">
-                <h1>Items.json Generator</h1>
-                <a href="https://github.com/AidansLab/Pip-Boy-Inventory-JSON-Generator/blob/main/README.md#remote-usage-recommended-for-most-users" target="_blank" class="help-link" title="View documentation">(?)</a>
-            </div>
+            <h1>Items.json Generator</h1>
+            <a href="https://github.com/AidansLab/Pip-Boy-Inventory-JSON-Generator/blob/main/README.md#remote-usage-recommended-for-most-users" target="_blank" class="help-link" title="View documentation">
+                <img src="help_button.svg" alt="Help" class="help-icon" style="height: 18px; width: 18px;">
+            </a>
+            <button id="replayTutorialBtn" class="help-link" style="background:none; border:none; cursor:pointer; font-size: 0.9em; padding-left: 5px;"><img src="tour_button.svg" alt="Help" class="help-icon" style="height: 22px; width: 22px"; title="Replay Tour"></button>
+			</div>
             <div class="header-buttons">
                 <button id="btnConnectUSB" class="export-btn-header">Connect</button>
                 <button id="btnUploadUSB" class="export-btn-header" onclick="sendJSONviaUSB()" disabled>Upload Items to Device</button>
@@ -1011,6 +1220,17 @@
                     <p>Coming Soon.</p>
                      </div>
             </div>
+			
+			<div id="tutorialDataStartModal" class="tutorial-overlay" style="display: none;">
+        <div class="tutorial-modal-content">
+            <h2>Data Tab Tour</h2>
+            <p>This section is for managing files on your Pip-Boy. Would you like a quick tour?</p>
+            <div class="tutorial-modal-buttons">
+                <button id="skipDataTutorialBtn" class="tutorial-btn-skip">Skip</button>
+                <button id="startDataTutorialBtn" class="tutorial-btn-next">Start Tour</button>
+            </div>
+        </div>
+    </div>
 
         </div>
     </div>
@@ -1040,7 +1260,7 @@
 
         // --- Main Tab Function ---
         function openTab(tabName) {
-            // ... (no changes needed here) ...
+            // ... (all the existing tab-switching logic) ...
              const tabcontent = document.getElementsByClassName("tab-content");
             for (let i = 0; i < tabcontent.length; i++) {
                 tabcontent[i].classList.remove("active");
@@ -1071,6 +1291,13 @@
                      if (uploadCommunityButton) uploadCommunityButton.disabled = !(isConnected && hasSelectedCommunity);
                  }
              }
+
+            // --- START MODIFICATION ---
+            // Check if we should show the DATA tutorial
+            if (tabName === 'data' && localStorage.getItem('pipboyGenDataTutorialSkipped') !== 'true') {
+                showDataStartModal();
+            }
+            // --- END MODIFICATION ---
         }
 
         // --- Data Sub-Tab Function ---
@@ -1477,7 +1704,7 @@
                     presetItems[key] = item;
                     consumablePresetItems.push({ key: key, name: item.name });
                 });
-                consumablePresets.sort((a, b) => a.name.localeCompare(b.name)); // Sort alphabetically
+                consumablePresetItems.sort((a, b) => a.name.localeCompare(b.name)); // Sort alphabetically
             }
              console.log("Presets initialized and categorized.");
         }
@@ -1560,7 +1787,66 @@
         function removeSound(index){currentIndex<0||!items[currentIndex].sounds||index<0||index>=items[currentIndex].sounds.length||(items[currentIndex].sounds.splice(index,1),0===items[currentIndex].sounds.length&&delete items[currentIndex].sounds,renderSounds())}
         function addApparelEquipSlot(slot){!slot||currentIndex<0||"apparel"!==items[currentIndex].type||(items[currentIndex].equipSlots||(items[currentIndex].equipSlots=[]),items[currentIndex].equipSlots.includes(slot)||(items[currentIndex].equipSlots.push(slot),renderApparelEquipSlots()))}
         function removeApparelEquipSlot(index){currentIndex<0||!items[currentIndex].equipSlots||index<0||index>=items[currentIndex].equipSlots.length||(items[currentIndex].equipSlots.splice(index,1),0===items[currentIndex].equipSlots.length&&delete items[currentIndex].equipSlots,renderApparelEquipSlots())}
-        function renderEditor(){if(currentIndex<0)return void(document.getElementById("editor").innerHTML='<div class="empty-state"><h2>No item selected</h2><p>Connect device to select sounds/images.</p></div>');const item=items[currentIndex];let html='<div class="section-header">Edit Item</div>';const currentSounds=deviceSounds,currentImages=deviceImages,soundSourceLabel=UART.isConnected()?"Sounds (from Device)":"Sounds (Connect Device)",imageSourceLabel=UART.isConnected()?"Image File (from Device)":"Image File (Connect Device)";html+=`<div class="form-row"><div class="form-group"><label>Type</label><select onchange="updateItem('type',this.value)"><option value="" ${item.type?"":"selected"}>None</option><option value="weapon" ${"weapon"===item.type?"selected":""}>Weapon</option><option value="apparel" ${"apparel"===item.type?"selected":""}>Apparel</option><option value="consumable" ${"consumable"===item.type?"selected":""}>Consumable</option></select></div><div class="form-group"><label>Name</label><input type="text" value="${item.name||""}" oninput="updateItem('name',this.value)"></div></div> <div class="form-row"><div class="form-group"><label>Quantity</label><input type="number" value="${item.quantity||1}" min="0" step="1" oninput="updateItem('quantity',parseInt(this.value)||0)"></div><div class="form-group"><label>${soundSourceLabel}</label><select onchange="addSound(this.value);this.value='';"><option value="">Select sound...</option>${currentSounds.map(s=>`<option value="${s}">${s}</option>`).join("")}</select><div class="sound-list" id="soundList"></div></div></div> <div class="form-group"><label>${imageSourceLabel}</label><select onchange="updateItem('image',this.value)"><option value="">None</option>${currentImages.map(img=>`<option value="${img}" ${item.image===img?"selected":""}>${img}</option>`).join("")}</select></div>`,"weapon"===item.type&&(html+=`<div class="form-group"><label>Ammo Type</label><input type="text" value="${item.ammoType||"None"}" oninput="updateItem('ammoType',this.value||null)" placeholder="e.g., Fusion Cell"></div><div class="form-group"><label>Damages</label><div class="damages-container" id="damagesContainer"></div><button class="add-stat-btn" onclick="addDamage()">+ Damage</button></div>`),"apparel"===item.type&&(html+=`<div class="form-group"><label>Equip Slots</label><select onchange="addApparelEquipSlot(this.value);this.value='';"><option value="">Add slot...</option>${apparelEquipSlots.map(slot=>`<option value="${slot}">${slot}</option>`).join("")}</select><div class="equip-slot-list" id="equipSlotList"></div></div><div class="form-group"><label>Defenses</label><div class="defenses-container" id="defensesContainer"></div><button class="add-stat-btn" onclick="addDefense()">+ Defense</button></div>`),html+=`<div class="form-group" style="margin-top:15px"><label>Stats</label><div class="stats-container" id="statsContainer"></div><button class="add-stat-btn" onclick="addStat()">+ Stat</button></div><div class="form-group"><label>Effect Desc</label><textarea oninput="updateItem('effect',this.value)">${item.effect||""}</textarea></div>`,document.getElementById("editor").innerHTML=html,renderDamages(),renderDefenses(),renderSounds(),renderApparelEquipSlots(),renderStats()}
+        
+        function renderEditor(){if(currentIndex<0)return void(document.getElementById("editor").innerHTML='<div class="empty-state"><h2>No item selected</h2><p>Connect device to select sounds/images.</p></div>');
+            const item=items[currentIndex];
+            let html='<div class="section-header">Edit Item</div>';
+            const currentSounds=deviceSounds,currentImages=deviceImages,soundSourceLabel=UART.isConnected()?"Sounds (from Device)":"Sounds (Connect Device)",imageSourceLabel=UART.isConnected()?"Image File (from Device)":"Image File (Connect Device)";
+
+            // --- START REPLACEMENT ---
+
+            // Basic Info Wrapper (Type, Name, Qty/Sounds) - ALWAYS SHOWN
+            html+=`<div id="tutorial-basic-info-wrapper">`;
+            html+=`<div class="form-row"><div class="form-group"><label>Type</label><select onchange="updateItem('type',this.value)"><option value="" ${item.type?"":"selected"}>None</option><option value="weapon" ${"weapon"===item.type?"selected":""}>Weapon</option><option value="apparel" ${"apparel"===item.type?"selected":""}>Apparel</option><option value="consumable" ${"consumable"===item.type?"selected":""}>Consumable</option></select></div><div class="form-group"><label>Name</label><input type="text" value="${item.name||""}" oninput="updateItem('name',this.value)"></div></div>`; // Type + Name row
+            
+            if("consumable"===item.type){ // Consumable row (Qty + Sounds)
+                html+=` <div class="form-row"><div class="form-group"><label>Quantity</label><input type="number" value="${item.quantity||1}" min="0" step="1" oninput="updateItem('quantity',parseInt(this.value)||0)"></div><div class="form-group"><label>${soundSourceLabel}</label><select onchange="addSound(this.value);this.value='';"><option value="">Select sound...</option>${currentSounds.map(s=>`<option value="${s}">${s}</option>`).join("")}</select><div class="sound-list" id="soundList"></div></div></div>`;
+            }else{ // Weapon/Apparel row (Qty + Empty)
+                html+=` <div class="form-row"><div class="form-group"><label>Quantity</label><input type="number" value="${item.quantity||1}" min="0" step="1" oninput="updateItem('quantity',parseInt(this.value)||0)"></div><div class="form-group"></div></div>`;
+            }
+            html+=`</div>`; // Close basic tutorial wrapper
+
+            // Image File HTML string (we'll use this)
+            const imageFileHtml = `<div class="form-group"><label>${imageSourceLabel}</label><select onchange="updateItem('image',this.value)"><option value="">None</option>${currentImages.map(img=>`<option value="${img}" ${item.image===img?"selected":""}>${img}</option>`).join("")}</select></div>`;
+            
+            // --- Conditionally place Image/Ammo/Equip sections ---
+            if ("weapon" === item.type) {
+                // For Weapons: Group Image and Ammo Type in one wrapper (NO form-row)
+                // This makes them stack vertically but highlight as one block
+                html += `<div id="tutorial-weapon-img-ammo-wrapper">
+                            ${imageFileHtml} 
+                            <div class="form-group"><label>Ammo Type</label><input type="text" value="${item.ammoType||"None"}" oninput="updateItem('ammoType',this.value||null)" placeholder="e.g., Fusion Cell"></div>
+                         </div>`;
+                // Damages Wrapper
+                html += `<div id="tutorial-damages-wrapper" class="form-group"><label>Damages</label><div class="damages-container" id="damagesContainer"></div><button class="add-stat-btn" onclick="addDamage()">+ Damage</button></div>`;
+            } else if ("apparel" === item.type) {
+                // For Apparel: Group Image and Equip Slots in one wrapper (NO form-row)
+                // This makes them stack vertically but highlight as one block
+                html += `<div id="tutorial-apparel-img-equip-wrapper">
+                            ${imageFileHtml}
+                            <div class="form-group" style="margin-top: 12px;"><label>Equip Slots</label><select onchange="addApparelEquipSlot(this.value);this.value='';"><option value="">Add slot...</option>${apparelEquipSlots.map(slot=>`<option value="${slot}">${slot}</option>`).join("")}</select><div class="equip-slot-list" id="equipSlotList"></div></div>
+                         </div>`;
+                // Defenses Wrapper
+                html += `<div id="tutorial-defenses-wrapper" class="form-group"><label>Defenses</label><div class="defenses-container" id="defensesContainer"></div><button class="add-stat-btn" onclick="addDefense()">+ Defense</button></div>`;
+            } else if ("consumable" === item.type) {
+                // For Consumable: Image is separate
+                html += `<div id="tutorial-image-file-wrapper">${imageFileHtml}</div>`;
+            }
+            
+            // Stats and Effect (common to all)
+            html+=`<div id="tutorial-stats-wrapper" class="form-group" style="margin-top:15px"><label>Stats</label><div class="stats-container" id="statsContainer"></div><button class="add-stat-btn" onclick="addStat()">+ Stat</button></div>
+                    <div class="form-group"><label>Effect Desc</label><textarea oninput="updateItem('effect',this.value)">${item.effect||""}</textarea></div>`,
+            // --- END REPLACEMENT ---
+            
+            document.getElementById("editor").innerHTML=html,renderDamages(),renderDefenses();
+            
+            if("consumable"===item.type){ // Only render sounds if consumable
+                 renderSounds();
+            }
+            
+            renderApparelEquipSlots(),renderStats()
+        }
+
         function renderDamages(){const container=document.getElementById("damagesContainer");container&&(container.innerHTML="",!(currentIndex<0||!items[currentIndex].damages))&&items[currentIndex].damages.forEach((damage,index)=>{const div=document.createElement("div");div.className="damage-item",div.innerHTML=`<div><label>Type</label><select onchange="updateDamage(${index},'type',this.value)">${damageTypes.map(t=>`<option value="${t}" ${damage.type===t?"selected":""}>${t}</option>`).join("")}</select></div><div><label>Value</label><input type="text" value="${damage.value||""}" oninput="updateDamage(${index},'value',this.value)"></div><button class="remove-stat-btn" onclick="removeDamage(${index})">X</button>`,container.appendChild(div)})}
         function renderDefenses(){const container=document.getElementById("defensesContainer");container&&(container.innerHTML="",!(currentIndex<0||!items[currentIndex].defenses))&&items[currentIndex].defenses.forEach((defense,index)=>{const div=document.createElement("div");div.className="defense-item",div.innerHTML=`<div><label>Type</label><select onchange="updateDefense(${index},'type',this.value)">${defenseTypes.map(t=>`<option value="${t}" ${defense.type===t?"selected":""}>${t}</option>`).join("")}</select></div><div><label>Value</label><input type="text" value="${defense.value||""}" oninput="updateDefense(${index},'value',this.value)"></div><button class="remove-stat-btn" onclick="removeDefense(${index})">X</button>`,container.appendChild(div)})}
         function renderSounds(){const container=document.getElementById("soundList");container&&(container.innerHTML="",!(currentIndex<0||!items[currentIndex].sounds))&&items[currentIndex].sounds.forEach((sound,index)=>{const tag=document.createElement("div");tag.className="sound-tag",tag.innerHTML=`${sound} <button onclick="removeSound(${index})">×</button>`,container.appendChild(tag)})}
@@ -1580,6 +1866,486 @@
                 toggleBtn.textContent = '»';
             }
         }
+
+        // --- Tutorial Code ---
+        let currentTutorialStep = 0;
+        let activeTutorialSteps = []; // Holds the steps for the *current* tutorial
+        let currentTutorialTarget = null; // Tracks the element for repositioning
+        let currentTutorialPosition = 'left'; // Tracks the position for repositioning
+
+        const mainTutorialSteps = [
+            {
+                element: '#btnConnectUSB',
+                title: '1. Connect',
+                text: 'Click here to connect your Pip-Boy device via Web Serial (USB).',
+                position: 'bottom'
+            },
+            {
+                element: '.preset-sidebar',
+                title: '2. Presets',
+                text: 'Find pre-made items here. Click a preset tab (Apparel, Weapons, Consumables) and then click an item to add it to your list.',
+                position: 'right'
+            },
+            {
+                element: '.sidebar',
+                title: '3. Your Item List',
+                text: 'Items you add appear here. You can load items from your device, load from .json files, or add new base items.',
+                position: 'right'
+            },
+            {
+                element: '.editor',
+                title: '4. The Editor',
+                text: 'When an item is selected, you can edit all its properties here, like its name, stats, and sounds.',
+                position: 'right'
+            },
+            {
+                element: '#pipboy-preview',
+                title: '5. Live Preview',
+                text: 'See what your item will look like on the Pip-Boy screen with this live preview.',
+                position: 'left'
+            },
+            {
+                element: '#btnUploadUSB',
+                title: '6. Upload to Device',
+                text: 'When you are finished, click here to upload all your items to the connected device.',
+                position: 'bottom'
+            },
+            {
+                element: '#exportBtnHeader',
+                title: '7. Download as ZIP',
+                text: 'Alternatively, you can download all your items as a .zip file for backup or sharing.',
+                position: 'bottom'
+            }
+        ];
+
+        const weaponEditorTutorialSteps = [
+            {
+                element: '#tutorial-basic-info-wrapper',
+                title: 'Weapon: Basic Info',
+                text: 'You can change the item "Type", "Name", and "Quantity" here.',
+                position: 'left'
+            },
+            {
+                element: '#tutorial-weapon-img-ammo-wrapper',
+                title: 'Weapon: Image & Ammo',
+                text: 'You can set the "Ammo Type" here (e.g., "Fusion Cell"). You can also select an Image File from your Pip-Boy\'s DATA folder.',
+                position: 'left'
+            },
+            {
+                element: '#tutorial-damages-wrapper',
+                title: 'Weapon: Damages',
+                text: 'Edit the damage types and values for your weapon using this section. You can add more damage types by clicking the "+ Damage" button.',
+                position: 'left'
+            },
+            {
+                element: '#tutorial-stats-wrapper',
+                title: 'Weapon: Stats',
+                text: 'Edit and add any other stats like "Weight", "Value", "Fire Rate", and "Range" here using the "+ Stat" button.',
+                position: 'left'
+            }
+        ];
+
+        const apparelEditorTutorialSteps = [
+            {
+                element: '#tutorial-basic-info-wrapper',
+                title: 'Apparel: Basic Info',
+                text: 'You can change the item "Type", "Name", and "Quantity" here.',
+                position: 'left'
+            },
+            {
+                element: '#tutorial-apparel-img-equip-wrapper',
+                title: 'Apparel: Image & Equip Slots',
+                text: 'Set the "Equip Slots" this apparel uses (e.g., "clothing", "hat") here, apparel can use multiple "Equip Slots". You can also select an Image File from your Pip-Boy\'s DATA folder.',
+                position: 'left'
+            },
+            {
+                element: '#tutorial-defenses-wrapper',
+                title: 'Apparel: Defenses',
+                text: 'Edit the defense types and values for your apparel using this section. You can add more defense types by clicking the "+ Defense" button.',
+                position: 'left'
+            },
+            {
+                element: '#tutorial-stats-wrapper',
+                title: 'Apparel: Other Stats',
+                text: 'Edit and add any other stats like "Weight", "Value", and "STR" here using the "+ Stat" button.',
+                position: 'left'
+            }
+        ];
+
+        const consumableEditorTutorialSteps = [
+            {
+                element: '#tutorial-basic-info-wrapper',
+                title: 'Consumable: Basic Info',
+                text: 'You can change the item "Type", "Name", "Quantity", and "Sounds" here. Sounds are loaded from the DATA folder on your Pip-Boy.',
+                position: 'left'
+            },
+            {
+                element: '#tutorial-image-file-wrapper',
+                title: 'Consumable: Image',
+                text: 'You can select an Image file from your Pip-Boy\'s DATA folder here.',
+                position: 'left'
+            },
+            {
+                element: '#tutorial-stats-wrapper',
+                title: 'Consumable: Effects',
+                text: 'Edit the stat names and values for your consumable using this section. You can add more stats by clicking the "+ STAT" button.',
+                position: 'left'
+            },
+            {
+                element: '.editor .stat-item.consumable-stat .checkbox-group',
+                title: 'Consumable: Timed Effects',
+                text: 'For effects that last over time (like "Rad-X"), check the "Timed" box.',
+                position: 'left'
+            }
+        ];
+		
+		// ... (after consumableEditorTutorialSteps array) ...
+
+        const dataTutorialSteps = [
+            {
+                element: '#btnScanDataDir',
+                title: '1. Scan Device',
+                text: 'After connecting, click this button to scan your Pip-Boy\'s DATA folder.',
+                position: 'left'
+            },
+            {
+                element: '#dataFileList',
+                title: '2. Manage Device Files',
+                text: 'Files on your device will appear here after a scan. You can delete individual files by clicking the \'X\' button next to them.',
+                position: 'left'
+            },
+            {
+                element: 'button[onclick="openDataSubTab(\'community\', this)"]',
+                title: '3. Community Files',
+                text: 'Click here to see community made files from the GitHub repo.',
+                position: 'bottom',
+                onShow: () => openDataSubTab('community', document.querySelector('button[onclick="openDataSubTab(\'community\', this)"]'))
+            },
+            {
+                element: '#communityDataFileList',
+                title: '4. Select Files',
+                text: 'Check the boxes next to any files you want to add to your device.',
+                position: 'right'
+            },
+            {
+                element: '#btnUploadSelectedCommunityFiles',
+                title: '5. Upload to Device',
+                text: 'After connecting, click here to upload the selected community files to your Pip-Boy\'s DATA folder.',
+                position: 'top'
+            },
+            {
+                element: 'button[onclick="openDataSubTab(\'local\', this)"]',
+                title: '6. Local Files',
+                text: 'Click this tab to use your own DATA files from your computer.',
+                position: 'bottom',
+                onShow: () => openDataSubTab('local', document.querySelector('button[onclick="openDataSubTab(\'local\', this)"]'))
+            },
+            {
+                element: 'button[onclick="document.getElementById(\'localDataFolderInput\').click()"]',
+                title: '7. Select Folder',
+                text: 'Click here to select the folder on your computer that contains your custom DATA files.',
+                position: 'right'
+            },
+            {
+                element: '#btnUploadSelectedDataFiles',
+                title: '8. Upload Local Files',
+                text: 'Just like the community tab, select your files and click here to upload them.',
+                position: 'top'
+            }
+        ];
+
+        function showDataStartModal() {
+            if (localStorage.getItem('pipboyGenDataTutorialSkipped') === 'true') {
+                return; // Don't show
+            }
+            document.getElementById('tutorialDataStartModal').style.display = 'flex';
+        }
+
+        function startDataTutorial() {
+            skipTutorial(); // Hide all other modals
+            document.getElementById('tutorialGuideOverlay').style.display = 'block';
+            document.getElementById('tutorialStepPopup').style.display = 'block';
+            
+            activeTutorialSteps = dataTutorialSteps;
+            currentTutorialStep = 0;
+            showTutorialStep(currentTutorialStep);
+        }
+
+        function skipDataTutorial() {
+            // This function skips and sets the "don't show again" flag
+            document.getElementById('tutorialDataStartModal').style.display = 'none';
+            localStorage.setItem('pipboyGenDataTutorialSkipped', 'true');
+        }
+
+
+        function showStartModal() {
+            // Check if user has seen it before
+            if (localStorage.getItem('pipboyGenMainTutorialDone') === 'true') {
+                return; // Don't show if they skipped before
+            }
+            document.getElementById('tutorialStartModal').style.display = 'flex';
+        }
+
+        function startTutorial() {
+            // This function starts the *main* tutorial
+            skipTutorial(); // Hide all other modals
+            document.getElementById('tutorialGuideOverlay').style.display = 'block';
+            document.getElementById('tutorialStepPopup').style.display = 'block';
+            
+            activeTutorialSteps = mainTutorialSteps;
+            currentTutorialStep = 0;
+            showTutorialStep(currentTutorialStep);
+        }
+
+        function startSpecificTutorial(tutorialArray, itemTypeToAdd) {
+            skipTutorial(); // Hide all modals
+
+            // Add the correct base item to ensure the editor is populated
+            addBaseItem(itemTypeToAdd);
+
+            // Set up and start the new tutorial
+            activeTutorialSteps = tutorialArray;
+            currentTutorialStep = 0;
+            
+            // Need a slight delay for the editor to render after addBaseItem
+            setTimeout(() => {
+                document.getElementById('tutorialGuideOverlay').style.display = 'block';
+                document.getElementById('tutorialStepPopup').style.display = 'block';
+                showTutorialStep(0);
+            }, 100); // 100ms delay should be enough
+        }
+		
+		function repositionTutorialPopup() {
+            if (!currentTutorialTarget || !tutorialStepPopup.style.display || tutorialStepPopup.style.display === 'none') {
+                return; // No target or popup isn't visible
+            }
+
+            const popup = document.getElementById('tutorialStepPopup');
+            const targetRect = currentTutorialTarget.getBoundingClientRect();
+            const popupRect = popup.getBoundingClientRect();
+            popup.className = ''; // Clear old arrow classes
+
+            let top, left;
+            const offset = 15;
+
+            switch (currentTutorialPosition) { // Use the stored position
+                case 'bottom':
+                    top = targetRect.bottom + offset;
+                    left = targetRect.left + (targetRect.width / 2) - (popupRect.width / 2);
+                    popup.classList.add('arrow-top');
+                    break;
+                case 'top':
+                    top = targetRect.top - popupRect.height - offset;
+                    left = targetRect.left + (targetRect.width / 2) - (popupRect.width / 2);
+                    popup.classList.add('arrow-bottom');
+                    break;
+                case 'left':
+                    top = targetRect.top + (targetRect.height / 2) - (popupRect.height / 2);
+                    left = targetRect.left - popupRect.width - offset;
+                    popup.classList.add('arrow-right');
+                    break;
+                case 'right':
+                default:
+                    top = targetRect.top + (targetRect.height / 2) - (popupRect.height / 2);
+                    left = targetRect.right + offset;
+                    popup.classList.add('arrow-left');
+                    break;
+            }
+            
+            // Constrain to viewport
+            if (top < 0) top = offset;
+            if (left < 0) left = offset;
+            if (left + popupRect.width > window.innerWidth) left = window.innerWidth - popupRect.width - offset;
+            if (top + popupRect.height > window.innerHeight) top = window.innerHeight - popupRect.height - offset;
+
+            popup.style.top = `${top}px`;
+            popup.style.left = `${left}px`;
+        }
+
+        function skipTutorial() {
+        // This function HIDES all tutorial elements
+        document.getElementById('tutorialStartModal').style.display = 'none';
+        document.getElementById('tutorialGuideOverlay').style.display = 'none';
+        document.getElementById('tutorialStepPopup').style.display = 'none';
+        document.getElementById('tutorialEditorModal').style.display = 'none';
+        document.getElementById('tutorialEditorChoiceModal').style.display = 'none';
+        document.getElementById('tutorialDataStartModal').style.display = 'none'; // <-- ADDED
+
+        // Remove any existing highlights
+        const highlighted = document.querySelector('.tutorial-highlight');
+        if (highlighted) {
+            highlighted.classList.remove('tutorial-highlight');
+        }
+
+        // --- MODIFICATION: Remove listener and clear target ---
+        document.getElementById('editor').removeEventListener('scroll', repositionTutorialPopup);
+        currentTutorialTarget = null;
+    }
+
+        function endTutorialPermanently() {
+            // This function skips and sets the "don't show again" flag
+            skipTutorial();
+            localStorage.setItem('pipboyGenMainTutorialDone', 'true');
+        }
+
+        // --- NEW HELPER FUNCTION ---
+        function showNextTutorialStepModal() {
+            // Hide the guide overlay and step popup
+            document.getElementById('tutorialGuideOverlay').style.display = 'none';
+            document.getElementById('tutorialStepPopup').style.display = 'none';
+
+            // Remove any existing highlights
+            const highlighted = document.querySelector('.tutorial-highlight');
+            if (highlighted) {
+                highlighted.classList.remove('tutorial-highlight');
+            }
+
+            // Find the active main tab link
+            const activeTabLink = document.querySelector('.tab-nav .tab-link.active');
+            
+            if (activeTabLink && activeTabLink.getAttribute('onclick') === "openTab('data')") {
+                // --- MODIFICATION ---
+                // If on DATA tab, show the DATA start modal DIRECTLY
+                // Don't use showDataStartModal() because it checks localStorage
+                document.getElementById('tutorialDataStartModal').style.display = 'flex';
+                // --- END MODIFICATION ---
+            } else {
+                // If on ITEMS tab (or other), show the EDITOR prompt modal
+                document.getElementById('tutorialEditorModal').style.display = 'flex';
+            }
+        }
+        // --- END NEW HELPER FUNCTION ---
+
+        function skipToEditorTutorial() {
+            // Manually hide *only* the start modal
+            document.getElementById('tutorialStartModal').style.display = 'none';
+            
+            // --- MODIFICATION ---
+            // Show the appropriate next modal based on the active tab
+            showNextTutorialStepModal();
+            // --- END MODIFICATION ---
+        }
+
+        function nextTutorialStep() {
+            currentTutorialStep++;
+            if (currentTutorialStep < activeTutorialSteps.length) {
+                showTutorialStep(currentTutorialStep);
+            } else {
+                // Tutorial has finished
+                const oldHighlighted = document.querySelector('.tutorial-highlight');
+                if (oldHighlighted) {
+                    oldHighlighted.classList.remove('tutorial-highlight');
+                }
+
+                // Check if that was the MAIN tutorial
+                if (activeTutorialSteps === mainTutorialSteps) {
+                    // --- MODIFICATION ---
+                    // Show the appropriate next modal based on the active tab
+                    showNextTutorialStepModal();
+                    // --- END MODIFICATION ---
+                } else {
+                    // It was an editor or data tutorial, just close everything
+                    if (activeTutorialSteps === dataTutorialSteps) { // <-- ADDED
+                        localStorage.setItem('pipboyGenDataTutorialSkipped', 'true');
+                    }
+                    skipTutorial(); // Ends the tutorial
+                }
+            }
+        }
+		
+		function handleSkipClick() {
+            // Check if we are in the main tutorial
+            if (activeTutorialSteps === mainTutorialSteps) {
+                // --- MODIFICATION ---
+                // If so, skip to the appropriate next prompt
+                showNextTutorialStepModal();
+                // --- END MODIFICATION ---
+            } else {
+                // For DATA tutorial or EDITOR tutorials
+                if (activeTutorialSteps === dataTutorialSteps) { // <-- ADDED
+                    // If skipping the DATA tour, also set the flag
+                    localStorage.setItem('pipboyGenDataTutorialSkipped', 'true');
+                }
+                skipTutorial();
+            }
+        }
+
+        function showTutorialStep(index) {
+        // --- MODIFICATION: Remove old scroll listener ---
+        document.getElementById('editor').removeEventListener('scroll', repositionTutorialPopup);
+
+        // Remove old highlight
+        const oldHighlighted = document.querySelector('.tutorial-highlight');
+        if (oldHighlighted) {
+            oldHighlighted.classList.remove('tutorial-highlight');
+        }
+
+        // Use the *active* tutorial step array
+        const step = activeTutorialSteps[index];
+
+        // --- START MODIFICATION (onShow hook) ---
+        if (step.onShow) {
+            step.onShow();
+        }
+        // --- END MODIFICATION ---
+
+        let targetElement;
+
+        try {
+             targetElement = document.querySelector(step.element);
+             if (!targetElement) throw new Error("Element not found");
+        } catch (e) {
+            console.warn('Tutorial element not found:', step.element, 'Skipping step.');
+            targetElement = document.getElementById('editor'); // Fallback
+            if (!targetElement.classList.contains('tutorial-highlight')) {
+                targetElement.classList.add('tutorial-highlight');
+            }
+        }
+
+        // Add new highlight
+        targetElement.classList.add('tutorial-highlight');
+
+        // --- MODIFICATION: Store target and position for scroll listener ---
+        currentTutorialTarget = targetElement;
+        currentTutorialPosition = step.position;
+
+        const editorPane = document.getElementById('editor');
+        if (editorPane.contains(targetElement)) {
+            // If the highlighted element is *inside* the editor pane, scroll it into view
+            targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // Update popup content
+        const popup = document.getElementById('tutorialStepPopup');
+        document.getElementById('tutorialStepTitle').textContent = step.title;
+        document.getElementById('tutorialStepText').textContent = step.text;
+        document.getElementById('tutorialStepIndicator').textContent = `${index + 1} / ${activeTutorialSteps.length}`;
+
+        const nextBtn = document.getElementById('tutorialNext');
+        if (index === activeTutorialSteps.length - 1) {
+            nextBtn.textContent = 'Finish';
+        } else {
+            nextBtn.textContent = 'Next';
+        }
+
+        // Position popup (this will be re-run by the scroll listener)
+        repositionTutorialPopup(); 
+
+        // --- MODIFICATION: Add new scroll listener ---
+        if (editorPane.contains(targetElement)) {
+            editorPane.addEventListener('scroll', repositionTutorialPopup, { passive: true });
+        }
+    }
+        // --- End Tutorial Code ---
+
+        // --- START MODIFICATION ---
+        function replayActiveTutorial() {
+            // "Replay Tour" should always start the main tour.
+            // The logic for what to show *after* the main tour
+            // is now handled in showNextTutorialStepModal().
+            startTutorial();
+        }
+        // --- END MODIFICATION ---
 
         // --- Initial setup ---
         window.onload = () => {
@@ -1684,8 +2450,91 @@
                         });
                 });
             }
+
+            // --- Tutorial Button Listeners ---
+            // Initial Modal
+            document.getElementById('startTutorialBtn').addEventListener('click', startTutorial);
+            document.getElementById('skipTutorialBtn').addEventListener('click', skipToEditorTutorial);
+            
+            // Replay Button
+            document.getElementById('replayTutorialBtn').addEventListener('click', replayActiveTutorial);
+
+            // Step Popup
+			document.getElementById('tutorialSkip').addEventListener('click', handleSkipClick);
+			document.getElementById('tutorialNext').addEventListener('click', nextTutorialStep);
+            
+            // Editor Prompt Modal
+            document.getElementById('tutorialEditorNoBtn').addEventListener('click', endTutorialPermanently);
+            document.getElementById('tutorialEditorYesBtn').addEventListener('click', () => {
+                document.getElementById('tutorialEditorModal').style.display = 'none';
+                document.getElementById('tutorialEditorChoiceModal').style.display = 'flex';
+            });
+
+            // Editor Choice Modal
+            document.getElementById('tutorialChoiceWeaponBtn').addEventListener('click', () => startSpecificTutorial(weaponEditorTutorialSteps, 'weapon'));
+            document.getElementById('tutorialChoiceApparelBtn').addEventListener('click', () => startSpecificTutorial(apparelEditorTutorialSteps, 'apparel'));
+            document.getElementById('tutorialChoiceConsumableBtn').addEventListener('click', () => startSpecificTutorial(consumableEditorTutorialSteps, 'consumable'));
+            document.getElementById('tutorialChoiceCancelBtn').addEventListener('click', endTutorialPermanently);
+			
+			document.getElementById('startDataTutorialBtn').addEventListener('click', startDataTutorial);
+            document.getElementById('skipDataTutorialBtn').addEventListener('click', skipDataTutorial);
+
+
+            // --- Show Start Modal ---
+            showStartModal();
         };
     </script>
+    
+    <div id="tutorialStartModal" class="tutorial-overlay" style="display: none;">
+        <div class="tutorial-modal-content">
+            <h2>Welcome!</h2>
+            <p>Would you like a quick tour of the Items.json Generator?</p>
+            <div class="tutorial-modal-buttons">
+                <button id="skipTutorialBtn" class="tutorial-btn-skip">Skip</button>
+                <button id="startTutorialBtn" class="tutorial-btn-next">Start Tour</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="tutorialGuideOverlay" class="tutorial-overlay" style="display: none;"></div>
+
+    <div id="tutorialStepPopup" style="display: none;">
+        <div id="tutorialStepContent">
+            <h3 id="tutorialStepTitle"></h3>
+            <p id="tutorialStepText"></p>
+        </div>
+        <div class="tutorial-nav">
+            <span id="tutorialStepIndicator"></span>
+            <button id="tutorialSkip" class="tutorial-btn-skip">Skip</button>
+            <button id="tutorialNext" class="tutorial-btn-next">Next</button>
+        </div>
+        <div class="tutorial-arrow"></div>
+    </div>
+
+    <div id="tutorialEditorModal" class="tutorial-overlay" style="display: none;">
+        <div class="tutorial-modal-content">
+            <h2>Main Tour Complete!</h2>
+            <p>Would you like a detailed walkthrough of the item editor settings?</p>
+            <div class="tutorial-modal-buttons">
+                <button id="tutorialEditorNoBtn" class="tutorial-btn-skip">No, thanks</button>
+                <button id="tutorialEditorYesBtn" class="tutorial-btn-next">Yes, show me</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="tutorialEditorChoiceModal" class="tutorial-overlay" style="display: none;">
+        <div class="tutorial-modal-content">
+            <h2>Which Editor?</h2>
+            <p>Please select an item type to explore its specific settings.</p>
+            <div class="tutorial-modal-buttons" style="flex-direction: column;">
+                <button id="tutorialChoiceWeaponBtn" class="tutorial-btn-next" style="margin-bottom: 10px;">Weapon Editor</button>
+                <button id="tutorialChoiceApparelBtn" class="tutorial-btn-next" style="margin-bottom: 10px;">Apparel Editor</button>
+                <button id="tutorialChoiceConsumableBtn" class="tutorial-btn-next">Consumable Editor</button>
+                <hr style="width: 100%; border-color: var(--pip-green-dim); margin: 15px 0;">
+                <button id="tutorialChoiceCancelBtn" class="tutorial-btn-skip">Cancel</button>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
