@@ -200,5 +200,21 @@ const consumablePresets = [
       "Value": "3"
     }
   }
+,
+  {
+    "name": "Yummy Soda",
+    "type": "consumable",
+    "quantity": 1,
+    "effect": "",
+    "stats": {
+      "Weight": "1.0",
+      "Value": "10",
+      "Health": "10"
+    },
+    "image": "Mentats_img.js",
+    "sounds": [
+      "Soda_01.wav"
+    ]
+  }
 ];
 
