@@ -192,4 +192,24 @@ const weaponPresets = [
     ],
     "ammoType": "None"
   }
+,
+  {
+    "name": "New Weapon",
+    "type": "weapon",
+    "quantity": 1,
+    "effect": "",
+    "stats": {
+      "Weight": "1.0",
+      "Value": "10",
+      "Fire Rate": "10",
+      "Range": "50"
+    },
+    "damages": [
+      {
+        "type": "attack",
+        "value": "5"
+      }
+    ],
+    "ammoType": "None"
+  }
 ];
