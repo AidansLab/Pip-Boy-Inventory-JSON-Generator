@@ -2070,17 +2070,22 @@
 
                 // Modify the file content to add the new item
                 const newContent = addItemToPresetFile(fileContent.content, itemCopy);
+                let itemAdded = newContent !== null;
+                let filesAdded = false;
 
-                // Commit the preset file change
-                await commitFile(fork.owner.login, GITHUB_CONFIG.targetRepo, presetFile, branchName, newContent,
-                    `Add ${item.name} to ${item.type} presets`);
+                // Only commit preset file if item was actually added
+                if (itemAdded) {
+                    await commitFile(fork.owner.login, GITHUB_CONFIG.targetRepo, presetFile, branchName, newContent,
+                        `Add ${item.name} to ${item.type} presets`);
+                }
 
                 // If there's a custom image, also commit it to community_DATA
                 if (customImage) {
                     updateSubmitStatus('Uploading custom image file...', 'loading');
                     const imagePath = `community_DATA/${customImage.filename}`;
-                    await createNewFile(fork.owner.login, GITHUB_CONFIG.targetRepo, imagePath, branchName, customImage.content,
+                    const imageResult = await createNewFile(fork.owner.login, GITHUB_CONFIG.targetRepo, imagePath, branchName, customImage.content,
                         `Add custom image ${customImage.filename}`);
+                    if (!imageResult.skipped) filesAdded = true;
                 }
 
                 // If there are custom sounds, commit them to community_DATA
@@ -2090,8 +2095,15 @@
                     const soundPath = `community_DATA/${sound.filename}`;
                     // Sound content is base64 data URL, extract just the base64 part
                     const base64Content = sound.content.split(',')[1];
-                    await createNewFileBinary(fork.owner.login, GITHUB_CONFIG.targetRepo, soundPath, branchName, base64Content,
+                    const soundResult = await createNewFileBinary(fork.owner.login, GITHUB_CONFIG.targetRepo, soundPath, branchName, base64Content,
                         `Add custom sound ${sound.filename}`);
+                    if (!soundResult.skipped) filesAdded = true;
+                }
+
+                // Check if anything was actually added
+                if (!itemAdded && !filesAdded) {
+                    updateSubmitStatus('Nothing new to submit - item and files already exist.', 'error');
+                    return;
                 }
 
                 updateSubmitStatus('Creating Pull Request...', 'loading');
@@ -2259,6 +2271,14 @@
         }
 
         function addItemToPresetFile(content, item) {
+            // Check if item with same name already exists - return null to indicate no change
+            const itemNameEscaped = item.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const namePattern = new RegExp(`["']name["']\\s*:\\s*["']${itemNameEscaped}["']`, 'i');
+            if (namePattern.test(content)) {
+                console.log(`Item "${item.name}" already exists, skipping.`);
+                return null; // Return null to indicate item was not added
+            }
+
             // Find the closing bracket of the array
             const lastBracketIndex = content.lastIndexOf('];');
             if (lastBracketIndex === -1) {
