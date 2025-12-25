@@ -1,0 +1,5 @@
+[build]
+  functions = "netlify/functions"
+
+# No redirects needed - main site stays on GitHub Pages
+# This Netlify site only hosts the OAuth function

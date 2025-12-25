@@ -16,11 +16,16 @@
     <style>
         /* --- Pip-Boy Theme --- */
         :root {
-            --pip-green: #00ff00; /* Main text, main button bg */
-            --pip-green-bright: #00cc00; /* Button hover, data file hover */
-            --pip-green-dim: #003300; /* Disabled button bg */
-            --pip-green-dark: #003300; /* Map to disabled */
-            --pip-black: #111111; /* Button text, data file text */
+            --pip-green: #00ff00;
+            /* Main text, main button bg */
+            --pip-green-bright: #00cc00;
+            /* Button hover, data file hover */
+            --pip-green-dim: #003300;
+            /* Disabled button bg */
+            --pip-green-dark: #003300;
+            /* Map to disabled */
+            --pip-black: #111111;
+            /* Button text, data file text */
             --pip-bg-primary: #000;
             --pip-bg-secondary: #0a0a0a;
             --pip-bg-tertiary: #050505;
@@ -36,7 +41,8 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: var(--pip-bg-primary);
             min-height: 100vh;
-            color: var(--pip-green); /* Main text color */
+            color: var(--pip-green);
+            /* Main text color */
             font-size: 16px;
         }
 
@@ -52,7 +58,8 @@
             color: var(--pip-green);
             padding: 15px 30px;
             text-align: center;
-            border-bottom: 3px solid var(--pip-green); /* Accent border */
+            border-bottom: 3px solid var(--pip-green);
+            /* Accent border */
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -79,13 +86,15 @@
 
         .help-link {
             font-size: 0.9em;
-            color: var(--pip-green); /* Dim green for link */
+            color: var(--pip-green);
+            /* Dim green for link */
             text-decoration: none;
             transition: color 0.3s;
         }
 
         .help-link:hover {
-            color: var(--pip-green-bright); /* Brighten on hover */
+            color: var(--pip-green-bright);
+            /* Brighten on hover */
         }
 
         /* --- Main Button Styles (Green BG, Black Text) --- */
@@ -131,47 +140,53 @@
             width: auto;
             padding: 12px 20px;
         }
+
         .add-item-btn {
             width: 100%;
             padding: 10px;
             font-size: 0.95em;
             margin-bottom: 8px;
         }
+
         .tab-button {
             padding: 10px 20px;
             font-size: 0.95em;
             margin-bottom: 12px;
             display: block;
-			margin-top: 20px;
+            margin-top: 20px;
             margin-left: auto;
             margin-right: auto;
             width: fit-content;
         }
+
         .delete-btn {
             padding: 4px 8px;
             font-size: 0.85em;
             margin-left: 8px;
             flex-shrink: 0;
         }
+
         .add-base-btn {
             flex: 1;
             padding: 8px;
             font-size: 0.85em;
         }
+
         .remove-stat-btn {
             padding: 7px 10px;
             font-size: 0.8em;
         }
-         .delete-data-btn {
+
+        .delete-data-btn {
             padding: 3px 6px;
             font-size: 0.8em;
             flex-shrink: 0;
             line-height: 1;
-			background: none;
+            background: none;
         }
-		
-		.delete-data-btn:hover {
-			background: var(--pip-green);
+
+        .delete-data-btn:hover {
+            background: var(--pip-green);
         }
 
         /* --- Grid layout --- */
@@ -186,37 +201,45 @@
 
         /* --- Preset Sidebar Styles --- */
         .preset-sidebar {
-            background: var(--pip-bg-tertiary); /* Near-black bg */
-            border-right: 2px solid var(--pip-green); /* Green border */
+            background: var(--pip-bg-tertiary);
+            /* Near-black bg */
+            border-right: 2px solid var(--pip-green);
+            /* Green border */
             padding: 10px;
             overflow: hidden;
             height: 100%;
             display: flex;
             flex-direction: column;
             scrollbar-width: thin;
-            scrollbar-color: var(--pip-green) var(--pip-bg-tertiary); /* Green scrollbar */
+            scrollbar-color: var(--pip-green) var(--pip-bg-tertiary);
+            /* Green scrollbar */
         }
 
         #presetSearch {
             width: 100%;
             padding: 8px;
             margin-bottom: 10px;
-            border: 2px solid var(--pip-green); /* Dim green border */
+            border: 2px solid var(--pip-green);
+            /* Dim green border */
             border-radius: 6px;
             font-size: 0.9em;
-            background: var(--pip-black); /* Black bg */
-            color: var(--pip-green); /* Green text */
+            background: var(--pip-black);
+            /* Black bg */
+            color: var(--pip-green);
+            /* Green text */
             flex-shrink: 0;
         }
 
         #presetSearch:focus {
             outline: none;
-            border-color: var(--pip-green); /* Bright green border on focus */
+            border-color: var(--pip-green);
+            /* Bright green border on focus */
         }
 
         .preset-tab-nav {
             display: flex;
-            border-bottom: 2px solid var(--pip-green); /* Dim green border */
+            border-bottom: 2px solid var(--pip-green);
+            /* Dim green border */
             margin-bottom: 10px;
             flex-shrink: 0;
         }
@@ -224,7 +247,8 @@
         .preset-tab-link {
             background: none;
             border: none;
-            color: var(--pip-green); /* Dim green text */
+            color: var(--pip-green);
+            /* Dim green text */
             padding: 4px 4px;
             font-size: 0.9em;
             font-weight: 600;
@@ -241,10 +265,12 @@
         }
 
         .preset-tab-link.active {
-            color: var(--pip-green); /* Bright green active text */
-            border-bottom-color: var(--pip-green); /* Bright green border */
-			background: var(--pip-green-dim);
-			border-radius: 4px;
+            color: var(--pip-green);
+            /* Bright green active text */
+            border-bottom-color: var(--pip-green);
+            /* Bright green border */
+            background: var(--pip-green-dim);
+            border-radius: 4px;
         }
 
         .preset-tab-content-area {
@@ -274,8 +300,10 @@
         }
 
         .preset-list li {
-            background: #101010; /* Very dark grey */
-            color: var(--pip-green); /* Dim green text */
+            background: #101010;
+            /* Very dark grey */
+            color: var(--pip-green);
+            /* Dim green text */
             padding: 8px 12px;
             margin-bottom: 5px;
             border-radius: 4px;
@@ -286,12 +314,15 @@
         }
 
         .preset-list li:hover {
-            background-color: var(--pip-green-dim); /* Dim green bg on hover */
-            color: var(--pip-green); /* Black text on hover */
+            background-color: var(--pip-green-dim);
+            /* Dim green bg on hover */
+            color: var(--pip-green);
+            /* Black text on hover */
         }
 
         .preset-list .status-message {
-            color: var(--pip-green); /* Dim green text */
+            color: var(--pip-green);
+            /* Dim green text */
             font-style: italic;
             text-align: center;
             padding: 15px;
@@ -306,8 +337,10 @@
 
         /* --- Item List Sidebar --- */
         .sidebar {
-            background: var(--pip-bg-tertiary); /* Near-black bg */
-            border-right: 2px solid var(--pip-green); /* Green border */
+            background: var(--pip-bg-tertiary);
+            /* Near-black bg */
+            border-right: 2px solid var(--pip-green);
+            /* Green border */
             padding: 15px;
             overflow-y: auto;
             height: 100%;
@@ -322,11 +355,13 @@
             margin-bottom: 12px;
             padding: 0;
             scrollbar-width: thin;
-            scrollbar-color: var(--pip-green) var(--pip-bg-tertiary); /* Green scrollbar */
+            scrollbar-color: var(--pip-green) var(--pip-bg-tertiary);
+            /* Green scrollbar */
         }
 
         .item-list li {
-            background: #101010; /* Very dark grey */
+            background: #101010;
+            /* Very dark grey */
             margin-bottom: 6px;
             padding: 10px;
             border-radius: 6px;
@@ -336,18 +371,24 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            color: var(--pip-green); /* Bright green text */
+            color: var(--pip-green);
+            /* Bright green text */
         }
 
         .item-list li:hover {
-            border-color: var(--pip-green); /* Green border on hover */
-            background: var(--pip-green-dim); /* Dark bg on hover */
+            border-color: var(--pip-green);
+            /* Green border on hover */
+            background: var(--pip-green-dim);
+            /* Dark bg on hover */
         }
 
         .item-list li.active {
-            background: var(--pip-green-bright); /* Dim green bg when active */
-            color: var(--pip-black); /* Black text when active */
-            border-color: var(--pip-green); /* Bright green border */
+            background: var(--pip-green-bright);
+            /* Dim green bg when active */
+            color: var(--pip-black);
+            /* Black text when active */
+            border-color: var(--pip-green);
+            /* Bright green border */
         }
 
         .item-name-wrapper {
@@ -366,15 +407,19 @@
             font-size: 0.75em;
             padding: 2px 8px;
             border-radius: 10px;
-            background: var(--pip-green-dark); /* Dark green bg */
-            color: var(--pip-green); /* Bright green text */
+            background: var(--pip-green-dark);
+            /* Dark green bg */
+            color: var(--pip-green);
+            /* Bright green text */
             margin-left: 8px;
             white-space: nowrap;
         }
 
         .item-list li.active .item-type {
-            background: var(--pip-green); /* Bright green bg */
-            color: var(--pip-black); /* Black text */
+            background: var(--pip-green);
+            /* Bright green bg */
+            color: var(--pip-black);
+            /* Black text */
         }
 
         /* --- Editor --- */
@@ -382,9 +427,11 @@
             padding: 20px;
             overflow-y: auto;
             height: 100%;
-            border-right: 2px solid var(--pip-green); /* Green border */
+            border-right: 2px solid var(--pip-green);
+            /* Green border */
             scrollbar-width: thin;
-            scrollbar-color: var(--pip-green) var(--pip-bg-secondary); /* Green scrollbar */
+            scrollbar-color: var(--pip-green) var(--pip-bg-secondary);
+            /* Green scrollbar */
         }
 
         #togglePreviewBtn {
@@ -394,9 +441,12 @@
             transform: translateY(-50%) translateX(50%);
             width: 20px;
             height: 70px;
-            background: var(--pip-black); /* Black bg */
-            color: var(--pip-green); /* Green text */
-            border: 2px solid var(--pip-green); /* Green border */
+            background: var(--pip-black);
+            /* Black bg */
+            color: var(--pip-green);
+            /* Green text */
+            border: 2px solid var(--pip-green);
+            /* Green border */
             border-radius: 6px;
             cursor: pointer;
             z-index: 10;
@@ -407,17 +457,21 @@
         }
 
         #togglePreviewBtn:hover {
-            background: var(--pip-green-dim); /* Dim green bg on hover */
-            color: var(--pip-black); /* Black text on hover */
+            background: var(--pip-green-dim);
+            /* Dim green bg on hover */
+            color: var(--pip-black);
+            /* Black text on hover */
         }
 
         /* Collapsed State Rules */
         .main-content.preview-collapsed {
             grid-template-columns: 260px 308px 1fr;
         }
+
         .main-content.preview-collapsed .pipboy-preview-container {
             display: none;
         }
+
         .main-content.preview-collapsed #togglePreviewBtn {
             right: 6px;
         }
@@ -425,6 +479,7 @@
         .form-group {
             margin-bottom: 12px;
         }
+
         .form-row {
             display: grid;
             grid-template-columns: 1fr 2fr;
@@ -436,7 +491,8 @@
             display: block;
             font-weight: 600;
             margin-bottom: 4px;
-            color: var(--pip-green); /* Dim green for labels */
+            color: var(--pip-green);
+            /* Dim green for labels */
             font-size: 0.85em;
         }
 
@@ -446,19 +502,23 @@
         select {
             width: 100%;
             padding: 7px;
-            border: 2px solid var(--pip-green); /* Dim green border */
+            border: 2px solid var(--pip-green);
+            /* Dim green border */
             border-radius: 6px;
             font-size: 0.9em;
             transition: border-color 0.3s;
-            background: var(--pip-black); /* Black bg */
-            color: var(--pip-green); /* Green text */
+            background: var(--pip-black);
+            /* Black bg */
+            color: var(--pip-green);
+            /* Green text */
         }
 
         input:focus,
         textarea:focus,
         select:focus {
             outline: none;
-            border-color: var(--pip-green); /* Bright green border on focus */
+            border-color: var(--pip-green);
+            /* Bright green border on focus */
         }
 
         textarea {
@@ -470,11 +530,13 @@
         .stats-container,
         .damages-container,
         .defenses-container {
-            background: var(--pip-bg-secondary); /* Dark bg */
+            background: var(--pip-bg-secondary);
+            /* Dark bg */
             padding: 10px;
             border-radius: 6px;
             margin-top: 6px;
-            border: 1px solid var(--pip-green-dark); /* Dark green border */
+            border: 1px solid var(--pip-green-dark);
+            /* Dark green border */
         }
 
         .stat-item {
@@ -484,9 +546,11 @@
             margin-bottom: 6px;
             align-items: end;
         }
+
         .stat-item.consumable-stat {
             grid-template-columns: 1fr 1fr auto auto auto;
         }
+
         .damage-item,
         .defense-item {
             display: grid;
@@ -508,6 +572,7 @@
             margin-top: 6px;
             font-size: 0.8em;
         }
+
         .add-stat-btn:hover {
             background: var(--pip-green-bright);
         }
@@ -517,10 +582,12 @@
             align-items: center;
             margin-top: 10px;
         }
+
         .checkbox-group input[type="checkbox"] {
             width: auto;
             margin-right: 8px;
         }
+
         /* Label for checkbox should be bright */
         .checkbox-group label {
             color: var(--pip-green);
@@ -537,8 +604,10 @@
 
         .sound-tag,
         .equip-slot-tag {
-            background: var(--pip-green-bright); /* Dim green bg */
-            color: var(--pip-black); /* Black text */
+            background: var(--pip-green-bright);
+            /* Dim green bg */
+            color: var(--pip-black);
+            /* Black text */
             padding: 4px 10px;
             border-radius: 15px;
             font-size: 0.8em;
@@ -549,9 +618,11 @@
 
         .sound-tag button,
         .equip-slot-tag button {
-            background: var(--pip-green); /* Bright green bg */
+            background: var(--pip-green);
+            /* Bright green bg */
             border: none;
-            color: var(--pip-black); /* Black text */
+            color: var(--pip-black);
+            /* Black text */
             border-radius: 50%;
             width: 18px;
             height: 18px;
@@ -563,18 +634,22 @@
         .empty-state {
             text-align: center;
             padding: 60px 20px;
-            color: var(--pip-green); /* Dim green text */
+            color: var(--pip-green);
+            /* Dim green text */
         }
+
         .empty-state h2 {
             margin-bottom: 15px;
         }
 
         .section-header {
             font-size: 1.1em;
-            color: var(--pip-green); /* Bright green text */
+            color: var(--pip-green);
+            /* Bright green text */
             margin-bottom: 12px;
             padding-bottom: 6px;
-            border-bottom: 2px solid var(--pip-green); /* Dim green border */
+            border-bottom: 2px solid var(--pip-green);
+            /* Dim green border */
         }
 
         /* --- Pipboy Preview (Already themed) --- */
@@ -587,6 +662,7 @@
             height: 100%;
             overflow-y: auto;
         }
+
         .preview-header {
             display: flex;
             justify-content: space-between;
@@ -594,6 +670,7 @@
             padding-bottom: 5px;
             margin-bottom: 5px;
         }
+
         .preview-stats-list .stat-row {
             display: flex;
             justify-content: space-between;
@@ -602,15 +679,18 @@
             margin-bottom: 2px;
             height: 24px;
         }
+
         .preview-stats-list .stat-row .stat-name,
         .preview-stats-list .stat-row .stat-value {
             display: flex;
             align-items: center;
             gap: 6px;
         }
+
         .preview-stats-list .bright-bg {
             background-color: #0d3a1f;
         }
+
         .preview-stats-list .dithered-bg {
             background-image: repeating-linear-gradient(#000 0, #000 1px, #0a2815 1px, #0a2815 2px);
         }
@@ -622,6 +702,7 @@
             gap: 2px;
             flex-shrink: 0;
         }
+
         .reorder-arrows button {
             background: var(--pip-green);
             color: var(--pip-black);
@@ -634,9 +715,11 @@
             cursor: pointer;
             font-size: 10px;
         }
+
         .reorder-arrows button:hover {
             background: var(--pip-green-bright);
         }
+
         .reorder-arrows button:disabled {
             background: var(--pip-green-dark);
             color: var(--pip-black);
@@ -645,7 +728,8 @@
         }
 
         hr {
-            border: 1px solid var(--pip-green); /* Dim green line */
+            border: 1px solid var(--pip-green);
+            /* Dim green line */
             margin: 12px 0;
             flex-shrink: 0;
             width: 100%;
@@ -656,21 +740,25 @@
             gap: 8px;
             flex-shrink: 0;
         }
+
         /* .add-base-btn is already styled */
 
 
         /* --- Main Tab Styles --- */
         .tab-nav {
             display: flex;
-            background: var(--pip-black); /* Black bg */
-            border-bottom: 3px solid var(--pip-green); /* Green border */
+            background: var(--pip-black);
+            /* Black bg */
+            border-bottom: 3px solid var(--pip-green);
+            /* Green border */
             flex-shrink: 0;
         }
 
         .tab-link {
             background: none;
             border: none;
-            color: var(--pip-green); /* Dim green text */
+            color: var(--pip-green);
+            /* Dim green text */
             padding: 12px 20px;
             font-size: 1em;
             font-weight: 600;
@@ -685,15 +773,18 @@
         }
 
         .tab-link.active {
-            color: var(--pip-green); /* Bright green text */
-            border-bottom-color: var(--pip-green); /* Green border */
-			background: var(--pip-green-dim);
+            color: var(--pip-green);
+            /* Bright green text */
+            border-bottom-color: var(--pip-green);
+            /* Green border */
+            background: var(--pip-green-dim);
         }
 
         .tab-content-area {
             flex-grow: 1;
             overflow: hidden;
-            background: var(--pip-bg-secondary); /* Dark bg */
+            background: var(--pip-bg-secondary);
+            /* Dark bg */
             display: flex;
             flex-direction: column;
         }
@@ -736,23 +827,28 @@
             flex-direction: column;
             flex: 1;
             overflow: hidden;
-            background: var(--pip-bg-secondary); /* Dark bg */
+            background: var(--pip-bg-secondary);
+            /* Dark bg */
             border-radius: 6px;
-            border: 1px solid var(--pip-green); /* Dim green border */
+            border: 1px solid var(--pip-green);
+            /* Dim green border */
             padding: 0;
         }
 
         .data-sub-nav {
             display: flex;
-            border-bottom: 2px solid var(--pip-green); /* Dim green border */
+            border-bottom: 2px solid var(--pip-green);
+            /* Dim green border */
             flex-shrink: 0;
-            background-color: var(--pip-black); /* Black bg */
+            background-color: var(--pip-black);
+            /* Black bg */
         }
 
         .data-sub-link {
             background: none;
             border: none;
-            color: var(--pip-green); /* Dim green text */
+            color: var(--pip-green);
+            /* Dim green text */
             padding: 8px 15px;
             font-size: 0.9em;
             font-weight: 600;
@@ -766,13 +862,17 @@
 
         .data-sub-link:hover {
             color: var(--pip-green-bright);
-            background-color: var(--pip-green-dark); /* Dark green bg on hover */
+            background-color: var(--pip-green-dark);
+            /* Dark green bg on hover */
         }
 
         .data-sub-link.active {
-            color: var(--pip-green); /* Bright green text */
-            border-bottom-color: var(--pip-green); /* Green border */
-            background-color: var(--pip-green-dim); /* Dark bg */
+            color: var(--pip-green);
+            /* Bright green text */
+            border-bottom-color: var(--pip-green);
+            /* Green border */
+            background-color: var(--pip-green-dim);
+            /* Dark bg */
         }
 
         .data-sub-content-area {
@@ -800,7 +900,8 @@
         .data-sub-content h3 {
             margin-bottom: 10px;
             text-align: center;
-            color: var(--pip-green); /* Bright green text */
+            color: var(--pip-green);
+            /* Bright green text */
             flex-shrink: 0;
         }
 
@@ -810,15 +911,18 @@
             flex-direction: column;
             overflow: hidden;
             padding: 10px;
-            background: var(--pip-bg-secondary); /* Dark bg */
+            background: var(--pip-bg-secondary);
+            /* Dark bg */
             border-radius: 6px;
-            border: 1px solid var(--pip-green); /* Dim green border */
+            border: 1px solid var(--pip-green);
+            /* Dim green border */
         }
 
         .data-list-container h3 {
             margin-bottom: 10px;
             text-align: center;
-            color: var(--pip-green); /* Bright green text */
+            color: var(--pip-green);
+            /* Bright green text */
             flex-shrink: 0;
         }
 
@@ -829,17 +933,22 @@
             margin: 0;
             flex-grow: 1;
             overflow-y: auto;
-            background: var(--pip-green); /* Green background */
+            background: var(--pip-green);
+            /* Green background */
             border-radius: 4px;
             padding: 8px;
-            max-height: 260px; /* Limit height to ~6 items */
-			scrollbar-width: thin;
-			scrollbar-color: var(--pip-green) var(--pip-bg-tertiary); /* Green scrollbar */
+            max-height: 260px;
+            /* Limit height to ~6 items */
+            scrollbar-width: thin;
+            scrollbar-color: var(--pip-green) var(--pip-bg-tertiary);
+            /* Green scrollbar */
         }
 
-         .data-file-list li {
-            background: none; /* No background for items */
-            color: var(--pip-black); /* Default dark text for li */
+        .data-file-list li {
+            background: none;
+            /* No background for items */
+            color: var(--pip-black);
+            /* Default dark text for li */
             padding: 8px 12px;
             margin-bottom: 5px;
             border-radius: 4px;
@@ -847,47 +956,53 @@
             align-items: center;
             cursor: default;
             font-size: 0.9em;
-            transition: background-color 0.2s; /* Add transition */
-         }
+            transition: background-color 0.2s;
+            /* Add transition */
+        }
 
-         /* Apply hover to all LI except status */
-         .data-file-list li:not(.status-message):hover {
-             background-color: var(--pip-green-bright); /* Lighter green on hover */
-         }
+        /* Apply hover to all LI except status */
+        .data-file-list li:not(.status-message):hover {
+            background-color: var(--pip-green-bright);
+            /* Lighter green on hover */
+        }
 
-         .data-file-list input[type="checkbox"].file-checkbox {
-             margin-right: 10px;
-             flex-shrink: 0;
-             cursor: pointer;
-         }
+        .data-file-list input[type="checkbox"].file-checkbox {
+            margin-right: 10px;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
 
-         .data-filename {
-             flex-grow: 1;
-             margin-right: 10px;
-             word-break: break-all;
-             cursor: inherit;
-             font-size: inherit;
-             color: var(--pip-black); /* *** THIS IS THE FIX *** */
-         }
-         
-         .data-file-list label.data-filename {
-             cursor: pointer;
-         }
+        .data-filename {
+            flex-grow: 1;
+            margin-right: 10px;
+            word-break: break-all;
+            cursor: inherit;
+            font-size: inherit;
+            color: var(--pip-black);
+            /* *** THIS IS THE FIX *** */
+        }
 
-         .data-file-list .status-message {
-             color: var(--pip-black); /* Dark text */
-             font-style: italic;
-             text-align: center;
-             padding: 20px;
-             display: block;
-             cursor: default;
-             background: var(--pip-green); /* Match list background */
-         }
+        .data-file-list label.data-filename {
+            cursor: pointer;
+        }
 
-         .data-file-list li.status-message:hover {
-             background-color: var(--pip-green); /* No hover effect */
-             color: var(--pip-black);
-         }
+        .data-file-list .status-message {
+            color: var(--pip-black);
+            /* Dark text */
+            font-style: italic;
+            text-align: center;
+            padding: 20px;
+            display: block;
+            cursor: default;
+            background: var(--pip-green);
+            /* Match list background */
+        }
+
+        .data-file-list li.status-message:hover {
+            background-color: var(--pip-green);
+            /* No hover effect */
+            color: var(--pip-black);
+        }
 
         /* .delete-data-btn is already styled */
 
@@ -906,9 +1021,12 @@
         }
 
         #tutorialGuideOverlay {
-             background: rgba(0, 0, 0, 0.5); /* Less dark for the guide */
-             align-items: initial; /* Don't center this one */
-             z-index: 999; /* Below popup and highlight */
+            background: rgba(0, 0, 0, 0.5);
+            /* Less dark for the guide */
+            align-items: initial;
+            /* Don't center this one */
+            z-index: 999;
+            /* Below popup and highlight */
         }
 
         .tutorial-modal-content {
@@ -925,17 +1043,20 @@
         .tutorial-modal-content h2 {
             margin-bottom: 15px;
         }
+
         .tutorial-modal-content p {
             margin-bottom: 20px;
             font-size: 1.1em;
         }
+
         .tutorial-modal-buttons {
             display: flex;
             justify-content: center;
             gap: 15px;
         }
 
-        .tutorial-btn-skip, .tutorial-btn-next {
+        .tutorial-btn-skip,
+        .tutorial-btn-next {
             background: var(--pip-green);
             color: var(--pip-black);
             border: none;
@@ -946,15 +1067,19 @@
             cursor: pointer;
             transition: background 0.3s;
         }
+
         .tutorial-btn-skip {
-            background: var(--pip-bg-tertiary); /* Darker */
+            background: var(--pip-bg-tertiary);
+            /* Darker */
             color: var(--pip-green);
             border: 2px solid var(--pip-green-dim);
         }
+
         .tutorial-btn-skip:hover {
             background: var(--pip-green-dim);
             color: var(--pip-green);
         }
+
         .tutorial-btn-next:hover {
             background: var(--pip-green-bright);
         }
@@ -978,10 +1103,12 @@
             border-bottom: 1px solid var(--pip-green-dim);
             padding-bottom: 5px;
         }
+
         #tutorialStepPopup p {
             font-size: 0.9em;
             margin-bottom: 15px;
         }
+
         .tutorial-nav {
             display: flex;
             justify-content: space-between;
@@ -989,9 +1116,11 @@
             border-top: 1px solid var(--pip-green-dim);
             padding-top: 10px;
         }
+
         #tutorialStepIndicator {
             font-size: 0.8em;
         }
+
         .tutorial-nav .tutorial-btn-skip,
         .tutorial-nav .tutorial-btn-next {
             padding: 5px 12px;
@@ -1007,7 +1136,7 @@
             border-radius: 4px;
             transition: box-shadow 0.3s;
         }
-        
+
         /* Arrow (pseudo-element) */
         .tutorial-arrow {
             position: absolute;
@@ -1015,6 +1144,7 @@
             height: 0;
             border-style: solid;
         }
+
         #tutorialStepPopup.arrow-top .tutorial-arrow {
             bottom: 100%;
             left: 50%;
@@ -1022,6 +1152,7 @@
             border-width: 0 10px 10px 10px;
             border-color: transparent transparent var(--pip-green) transparent;
         }
+
         #tutorialStepPopup.arrow-bottom .tutorial-arrow {
             top: 100%;
             left: 50%;
@@ -1029,6 +1160,7 @@
             border-width: 10px 10px 0 10px;
             border-color: var(--pip-green) transparent transparent transparent;
         }
+
         #tutorialStepPopup.arrow-left .tutorial-arrow {
             right: 100%;
             top: 50%;
@@ -1036,6 +1168,7 @@
             border-width: 10px 10px 10px 0;
             border-color: transparent var(--pip-green) transparent transparent;
         }
+
         #tutorialStepPopup.arrow-right .tutorial-arrow {
             left: 100%;
             top: 50%;
@@ -1048,54 +1181,233 @@
             text-decoration: none;
             transition: color 0.3s;
         }
+
         #replayTutorialBtn:hover {
             color: var(--pip-green-bright);
         }
-		.help-icon {
-			filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%); /* Example filter for green */
-			opacity: 0.7; /* Optional: Make it slightly dimmer like other help text */
-			transition: filter 0.3s, opacity 0.3s;
-		}
-		
-		.help-link:hover .help-icon {
-			/* Optional: Make it brighter on hover */
-			filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(130%) contrast(130%);
-			opacity: 1;
-		}
-		.header-title-section {
-        display: flex;
-        align-items: baseline; /* Keep baseline alignment for the initial layout */
-        gap: 8px;
-        flex: 0 0 auto;
-    }
 
-    /* Target the link containing the help icon */
-    .header-title-section > a.help-link {
-        position: relative; /* Enable manual positioning */
-        top: -3px; /* Move it DOWN slightly (adjust this value as needed) */
-        line-height: 1; /* Keep line height tight */
-		margin-left: 4px;
-    }
+        .help-icon {
+            filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%);
+            /* Example filter for green */
+            opacity: 0.7;
+            /* Optional: Make it slightly dimmer like other help text */
+            transition: filter 0.3s, opacity 0.3s;
+        }
 
-    /* Target the Replay Tour button specifically */
-    .header-title-section > button#replayTutorialBtn {
-        position: relative; /* Enable manual positioning */
-        top: -3.5px; /* Move it UP slightly (adjust this value as needed) */
-        line-height: 1; /* Keep line height tight */
-    }
+        .help-link:hover .help-icon {
+            /* Optional: Make it brighter on hover */
+            filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(130%) contrast(130%);
+            opacity: 1;
+        }
 
-    .help-icon {
-        vertical-align: middle; /* Middle align the icon within its link container */
-        /* --- Add back your filter/fill rules --- */
-        filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%);
-        opacity: 0.7;
-        transition: filter 0.3s, opacity 0.3s;
-    }
+        .header-title-section {
+            display: flex;
+            align-items: baseline;
+            /* Keep baseline alignment for the initial layout */
+            gap: 8px;
+            flex: 0 0 auto;
+        }
 
-    .help-link:hover .help-icon {
-       filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(130%) contrast(130%);
-       opacity: 1;
-    }
+        /* Target the link containing the help icon */
+        .header-title-section>a.help-link {
+            position: relative;
+            /* Enable manual positioning */
+            top: -3px;
+            /* Move it DOWN slightly (adjust this value as needed) */
+            line-height: 1;
+            /* Keep line height tight */
+            margin-left: 4px;
+        }
+
+        /* Target the Replay Tour button specifically */
+        .header-title-section>button#replayTutorialBtn {
+            position: relative;
+            /* Enable manual positioning */
+            top: -3.5px;
+            /* Move it UP slightly (adjust this value as needed) */
+            line-height: 1;
+            /* Keep line height tight */
+        }
+
+        .help-icon {
+            vertical-align: middle;
+            /* Middle align the icon within its link container */
+            /* --- Add back your filter/fill rules --- */
+            filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%);
+            opacity: 0.7;
+            transition: filter 0.3s, opacity 0.3s;
+        }
+
+        .help-link:hover .help-icon {
+            filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(130%) contrast(130%);
+            opacity: 1;
+        }
+
+        /* --- Submit to Community Button & Modal --- */
+        .submit-community-btn {
+            background: #4078c0;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .submit-community-btn:hover {
+            background: #3069b3;
+        }
+
+        .submit-community-btn:disabled {
+            background: #555;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .submit-community-btn .github-icon {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .submit-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .submit-modal-content {
+            background: var(--pip-bg-secondary);
+            border: 2px solid var(--pip-green);
+            border-radius: 8px;
+            padding: 25px;
+            max-width: 500px;
+            width: 90%;
+            color: var(--pip-green);
+        }
+
+        .submit-modal-content h2 {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .submit-modal-content .item-preview {
+            background: var(--pip-black);
+            border: 1px solid var(--pip-green-dim);
+            border-radius: 4px;
+            padding: 12px;
+            margin: 15px 0;
+            font-family: monospace;
+            font-size: 0.85em;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .submit-modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .submit-modal-buttons button {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+        }
+
+        .submit-cancel-btn {
+            background: var(--pip-bg-tertiary);
+            color: var(--pip-green);
+            border: 2px solid var(--pip-green-dim) !important;
+        }
+
+        .submit-confirm-btn {
+            background: #4078c0;
+            color: white;
+        }
+
+        .submit-confirm-btn:disabled {
+            background: #555;
+            cursor: not-allowed;
+        }
+
+        .github-login-section {
+            background: var(--pip-black);
+            border: 1px solid var(--pip-green-dim);
+            border-radius: 4px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .github-login-btn {
+            background: #333;
+            color: white;
+            border: 1px solid #555;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+        }
+
+        .github-login-btn:hover {
+            background: #444;
+        }
+
+        .github-user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .github-user-info img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+        }
+
+        .submit-status {
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .submit-status.loading {
+            background: var(--pip-green-dim);
+            color: var(--pip-green);
+        }
+
+        .submit-status.success {
+            background: #1a4d1a;
+            color: #4eff4e;
+        }
+
+        .submit-status.error {
+            background: #4d1a1a;
+            color: #ff4e4e;
+        }
     </style>
 </head>
 
@@ -1103,16 +1415,74 @@
     <div class="container">
         <div class="header">
             <div class="header-title-section">
-            <h1>Items.json Generator</h1>
-            <a href="https://github.com/AidansLab/Pip-Boy-Inventory-JSON-Generator/blob/main/README.md#remote-usage-recommended-for-most-users" target="_blank" class="help-link" title="View documentation">
-                <img src="help_button.svg" alt="Help" class="help-icon" style="height: 18px; width: 18px;">
-            </a>
-            <button id="replayTutorialBtn" class="help-link" style="background:none; border:none; cursor:pointer; font-size: 0.9em; padding-left: 5px;"><img src="tour_button.svg" alt="Help" class="help-icon" style="height: 22px; width: 22px"; title="Replay Tour"></button>
-			</div>
+                <h1>Items.json Generator</h1>
+                <a href="https://github.com/AidansLab/Pip-Boy-Inventory-JSON-Generator/blob/main/README.md#remote-usage-recommended-for-most-users"
+                    target="_blank" class="help-link" title="View documentation">
+                    <img src="help_button.svg" alt="Help" class="help-icon" style="height: 18px; width: 18px;">
+                </a>
+                <button id="replayTutorialBtn" class="help-link"
+                    style="background:none; border:none; cursor:pointer; font-size: 0.9em; padding-left: 5px;"><img
+                        src="tour_button.svg" alt="Help" class="help-icon" style="height: 22px; width: 22px" ;
+                        title="Replay Tour"></button>
+            </div>
             <div class="header-buttons">
                 <button id="btnConnectUSB" class="export-btn-header">Connect</button>
-                <button id="btnUploadUSB" class="export-btn-header" onclick="sendJSONviaUSB()" disabled>Upload Items to Device</button>
-                <button id="exportBtnHeader" class="export-btn-header" onclick="exportJSON()" disabled>Download Items As ZIP</button>
+                <button id="btnUploadUSB" class="export-btn-header" onclick="sendJSONviaUSB()" disabled>Upload Items to
+                    Device</button>
+                <button id="exportBtnHeader" class="export-btn-header" onclick="exportJSON()" disabled>Download Items As
+                    ZIP</button>
+                <button id="btnSubmitCommunity" class="submit-community-btn" onclick="openSubmitModal()" disabled
+                    title="Submit selected item to the community presets">
+                    <svg class="github-icon" viewBox="0 0 16 16">
+                        <path fill="currentColor"
+                            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                    </svg>
+                    Submit to Community
+                </button>
+            </div>
+        </div>
+
+        <!-- Submit to Community Modal -->
+        <div id="submitCommunityModal" class="submit-modal-overlay">
+            <div class="submit-modal-content">
+                <h2>
+                    <svg style="width:24px;height:24px" viewBox="0 0 16 16">
+                        <path fill="currentColor"
+                            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                    </svg>
+                    Submit Item to Community
+                </h2>
+                <p>This will create a Pull Request to add your item to the community presets.</p>
+
+                <div class="github-login-section" id="githubLoginSection">
+                    <p style="margin-bottom: 10px;">Login with GitHub to submit:</p>
+                    <button class="github-login-btn" onclick="loginWithGitHub()">
+                        <svg style="width:20px;height:20px" viewBox="0 0 16 16">
+                            <path fill="currentColor"
+                                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                        </svg>
+                        Login with GitHub
+                    </button>
+                </div>
+
+                <div class="github-login-section" id="githubUserSection" style="display: none;">
+                    <div class="github-user-info">
+                        <img id="githubUserAvatar" src="" alt="Avatar">
+                        <span>Logged in as <strong id="githubUsername"></strong></span>
+                        <button onclick="logoutGitHub()"
+                            style="background:none;border:none;color:#ff6b6b;cursor:pointer;margin-left:10px;">Logout</button>
+                    </div>
+                </div>
+
+                <div class="item-preview" id="submitItemPreview"></div>
+
+                <div id="submitStatus" class="submit-status" style="display: none;"></div>
+
+                <div class="submit-modal-buttons">
+                    <button class="submit-cancel-btn" onclick="closeSubmitModal()">Cancel</button>
+                    <button class="submit-confirm-btn" id="submitConfirmBtn" onclick="submitItemToCommunity()"
+                        disabled>Create Pull Request</button>
+                </div>
             </div>
         </div>
 
@@ -1131,7 +1501,8 @@
                     <div class="preset-tab-nav">
                         <button class="preset-tab-link active" onclick="openPresetTab('apparel', this)">Apparel</button>
                         <button class="preset-tab-link" onclick="openPresetTab('weapons', this)">Weapons</button>
-                        <button class="preset-tab-link" onclick="openPresetTab('consumables', this)">Consumables</button>
+                        <button class="preset-tab-link"
+                            onclick="openPresetTab('consumables', this)">Consumables</button>
                     </div>
                     <div class="preset-tab-content-area">
                         <div id="preset-tab-content-apparel" class="preset-tab-content active">
@@ -1152,9 +1523,12 @@
                     </div>
                 </div>
                 <div class="sidebar">
-                    <button id="btnLoadFromDevice" class="add-item-btn export-btn-header" onclick="loadItemsFromDevice()" style="width:auto;">Load Items from Device</button>
-                    <button class="add-item-btn" onclick="document.getElementById('fileInput').click()">Load Items JSONs...</button>
-                    <input type="file" id="fileInput" multiple accept=".json" style="display: none;" onchange="loadItemsFromFiles(event)">
+                    <button id="btnLoadFromDevice" class="add-item-btn export-btn-header"
+                        onclick="loadItemsFromDevice()" style="width:auto;">Load Items from Device</button>
+                    <button class="add-item-btn" onclick="document.getElementById('fileInput').click()">Load Items
+                        JSONs...</button>
+                    <input type="file" id="fileInput" multiple accept=".json" style="display: none;"
+                        onchange="loadItemsFromFiles(event)">
                     <ul class="item-list" id="itemList"></ul>
                     <hr>
                     <div class="base-item-controls">
@@ -1172,65 +1546,75 @@
                 </div>
 
                 <div class="pipboy-preview-container" id="pipboy-preview">
-                    <div class="preview-header"> <span id="preview-name">ITEM NAME</span><span>QTY <span id="preview-qty">0</span></span></div>
+                    <div class="preview-header"> <span id="preview-name">ITEM NAME</span><span>QTY <span
+                                id="preview-qty">0</span></span></div>
                     <div class="preview-stats-list" id="preview-stats-list"></div>
                 </div>
-				<button id="togglePreviewBtn" onclick="togglePreview()">»</button>
+                <button id="togglePreviewBtn" onclick="togglePreview()">»</button>
             </div>
 
             <div id="tab-content-data" class="tab-content">
-                 <div class="data-tab-layout">
-                     <div class="data-sub-tabs">
-                         <div class="data-sub-nav">
-                            <button class="data-sub-link active" onclick="openDataSubTab('community', this)">Community</button>
+                <div class="data-tab-layout">
+                    <div class="data-sub-tabs">
+                        <div class="data-sub-nav">
+                            <button class="data-sub-link active"
+                                onclick="openDataSubTab('community', this)">Community</button>
                             <button class="data-sub-link" onclick="openDataSubTab('local', this)">Local</button>
-                         </div>
-                         <div class="data-sub-content-area">
-                             <div id="data-sub-content-community" class="data-sub-content active">
+                        </div>
+                        <div class="data-sub-content-area">
+                            <div id="data-sub-content-community" class="data-sub-content active">
                                 <h3>Community Files (from GitHub)</h3>
                                 <ul id="communityDataFileList" class="data-file-list">
                                     <li class="status-message">Loading Community files...</li>
                                 </ul>
-                                <button id="btnUploadSelectedCommunityFiles" class="tab-button" onclick="uploadSelectedCommunityFiles()" disabled>Upload Selected Files to Device</button>
+                                <button id="btnUploadSelectedCommunityFiles" class="tab-button"
+                                    onclick="uploadSelectedCommunityFiles()" disabled>Upload Selected Files to
+                                    Device</button>
                             </div>
                             <div id="data-sub-content-local" class="data-sub-content">
-                                 <h3>Local Files for Upload</h3>
-                                 <button class="tab-button" onclick="document.getElementById('localDataFolderInput').click()">Select Local DATA Files Folder</button>
-                                 <input type="file" id="localDataFolderInput" webkitdirectory directory style="display: none;" onchange="selectLocalDataFolder(event)">
-                                 <ul id="localDataFileList" class="data-file-list">
+                                <h3>Local Files for Upload</h3>
+                                <button class="tab-button"
+                                    onclick="document.getElementById('localDataFolderInput').click()">Select Local DATA
+                                    Files Folder</button>
+                                <input type="file" id="localDataFolderInput" webkitdirectory directory
+                                    style="display: none;" onchange="selectLocalDataFolder(event)">
+                                <ul id="localDataFileList" class="data-file-list">
                                     <li class="status-message">Select a folder to list files...</li>
-                                 </ul>
-                                 <button id="btnUploadSelectedDataFiles" class="tab-button" onclick="uploadSelectedDataFiles()" disabled>Upload Selected Files to Device</button>
-                             </div>
-                         </div>
-                     </div>
-                     <div class="data-list-container">
-                         <h3>Files in DATA/ on Device</h3>
-                          <button id="btnScanDataDir" class="tab-button" onclick="scanDataDirectory()" style="margin-top: 0;">Scan DATA Directory</button>
-                         <ul id="dataFileList" class="data-file-list">
+                                </ul>
+                                <button id="btnUploadSelectedDataFiles" class="tab-button"
+                                    onclick="uploadSelectedDataFiles()" disabled>Upload Selected Files to
+                                    Device</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="data-list-container">
+                        <h3>Files in DATA/ on Device</h3>
+                        <button id="btnScanDataDir" class="tab-button" onclick="scanDataDirectory()"
+                            style="margin-top: 0;">Scan DATA Directory</button>
+                        <ul id="dataFileList" class="data-file-list">
                             <li class="status-message">Connect and Scan to list files...</li>
-                         </ul>
-                     </div>
-                 </div>
+                        </ul>
+                    </div>
+                </div>
             </div>
 
             <div id="tab-content-image-maker" class="tab-content">
                 <div class="empty-state">
                     <h2>Image Maker</h2>
                     <p>Coming Soon.</p>
-                     </div>
+                </div>
             </div>
-			
-			<div id="tutorialDataStartModal" class="tutorial-overlay" style="display: none;">
-        <div class="tutorial-modal-content">
-            <h2>Data Tab Tour</h2>
-            <p>This section is for managing files on your Pip-Boy. Would you like a quick tour?</p>
-            <div class="tutorial-modal-buttons">
-                <button id="skipDataTutorialBtn" class="tutorial-btn-skip">Skip</button>
-                <button id="startDataTutorialBtn" class="tutorial-btn-next">Start Tour</button>
+
+            <div id="tutorialDataStartModal" class="tutorial-overlay" style="display: none;">
+                <div class="tutorial-modal-content">
+                    <h2>Data Tab Tour</h2>
+                    <p>This section is for managing files on your Pip-Boy. Would you like a quick tour?</p>
+                    <div class="tutorial-modal-buttons">
+                        <button id="skipDataTutorialBtn" class="tutorial-btn-skip">Skip</button>
+                        <button id="startDataTutorialBtn" class="tutorial-btn-next">Start Tour</button>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
         </div>
     </div>
@@ -1242,6 +1626,389 @@
         let deviceImages = [];
         let localDataFiles = []; // Files selected in the LOCAL data tab { file: File, selected: boolean }
         let communityDataFiles = []; // Files fetched for COMMUNITY data tab { name: string, download_url: string, selected: boolean }
+
+        // --- GitHub OAuth & PR Submission Configuration ---
+        const GITHUB_CONFIG = {
+            clientId: 'YOUR_GITHUB_CLIENT_ID', // Replace with your GitHub OAuth App Client ID
+            oauthProxyUrl: 'https://YOUR_NETLIFY_SITE.netlify.app/.netlify/functions/github-oauth', // Replace with your Netlify function URL
+            targetOwner: 'AidansLab',
+            targetRepo: 'Pip-Boy-Inventory-JSON-Generator',
+            scopes: 'public_repo'
+        };
+
+        let githubToken = localStorage.getItem('github_token') || null;
+        let githubUser = null;
+
+        // --- GitHub OAuth Functions ---
+        function loginWithGitHub() {
+            const authUrl = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CONFIG.clientId}&scope=${GITHUB_CONFIG.scopes}&redirect_uri=${encodeURIComponent(window.location.origin + window.location.pathname)}`;
+
+            // Open popup for OAuth
+            const popup = window.open(authUrl, 'github-oauth', 'width=600,height=700');
+
+            // Listen for the OAuth callback
+            window.addEventListener('message', async function handleOAuthMessage(event) {
+                if (event.origin !== window.location.origin) return;
+                if (event.data.type === 'github-oauth-code') {
+                    window.removeEventListener('message', handleOAuthMessage);
+                    popup.close();
+                    await exchangeCodeForToken(event.data.code);
+                }
+            });
+        }
+
+        // Check for OAuth callback on page load
+        function checkOAuthCallback() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const code = urlParams.get('code');
+            if (code) {
+                // Clear the URL parameters
+                window.history.replaceState({}, document.title, window.location.pathname);
+
+                // If opened in popup, send message to parent
+                if (window.opener) {
+                    window.opener.postMessage({ type: 'github-oauth-code', code: code }, window.location.origin);
+                    window.close();
+                } else {
+                    // Direct navigation (not popup) - exchange token directly
+                    exchangeCodeForToken(code);
+                }
+            }
+        }
+
+        async function exchangeCodeForToken(code) {
+            try {
+                updateSubmitStatus('Authenticating with GitHub...', 'loading');
+
+                const response = await fetch(GITHUB_CONFIG.oauthProxyUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code: code })
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                githubToken = data.access_token;
+                localStorage.setItem('github_token', githubToken);
+
+                await fetchGitHubUser();
+                updateGitHubLoginUI();
+                updateSubmitStatus('', '');
+
+            } catch (error) {
+                console.error('OAuth error:', error);
+                updateSubmitStatus('Authentication failed: ' + error.message, 'error');
+            }
+        }
+
+        async function fetchGitHubUser() {
+            if (!githubToken) return null;
+
+            try {
+                const response = await fetch('https://api.github.com/user', {
+                    headers: { 'Authorization': `token ${githubToken}` }
+                });
+
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        logoutGitHub();
+                        return null;
+                    }
+                    throw new Error('Failed to fetch user');
+                }
+
+                githubUser = await response.json();
+                return githubUser;
+            } catch (error) {
+                console.error('Error fetching GitHub user:', error);
+                return null;
+            }
+        }
+
+        function logoutGitHub() {
+            githubToken = null;
+            githubUser = null;
+            localStorage.removeItem('github_token');
+            updateGitHubLoginUI();
+        }
+
+        function updateGitHubLoginUI() {
+            const loginSection = document.getElementById('githubLoginSection');
+            const userSection = document.getElementById('githubUserSection');
+            const confirmBtn = document.getElementById('submitConfirmBtn');
+
+            if (githubToken && githubUser) {
+                loginSection.style.display = 'none';
+                userSection.style.display = 'block';
+                document.getElementById('githubUserAvatar').src = githubUser.avatar_url;
+                document.getElementById('githubUsername').textContent = githubUser.login;
+                confirmBtn.disabled = false;
+            } else {
+                loginSection.style.display = 'block';
+                userSection.style.display = 'none';
+                confirmBtn.disabled = true;
+            }
+        }
+
+        // --- Submit Modal Functions ---
+        function openSubmitModal() {
+            if (currentIndex < 0) {
+                alert('Please select an item first.');
+                return;
+            }
+
+            const item = items[currentIndex];
+            const modal = document.getElementById('submitCommunityModal');
+            const preview = document.getElementById('submitItemPreview');
+
+            // Show item preview
+            const itemCopy = JSON.parse(JSON.stringify(item));
+            itemCopy.quantity = 1; // Always set to 1 for presets
+            preview.textContent = JSON.stringify(itemCopy, null, 2);
+
+            // Update login UI
+            if (githubToken) {
+                fetchGitHubUser().then(() => updateGitHubLoginUI());
+            } else {
+                updateGitHubLoginUI();
+            }
+
+            updateSubmitStatus('', '');
+            modal.style.display = 'flex';
+        }
+
+        function closeSubmitModal() {
+            document.getElementById('submitCommunityModal').style.display = 'none';
+        }
+
+        function updateSubmitStatus(message, type) {
+            const status = document.getElementById('submitStatus');
+            if (!message) {
+                status.style.display = 'none';
+                return;
+            }
+            status.textContent = message;
+            status.className = 'submit-status ' + type;
+            status.style.display = 'block';
+        }
+
+        // --- PR Creation Functions ---
+        async function submitItemToCommunity() {
+            if (!githubToken || currentIndex < 0) return;
+
+            const item = items[currentIndex];
+            const itemCopy = JSON.parse(JSON.stringify(item));
+            itemCopy.quantity = 1;
+
+            // Determine preset file based on item type
+            let presetFile;
+            switch (item.type) {
+                case 'weapon': presetFile = 'presets_weapons.js'; break;
+                case 'apparel': presetFile = 'presets_apparel.js'; break;
+                case 'consumable': presetFile = 'presets_consumables.js'; break;
+                default:
+                    updateSubmitStatus('Item must have a type (weapon, apparel, or consumable) to submit.', 'error');
+                    return;
+            }
+
+            try {
+                updateSubmitStatus('Creating fork if needed...', 'loading');
+
+                // Fork the repo (or get existing fork)
+                const fork = await ensureFork();
+
+                updateSubmitStatus('Fetching current preset file...', 'loading');
+
+                // Get the current content of the preset file
+                const fileContent = await getFileContent(fork.owner.login, GITHUB_CONFIG.targetRepo, presetFile);
+
+                updateSubmitStatus('Creating branch...', 'loading');
+
+                // Create a new branch
+                const branchName = `add-${item.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${Date.now()}`;
+                await createBranch(fork.owner.login, GITHUB_CONFIG.targetRepo, branchName, fileContent.sha);
+
+                updateSubmitStatus('Adding item to preset file...', 'loading');
+
+                // Modify the file content to add the new item
+                const newContent = addItemToPresetFile(fileContent.content, itemCopy);
+
+                // Commit the change
+                await commitFile(fork.owner.login, GITHUB_CONFIG.targetRepo, presetFile, branchName, newContent,
+                    `Add ${item.name} to ${item.type} presets`);
+
+                updateSubmitStatus('Creating Pull Request...', 'loading');
+
+                // Create the PR
+                const pr = await createPullRequest(fork.owner.login, branchName, item);
+
+                updateSubmitStatus(`Pull Request created! <a href="${pr.html_url}" target="_blank" style="color:#4eff4e">View PR #${pr.number}</a>`, 'success');
+                document.getElementById('submitStatus').innerHTML = document.getElementById('submitStatus').textContent;
+                document.getElementById('submitStatus').innerHTML = `Pull Request created! <a href="${pr.html_url}" target="_blank" style="color:#4eff4e">View PR #${pr.number}</a>`;
+
+            } catch (error) {
+                console.error('PR creation error:', error);
+                updateSubmitStatus('Error: ' + error.message, 'error');
+            }
+        }
+
+        async function ensureFork() {
+            // Check if fork already exists
+            try {
+                const response = await fetch(`https://api.github.com/repos/${githubUser.login}/${GITHUB_CONFIG.targetRepo}`, {
+                    headers: { 'Authorization': `token ${githubToken}` }
+                });
+
+                if (response.ok) {
+                    return await response.json();
+                }
+            } catch (e) { /* Fork doesn't exist, create it */ }
+
+            // Create fork
+            const forkResponse = await fetch(`https://api.github.com/repos/${GITHUB_CONFIG.targetOwner}/${GITHUB_CONFIG.targetRepo}/forks`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `token ${githubToken}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!forkResponse.ok) {
+                throw new Error('Failed to create fork');
+            }
+
+            const fork = await forkResponse.json();
+
+            // Wait for fork to be ready
+            await new Promise(resolve => setTimeout(resolve, 3000));
+
+            return fork;
+        }
+
+        async function getFileContent(owner, repo, path) {
+            const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
+                headers: { 'Authorization': `token ${githubToken}` }
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to get file: ${path}`);
+            }
+
+            const data = await response.json();
+            return {
+                content: atob(data.content),
+                sha: data.sha
+            };
+        }
+
+        async function createBranch(owner, repo, branchName, baseSha) {
+            // Get the default branch ref
+            const refResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/git/ref/heads/main`, {
+                headers: { 'Authorization': `token ${githubToken}` }
+            });
+
+            if (!refResponse.ok) {
+                throw new Error('Failed to get main branch ref');
+            }
+
+            const refData = await refResponse.json();
+
+            // Create new branch
+            const createResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/git/refs`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `token ${githubToken}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    ref: `refs/heads/${branchName}`,
+                    sha: refData.object.sha
+                })
+            });
+
+            if (!createResponse.ok) {
+                throw new Error('Failed to create branch');
+            }
+
+            return await createResponse.json();
+        }
+
+        function addItemToPresetFile(content, item) {
+            // Find the closing bracket of the array
+            const lastBracketIndex = content.lastIndexOf('];');
+            if (lastBracketIndex === -1) {
+                throw new Error('Invalid preset file format');
+            }
+
+            // Check if array is empty or has items
+            const beforeBracket = content.substring(0, lastBracketIndex).trim();
+            const needsComma = beforeBracket.endsWith('}');
+
+            // Format the new item
+            const itemJson = JSON.stringify(item, null, 2).split('\n').map((line, i) => i === 0 ? line : '  ' + line).join('\n');
+
+            // Insert the new item
+            const insertion = (needsComma ? ',' : '') + '\n  ' + itemJson + '\n';
+
+            return content.substring(0, lastBracketIndex) + insertion + content.substring(lastBracketIndex);
+        }
+
+        async function commitFile(owner, repo, path, branch, content, message) {
+            // Get current file SHA on the branch
+            const fileResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${branch}`, {
+                headers: { 'Authorization': `token ${githubToken}` }
+            });
+
+            const fileData = await fileResponse.json();
+
+            // Commit the file
+            const commitResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `token ${githubToken}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: message,
+                    content: btoa(unescape(encodeURIComponent(content))),
+                    sha: fileData.sha,
+                    branch: branch
+                })
+            });
+
+            if (!commitResponse.ok) {
+                throw new Error('Failed to commit file');
+            }
+
+            return await commitResponse.json();
+        }
+
+        async function createPullRequest(forkOwner, branchName, item) {
+            const response = await fetch(`https://api.github.com/repos/${GITHUB_CONFIG.targetOwner}/${GITHUB_CONFIG.targetRepo}/pulls`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `token ${githubToken}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    title: `Add ${item.name} to ${item.type} presets`,
+                    body: `## New Item Submission\n\nThis PR adds **${item.name}** to the ${item.type} presets.\n\n### Item Details\n\`\`\`json\n${JSON.stringify(item, null, 2)}\n\`\`\`\n\n---\n*Submitted via the Pip-Boy Inventory Generator*`,
+                    head: `${forkOwner}:${branchName}`,
+                    base: 'main'
+                })
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.message || 'Failed to create PR');
+            }
+
+            return await response.json();
+        }
 
         // --- NEW: Preset data storage ---
         let presetItems = {}; // Combined lookup { key: itemData }
@@ -1261,7 +2028,7 @@
         // --- Main Tab Function ---
         function openTab(tabName) {
             // ... (all the existing tab-switching logic) ...
-             const tabcontent = document.getElementsByClassName("tab-content");
+            const tabcontent = document.getElementsByClassName("tab-content");
             for (let i = 0; i < tabcontent.length; i++) {
                 tabcontent[i].classList.remove("active");
             }
@@ -1279,18 +2046,18 @@
             const isConnected = UART.isConnected();
             const scanButton = document.getElementById('btnScanDataDir');
             if (scanButton) scanButton.disabled = !isConnected;
-             const activeSubTab = document.querySelector('.data-sub-content.active');
-             if (activeSubTab) {
-                 if (activeSubTab.id === 'data-sub-content-local') {
-                     const uploadLocalButton = document.getElementById('btnUploadSelectedDataFiles');
-                     const hasSelectedLocal = localDataFiles.some(f => f.selected);
-                     if (uploadLocalButton) uploadLocalButton.disabled = !(isConnected && hasSelectedLocal);
-                 } else if (activeSubTab.id === 'data-sub-content-community') {
-                     const uploadCommunityButton = document.getElementById('btnUploadSelectedCommunityFiles');
-                     const hasSelectedCommunity = communityDataFiles.some(f => f.selected);
-                     if (uploadCommunityButton) uploadCommunityButton.disabled = !(isConnected && hasSelectedCommunity);
-                 }
-             }
+            const activeSubTab = document.querySelector('.data-sub-content.active');
+            if (activeSubTab) {
+                if (activeSubTab.id === 'data-sub-content-local') {
+                    const uploadLocalButton = document.getElementById('btnUploadSelectedDataFiles');
+                    const hasSelectedLocal = localDataFiles.some(f => f.selected);
+                    if (uploadLocalButton) uploadLocalButton.disabled = !(isConnected && hasSelectedLocal);
+                } else if (activeSubTab.id === 'data-sub-content-community') {
+                    const uploadCommunityButton = document.getElementById('btnUploadSelectedCommunityFiles');
+                    const hasSelectedCommunity = communityDataFiles.some(f => f.selected);
+                    if (uploadCommunityButton) uploadCommunityButton.disabled = !(isConnected && hasSelectedCommunity);
+                }
+            }
 
             // --- START MODIFICATION ---
             // Check if we should show the DATA tutorial
@@ -1303,45 +2070,45 @@
         // --- Data Sub-Tab Function ---
         function openDataSubTab(tabName, clickedButtonElement) {
             // ... (no changes needed here) ...
-             const subContents = document.getElementsByClassName("data-sub-content");
-             for (let i = 0; i < subContents.length; i++) {
-                 subContents[i].classList.remove("active");
-             }
-             const subLinks = document.getElementsByClassName("data-sub-link");
-             for (let i = 0; i < subLinks.length; i++) {
-                 subLinks[i].classList.remove("active");
-             }
-             const contentToShow = document.getElementById('data-sub-content-' + tabName);
-             if (contentToShow) {
+            const subContents = document.getElementsByClassName("data-sub-content");
+            for (let i = 0; i < subContents.length; i++) {
+                subContents[i].classList.remove("active");
+            }
+            const subLinks = document.getElementsByClassName("data-sub-link");
+            for (let i = 0; i < subLinks.length; i++) {
+                subLinks[i].classList.remove("active");
+            }
+            const contentToShow = document.getElementById('data-sub-content-' + tabName);
+            if (contentToShow) {
                 contentToShow.classList.add("active");
-             } else {
+            } else {
                 console.error("Sub-content area not found for:", tabName);
-             }
-             if (clickedButtonElement) {
-                 clickedButtonElement.classList.add("active");
-             } else {
-                 let found = false;
-                 for (let i = 0; i < subLinks.length; i++) {
-                     if (subLinks[i].getAttribute('onclick') === `openDataSubTab('${tabName}', this)`) {
-                         subLinks[i].classList.add("active");
-                         found = true;
-                         break;
-                     }
-                 }
-                 if (!found) {
-                     console.error("Could not find sub-tab link for:", tabName);
-                 }
-             }
-             const isConnected = UART.isConnected();
-             if (tabName === 'local') {
-                 const uploadLocalButton = document.getElementById('btnUploadSelectedDataFiles');
-                 const hasSelectedLocal = localDataFiles.some(f => f.selected);
-                 if (uploadLocalButton) uploadLocalButton.disabled = !(isConnected && hasSelectedLocal);
-             } else if (tabName === 'community') {
-                 const uploadCommunityButton = document.getElementById('btnUploadSelectedCommunityFiles');
-                 const hasSelectedCommunity = communityDataFiles.some(f => f.selected);
-                 if (uploadCommunityButton) uploadCommunityButton.disabled = !(isConnected && hasSelectedCommunity);
-             }
+            }
+            if (clickedButtonElement) {
+                clickedButtonElement.classList.add("active");
+            } else {
+                let found = false;
+                for (let i = 0; i < subLinks.length; i++) {
+                    if (subLinks[i].getAttribute('onclick') === `openDataSubTab('${tabName}', this)`) {
+                        subLinks[i].classList.add("active");
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    console.error("Could not find sub-tab link for:", tabName);
+                }
+            }
+            const isConnected = UART.isConnected();
+            if (tabName === 'local') {
+                const uploadLocalButton = document.getElementById('btnUploadSelectedDataFiles');
+                const hasSelectedLocal = localDataFiles.some(f => f.selected);
+                if (uploadLocalButton) uploadLocalButton.disabled = !(isConnected && hasSelectedLocal);
+            } else if (tabName === 'community') {
+                const uploadCommunityButton = document.getElementById('btnUploadSelectedCommunityFiles');
+                const hasSelectedCommunity = communityDataFiles.some(f => f.selected);
+                if (uploadCommunityButton) uploadCommunityButton.disabled = !(isConnected && hasSelectedCommunity);
+            }
         }
 
         // --- NEW: Preset Tab Function ---
@@ -1363,16 +2130,16 @@
             if (clickedButtonElement) {
                 clickedButtonElement.classList.add("active");
             } else {
-                 // Find the button programmatically if needed (e.g., for default)
-                 let found = false;
-                 for (let i = 0; i < tabLinks.length; i++) {
-                     if (tabLinks[i].getAttribute('onclick') === `openPresetTab('${tabName}', this)`) {
-                         tabLinks[i].classList.add("active");
-                         found = true;
-                         break;
-                     }
-                 }
-                 if (!found) console.error("Could not find preset tab link for:", tabName);
+                // Find the button programmatically if needed (e.g., for default)
+                let found = false;
+                for (let i = 0; i < tabLinks.length; i++) {
+                    if (tabLinks[i].getAttribute('onclick') === `openPresetTab('${tabName}', this)`) {
+                        tabLinks[i].classList.add("active");
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) console.error("Could not find preset tab link for:", tabName);
             }
             // Optional: Re-filter list if needed, or clear search?
             // renderPresetLists(document.getElementById('presetSearch').value);
@@ -1421,24 +2188,24 @@
             } finally { scanButton.disabled = !UART.isConnected(); scanButton.textContent = 'Scan DATA Directory'; }
         }
 
-         // --- Delete DATA file function ---
-         async function deleteDataFile(fileName) {
-             // ... (no changes needed here) ...
-              if (!UART.isConnected()) { alert("Device disconnected."); return; }
-             if (!confirm(`Delete "${fileName}"?`)) return;
-             const fileList = document.getElementById('dataFileList'); const statusLi = document.createElement('li');
-             statusLi.className = 'status-message'; statusLi.textContent = `Deleting ${fileName}...`;
-             if (fileList.firstChild) fileList.insertBefore(statusLi, fileList.firstChild); else fileList.appendChild(statusLi);
-             const filePath = 'DATA/' + fileName; const deleteCommand = `try{require('fs').unlink(${JSON.stringify(filePath)});}catch(e){}\n`;
-             console.log("Sending:", deleteCommand.trim());
-             try { await UART.write(deleteCommand); console.log(`Delete sent. Rescan...`); setTimeout(scanDataDirectory, 300); }
-             catch (error) { console.error(`Delete err ${fileName}:`, error); alert(`Error: ${error.message || error}`); scanDataDirectory(); }
-         }
+        // --- Delete DATA file function ---
+        async function deleteDataFile(fileName) {
+            // ... (no changes needed here) ...
+            if (!UART.isConnected()) { alert("Device disconnected."); return; }
+            if (!confirm(`Delete "${fileName}"?`)) return;
+            const fileList = document.getElementById('dataFileList'); const statusLi = document.createElement('li');
+            statusLi.className = 'status-message'; statusLi.textContent = `Deleting ${fileName}...`;
+            if (fileList.firstChild) fileList.insertBefore(statusLi, fileList.firstChild); else fileList.appendChild(statusLi);
+            const filePath = 'DATA/' + fileName; const deleteCommand = `try{require('fs').unlink(${JSON.stringify(filePath)});}catch(e){}\n`;
+            console.log("Sending:", deleteCommand.trim());
+            try { await UART.write(deleteCommand); console.log(`Delete sent. Rescan...`); setTimeout(scanDataDirectory, 300); }
+            catch (error) { console.error(`Delete err ${fileName}:`, error); alert(`Error: ${error.message || error}`); scanDataDirectory(); }
+        }
 
         // --- Community DATA File Handling ---
         async function fetchGitHubDataFiles() {
             // ... (no changes needed here) ...
-             const listElement = document.getElementById('communityDataFileList'); const uploadButton = document.getElementById('btnUploadSelectedCommunityFiles');
+            const listElement = document.getElementById('communityDataFileList'); const uploadButton = document.getElementById('btnUploadSelectedCommunityFiles');
             listElement.innerHTML = '<li class="status-message">Fetching...</li>'; if (uploadButton) uploadButton.disabled = true; communityDataFiles = [];
             console.log("Starting fetchGitHubDataFiles...");
             try {
@@ -1452,23 +2219,23 @@
                 console.log("Filtered:", filteredFiles);
                 if (filteredFiles.length > 0) {
                     filteredFiles.sort((a, b) => a.name.localeCompare(b.name)).forEach((file, index) => {
-                         console.log(`Processing: ${file.name}`); communityDataFiles.push({ name: file.name, download_url: file.download_url, selected: false });
-                         const li = document.createElement('li'); li.className = 'selectable-file-item'; li.dataset.fileIndex = index;
-                         const checkbox = document.createElement('input'); checkbox.type = 'checkbox'; checkbox.className = 'file-checkbox'; checkbox.id = `communityFile_${index}`; checkbox.onchange = (e) => toggleCommunityFileSelection(checkbox, index);
-                         const nameSpan = document.createElement('label'); nameSpan.className = 'data-filename'; nameSpan.textContent = file.name; nameSpan.htmlFor = checkbox.id;
-                         li.appendChild(checkbox); li.appendChild(nameSpan);
-                         li.onclick = (e) => { if (e.target !== checkbox && e.target !== nameSpan) { checkbox.checked = !checkbox.checked; toggleCommunityFileSelection(checkbox, index); } };
-                         listElement.appendChild(li);
+                        console.log(`Processing: ${file.name}`); communityDataFiles.push({ name: file.name, download_url: file.download_url, selected: false });
+                        const li = document.createElement('li'); li.className = 'selectable-file-item'; li.dataset.fileIndex = index;
+                        const checkbox = document.createElement('input'); checkbox.type = 'checkbox'; checkbox.className = 'file-checkbox'; checkbox.id = `communityFile_${index}`; checkbox.onchange = (e) => toggleCommunityFileSelection(checkbox, index);
+                        const nameSpan = document.createElement('label'); nameSpan.className = 'data-filename'; nameSpan.textContent = file.name; nameSpan.htmlFor = checkbox.id;
+                        li.appendChild(checkbox); li.appendChild(nameSpan);
+                        li.onclick = (e) => { if (e.target !== checkbox && e.target !== nameSpan) { checkbox.checked = !checkbox.checked; toggleCommunityFileSelection(checkbox, index); } };
+                        listElement.appendChild(li);
                     }); console.log("Populated list.");
-                 } else { listElement.innerHTML = '<li class="status-message">No relevant files found.</li>'; console.log("No relevant files."); }
+                } else { listElement.innerHTML = '<li class="status-message">No relevant files found.</li>'; console.log("No relevant files."); }
             } catch (error) { console.error("Fetch err:", error); listElement.innerHTML = `<li class="status-message">Error: ${error.message || error}</li>`; communityDataFiles = []; }
-             const hasSelectedCommunity = communityDataFiles.some(f => f.selected); if (uploadButton) uploadButton.disabled = !(UART.isConnected() && hasSelectedCommunity);
-             console.log("fetchGitHubDataFiles finished.");
+            const hasSelectedCommunity = communityDataFiles.some(f => f.selected); if (uploadButton) uploadButton.disabled = !(UART.isConnected() && hasSelectedCommunity);
+            console.log("fetchGitHubDataFiles finished.");
         }
 
         function toggleCommunityFileSelection(checkbox, index) {
             // ... (no changes needed here) ...
-             if (isNaN(index) || index < 0 || index >= communityDataFiles.length) return;
+            if (isNaN(index) || index < 0 || index >= communityDataFiles.length) return;
             communityDataFiles[index].selected = checkbox.checked;
             const hasSelectedFiles = communityDataFiles.some(f => f.selected);
             document.getElementById('btnUploadSelectedCommunityFiles').disabled = !(UART.isConnected() && hasSelectedFiles);
@@ -1491,7 +2258,8 @@
                     const fileContentBuffer = await response.arrayBuffer(); const fileContentString = String.fromCharCode(...new Uint8Array(fileContentBuffer));
                     const devicePath = `DATA/${fileEntry.name}`; // Full path including directory
                     console.log(`Uploading ${fileEntry.name} (${fileContentString.length}b) to ${devicePath} (fs:true)...`);
-                    await connection.espruinoSendFile(devicePath, fileContentString, { fs: true, noACK: true, chunkSize: 1024 * 4,
+                    await connection.espruinoSendFile(devicePath, fileContentString, {
+                        fs: true, noACK: true, chunkSize: 1024 * 4,
                         progress: (bytesSent, totalBytes) => { let percent = totalBytes > 0 ? Math.round((bytesSent / totalBytes) * 100) : 0; uploadButton.textContent = `Uploading ${i + 1}/${filesToUpload.length} (${fileEntry.name} ${percent}%)...`; }
                     });
                     console.log(`Upload finished: ${fileEntry.name}`); successCount++;
@@ -1505,37 +2273,37 @@
             alert(`Community upload: ${successCount} sent, ${errorCount} failed.`); console.log("Rescanning..."); scanDataDirectory();
         }
 
-         // --- Local DATA File Handling ---
-         function selectLocalDataFolder(event) {
-             // ... (no changes needed here) ...
-             const files = event.target.files; const fileList = document.getElementById('localDataFileList'); fileList.innerHTML = ''; localDataFiles = [];
-             if (files.length === 0) { fileList.innerHTML = '<li class="status-message">No folder selected.</li>'; document.getElementById('btnUploadSelectedDataFiles').disabled = true; return; }
-             const fileArray = Array.from(files).filter(file => !file.webkitRelativePath || file.webkitRelativePath.split('/').length <= 2);
-             fileArray.sort((a, b) => a.name.localeCompare(b.name));
-             if (fileArray.length === 0) { fileList.innerHTML = '<li class="status-message">No files in folder.</li>'; document.getElementById('btnUploadSelectedDataFiles').disabled = true; return; }
-             fileArray.forEach((file, index) => {
-                 localDataFiles.push({ file: file, selected: false }); const li = document.createElement('li'); li.className = 'selectable-file-item'; li.dataset.fileIndex = index;
-                 const checkbox = document.createElement('input'); checkbox.type = 'checkbox'; checkbox.className = 'file-checkbox'; checkbox.id = `localFile_${index}`; checkbox.onchange = (e) => toggleLocalFileSelection(checkbox, index);
-                 const nameSpan = document.createElement('label'); nameSpan.className = 'data-filename'; nameSpan.textContent = file.name; nameSpan.htmlFor = checkbox.id;
-                 li.appendChild(checkbox); li.appendChild(nameSpan);
-                 li.onclick = (e) => { if (e.target !== checkbox && e.target !== nameSpan) { checkbox.checked = !checkbox.checked; toggleLocalFileSelection(checkbox, index); } };
-                 fileList.appendChild(li);
-             });
-             document.getElementById('btnUploadSelectedDataFiles').disabled = true; event.target.value = '';
-         }
+        // --- Local DATA File Handling ---
+        function selectLocalDataFolder(event) {
+            // ... (no changes needed here) ...
+            const files = event.target.files; const fileList = document.getElementById('localDataFileList'); fileList.innerHTML = ''; localDataFiles = [];
+            if (files.length === 0) { fileList.innerHTML = '<li class="status-message">No folder selected.</li>'; document.getElementById('btnUploadSelectedDataFiles').disabled = true; return; }
+            const fileArray = Array.from(files).filter(file => !file.webkitRelativePath || file.webkitRelativePath.split('/').length <= 2);
+            fileArray.sort((a, b) => a.name.localeCompare(b.name));
+            if (fileArray.length === 0) { fileList.innerHTML = '<li class="status-message">No files in folder.</li>'; document.getElementById('btnUploadSelectedDataFiles').disabled = true; return; }
+            fileArray.forEach((file, index) => {
+                localDataFiles.push({ file: file, selected: false }); const li = document.createElement('li'); li.className = 'selectable-file-item'; li.dataset.fileIndex = index;
+                const checkbox = document.createElement('input'); checkbox.type = 'checkbox'; checkbox.className = 'file-checkbox'; checkbox.id = `localFile_${index}`; checkbox.onchange = (e) => toggleLocalFileSelection(checkbox, index);
+                const nameSpan = document.createElement('label'); nameSpan.className = 'data-filename'; nameSpan.textContent = file.name; nameSpan.htmlFor = checkbox.id;
+                li.appendChild(checkbox); li.appendChild(nameSpan);
+                li.onclick = (e) => { if (e.target !== checkbox && e.target !== nameSpan) { checkbox.checked = !checkbox.checked; toggleLocalFileSelection(checkbox, index); } };
+                fileList.appendChild(li);
+            });
+            document.getElementById('btnUploadSelectedDataFiles').disabled = true; event.target.value = '';
+        }
 
-         function toggleLocalFileSelection(checkbox, index) {
-             // ... (no changes needed here) ...
-              if (isNaN(index) || index < 0 || index >= localDataFiles.length) return; localDataFiles[index].selected = checkbox.checked;
-             const hasSelectedFiles = localDataFiles.some(f => f.selected); document.getElementById('btnUploadSelectedDataFiles').disabled = !(UART.isConnected() && hasSelectedFiles);
-         }
+        function toggleLocalFileSelection(checkbox, index) {
+            // ... (no changes needed here) ...
+            if (isNaN(index) || index < 0 || index >= localDataFiles.length) return; localDataFiles[index].selected = checkbox.checked;
+            const hasSelectedFiles = localDataFiles.some(f => f.selected); document.getElementById('btnUploadSelectedDataFiles').disabled = !(UART.isConnected() && hasSelectedFiles);
+        }
 
-         function readFileAsBinaryString(file) {
-             // ... (no changes needed here) ...
-              return new Promise((resolve, reject) => { const reader = new FileReader(); reader.onload = (event) => { const buffer = event.target.result; const binaryString = String.fromCharCode(...new Uint8Array(buffer)); resolve(binaryString); }; reader.onerror = (event) => reject(reader.error); reader.readAsArrayBuffer(file); });
-         }
+        function readFileAsBinaryString(file) {
+            // ... (no changes needed here) ...
+            return new Promise((resolve, reject) => { const reader = new FileReader(); reader.onload = (event) => { const buffer = event.target.result; const binaryString = String.fromCharCode(...new Uint8Array(buffer)); resolve(binaryString); }; reader.onerror = (event) => reject(reader.error); reader.readAsArrayBuffer(file); });
+        }
 
-         async function uploadSelectedDataFiles() {
+        async function uploadSelectedDataFiles() {
             // ... (No changes needed) ...
             if (!UART.isConnected()) { alert("Device disconnected."); return; }
             const connection = UART.getConnection(); if (!connection) { alert("Connection error."); return; }
@@ -1550,7 +2318,8 @@
                 try {
                     const fileContentString = await readFileAsBinaryString(file); const devicePath = `DATA/${file.name}`; // Full path
                     console.log(`Uploading ${file.name} (${fileContentString.length}b) to ${devicePath} (fs:true)...`);
-                    await connection.espruinoSendFile(devicePath, fileContentString, { fs: true, noACK: true, chunkSize: 1024 * 4,
+                    await connection.espruinoSendFile(devicePath, fileContentString, {
+                        fs: true, noACK: true, chunkSize: 1024 * 4,
                         progress: (bytesSent, totalBytes) => { let percent = totalBytes > 0 ? Math.round((bytesSent / totalBytes) * 100) : 0; uploadButton.textContent = `Uploading ${i + 1}/${filesToUpload.length} (${file.name} ${percent}%)...`; }
                     });
                     console.log(`Upload finished: ${file.name}`); successCount++;
@@ -1562,7 +2331,7 @@
             }
             uploadButton.textContent = originalButtonText; const hasSelectedFiles = localDataFiles.some(f => f.selected); uploadButton.disabled = !(UART.isConnected() && hasSelectedFiles);
             alert(`Local upload: ${successCount} sent, ${errorCount} failed.`); console.log("Rescanning..."); scanDataDirectory();
-         }
+        }
 
         // --- Upload Items Function ---
         function sendJSONviaUSB() {
@@ -1575,7 +2344,7 @@
                 .then(() => { console.log("Cleanup sent. Wait..."); setTimeout(() => { if (!cleanupConfirmed) { console.warn("Timeout CLEANUP_DONE. Proceeding."); UART.getConnection()?.removeListener('data', onDataCleanup); sendNewItemFiles(); } }, 3000); })
                 .catch((err) => { console.error("Cleanup err:", err); alert("Cleanup err. Abort."); UART.getConnection()?.removeListener('data', onDataCleanup); uploadBtn.disabled = !(UART.isConnected() && items.length > 0); uploadBtn.textContent = "Upload Items to Device"; });
         }
-		
+
         async function sendNewItemFiles() {
             const uploadBtn = document.getElementById('btnUploadUSB');
             if (uploadBtn.textContent !== "Uploading Items...") return;
@@ -1660,7 +2429,7 @@
         // --- Load items from Device function ---
         async function loadItemsFromDevice() {
             // ... (no changes needed here) ...
-             if (!UART.isConnected()) { alert("Please connect first."); return; }
+            if (!UART.isConnected()) { alert("Please connect first."); return; }
             const loadBtn = document.getElementById('btnLoadFromDevice'); loadBtn.disabled = true; loadBtn.textContent = "Loading Items..."; console.log("Loading items..."); let allItems = []; const dataDir = 'DATA/'; const metaFileName = dataDir + 'items_meta.json'; let metaData;
             async function sendCommandGetJson(filePath, marker, timeout = 7000) { try { const content = await UART.getConnection().espruinoEval(`require('fs').readFileSync(${JSON.stringify(filePath)})`); if (content === undefined) return "READ_ERROR_NO_FILE"; if (content === "") return []; if (typeof content === 'object' && content !== null) return content; if (typeof content === 'string') { try { return JSON.parse(content); } catch (parseError) { console.error(`Manual parse err ${filePath}:`, content, parseError); return "PARSE_ERROR"; } } console.error(`Unexpected type ${filePath}:`, typeof content, content); return "READ_ERROR"; } catch (e) { console.error(`espruinoEval err ${filePath}:`, e); if (e.message && (e.message.includes("Unable to find file") || e.message.includes("ENOENT"))) return "READ_ERROR_NO_FILE"; throw e; } }
             try { metaData = await sendCommandGetJson(metaFileName, "__META_END__"); if (metaData === "READ_ERROR_NO_FILE") throw new Error(`Meta file (${metaFileName}) not found.`); if (metaData === "READ_ERROR" || metaData === "PARSE_ERROR") throw new Error(`Read/parse err meta file (${metaFileName}).`); if (typeof metaData !== 'object' || !Array.isArray(metaData.pageCounts)) throw new Error("Invalid meta format."); const numPages = metaData.pageCounts.length; console.log(`${numPages} page(s)`); if (numPages > 0) { for (let i = 0; i < numPages; i++) { const itemFileName = `${dataDir}items_${i}.json`; try { const pageItems = await sendCommandGetJson(itemFileName, `__ITEMS_${i}_END__`); if (pageItems === "READ_ERROR_NO_FILE") { console.warn(`${itemFileName} not found.`); continue; } if (pageItems === "READ_ERROR" || pageItems === "PARSE_ERROR") { console.warn(`Read/parse err ${itemFileName}.`); continue; } if (Array.isArray(pageItems)) allItems.push(...pageItems); else console.warn(`${itemFileName} not valid array.`); } catch (error) { throw new Error(`Comm err ${itemFileName}: ${error.message || error}`); } } } console.log(`Loaded: ${allItems.length}`); items = allItems; currentIndex = -1; renderItemList(); if (items.length > 0) selectItem(0); else { document.getElementById('editor').innerHTML = `<div class="empty-state"><h2>No items loaded</h2></div>`; renderPipboyPreview(); } const hasItems = items.length > 0; document.getElementById('exportBtnHeader').disabled = !hasItems; document.getElementById('btnUploadUSB').disabled = !(UART.isConnected() && hasItems); } catch (error) { console.error("Load err:", error); alert("Load err: " + error.message); items = []; currentIndex = -1; renderItemList(); document.getElementById('editor').innerHTML = `<div class="empty-state"><h2>Load Failed</h2><p>${error.message}</p></div>`; renderPipboyPreview(); document.getElementById('exportBtnHeader').disabled = true; document.getElementById('btnUploadUSB').disabled = true; } finally { loadBtn.disabled = !UART.isConnected(); loadBtn.textContent = "Load Items from Device"; }
@@ -1706,7 +2475,7 @@
                 });
                 consumablePresetItems.sort((a, b) => a.name.localeCompare(b.name)); // Sort alphabetically
             }
-             console.log("Presets initialized and categorized.");
+            console.log("Presets initialized and categorized.");
         }
         // --- END MODIFICATION ---
 
@@ -1728,9 +2497,9 @@
                 const listElement = document.getElementById(listElementId);
 
                 if (!listElement) {
-                     console.error("Preset list element not found:", listElementId);
-                     continue;
-                 }
+                    console.error("Preset list element not found:", listElementId);
+                    continue;
+                }
 
                 listElement.innerHTML = ''; // Clear current list
 
@@ -1755,67 +2524,68 @@
 
 
         // --- Helper Function (can remain minified) ---
-        function readFileAsText(a){return new Promise((b,c)=>{const d=new FileReader;d.onload=()=>b(d.result),d.onerror=()=>c(d.error),d.readAsText(a)})}
-        async function loadItemsFromFiles(a){const b=a.target.files;if(!b.length)return;let c=[];for(const d of b)try{const e=await readFileAsText(d),f=JSON.parse(e);Array.isArray(f)?c.push(...f):alert(`Warning: File ${d.name} is not valid.`)}catch(d){console.error(`Error loading file ${d.name}:`,d),alert(`Could not load file: ${d.name}.`)}items=c,currentIndex=-1,renderItemList(),items.length>0?selectItem(0):(document.getElementById("editor").innerHTML='<div class="empty-state"><h2>No item selected</h2></div>',renderPipboyPreview());const d=items.length>0;document.getElementById("exportBtnHeader").disabled=!d,document.getElementById("btnUploadUSB").disabled=!(UART.isConnected()&&d),a.target.value=""}
+        function readFileAsText(a) { return new Promise((b, c) => { const d = new FileReader; d.onload = () => b(d.result), d.onerror = () => c(d.error), d.readAsText(a) }) }
+        async function loadItemsFromFiles(a) { const b = a.target.files; if (!b.length) return; let c = []; for (const d of b) try { const e = await readFileAsText(d), f = JSON.parse(e); Array.isArray(f) ? c.push(...f) : alert(`Warning: File ${d.name} is not valid.`) } catch (d) { console.error(`Error loading file ${d.name}:`, d), alert(`Could not load file: ${d.name}.`) } items = c, currentIndex = -1, renderItemList(), items.length > 0 ? selectItem(0) : (document.getElementById("editor").innerHTML = '<div class="empty-state"><h2>No item selected</h2></div>', renderPipboyPreview()); const d = items.length > 0; document.getElementById("exportBtnHeader").disabled = !d, document.getElementById("btnUploadUSB").disabled = !(UART.isConnected() && d), a.target.value = "" }
 
         // --- Item List & Editor Rendering/Manipulation (can remain minified) ---
-        function renderItemList(){const a=document.getElementById("itemList");a.innerHTML="";items.forEach((b,c)=>{const d=document.createElement("li");d.className=c===currentIndex?"active":"";const e=0===c,f=c===items.length-1;d.innerHTML=`<div class="item-name-wrapper"><span class="item-name">${b.name||"Unnamed"}</span></div> ${b.type?`<span class="item-type">${b.type}</span>`:""} <div class="reorder-arrows"><button ${e?"disabled":""} onclick="moveItemUp(${c},event)">▲</button><button ${f?"disabled":""} onclick="moveItemDown(${c},event)">▼</button></div> <button class="delete-btn" onclick="deleteItem(${c},event)">×</button>`,d.onclick=a=>{a.target.closest("button,.reorder-arrows")||selectItem(c)},a.appendChild(d)})}
-        function renderPipboyPreview(){const a=items[currentIndex],b=document.getElementById("preview-name"),c=document.getElementById("preview-qty"),d=document.getElementById("preview-stats-list");if(!a)return b.textContent="ITEM NAME",c.textContent="0",void(d.innerHTML="");b.textContent=(a.name||"NO NAME").toUpperCase(),c.textContent=a.quantity||0,d.innerHTML="";const e=(a,b)=>{const c=document.createElement("div");c.className="stat-row",c.innerHTML=`<span class="stat-name">${a.toUpperCase()}</span><span class="stat-value bright-bg" style="padding:0 4px">${b}</span>`,d.appendChild(c)};a.damages?.forEach(a=>e(a.type||"?",a.value||"?")),a.defenses?.forEach(a=>e(a.type||"?",a.value||"?")),a.stats&&Object.entries(a.stats).forEach(([b,c])=>{const e=document.createElement("div"),f="object"==typeof c&&null!==c,g=f?c.value:c,h=f&&c.isTimed,i=b===a.ammoType?"bright-bg":"dithered-bg";e.className=`stat-row ${i}`;const j=h?"(T) ":"";e.innerHTML=`<span class="stat-name">${b.toUpperCase()}</span><span class="stat-value">${j}${g}</span>`,d.appendChild(e)})}
-        function selectItem(a){currentIndex=a,renderItemList(),renderEditor(),renderPipboyPreview()}
-        function updateItem(a,b){currentIndex<0||(items[currentIndex][a]=b,("name"===a||"quantity"===a||"type"===a)&&renderItemList(),"type"===a&&renderEditor(),renderPipboyPreview())}
-        function moveItem(a,b){if(!(a<0||a>=items.length||b<0||b>=items.length)){const[c]=items.splice(a,1);items.splice(b,0,c),selectItem(b)}}
-        function moveItemUp(a,b){b.stopPropagation(),moveItem(a,a-1)}
-        function moveItemDown(a,b){b.stopPropagation(),moveItem(a,a+1)}
-        function moveStat(a,b){if(!(currentIndex<0||!items[currentIndex].stats)){const c=items[currentIndex].stats,d=Object.entries(c),e=d.findIndex(b=>b[0]===a),f=e+b;e<0||f<0||f>=d.length||([d[e],d[f]]=[d[f],d[e]],items[currentIndex].stats=Object.fromEntries(d),renderStats(),renderPipboyPreview())}}
-        function moveStatUp(a){moveStat(a,-1)}
-        function moveStatDown(a){moveStat(a,1)}
-        function addDamage(){currentIndex<0||"weapon"!==items[currentIndex].type||(items[currentIndex].damages||(items[currentIndex].damages=[]),items[currentIndex].damages.push({type:"attack",value:"10"}),renderDamages(),renderPipboyPreview())}
-        function removeDamage(a){currentIndex<0||!items[currentIndex].damages||(items[currentIndex].damages.splice(a,1),0===items[currentIndex].damages.length&&delete items[currentIndex].damages,renderDamages(),renderPipboyPreview())}
-        function addDefense(){currentIndex<0||"apparel"!==items[currentIndex].type||(items[currentIndex].defenses||(items[currentIndex].defenses=[]),items[currentIndex].defenses.push({type:"defense",value:"10"}),renderDefenses(),renderPipboyPreview())}
-        function removeDefense(a){currentIndex<0||!items[currentIndex].defenses||(items[currentIndex].defenses.splice(a,1),0===items[currentIndex].defenses.length&&delete items[currentIndex].defenses,renderDefenses(),renderPipboyPreview())}
-        function addStat(){if(!(currentIndex<0)){items[currentIndex].stats||(items[currentIndex].stats={});let a="NewStat",b=1;for(;items[currentIndex].stats.hasOwnProperty(a);)a=`NewStat${b++}`;items[currentIndex].stats[a]="0",renderStats(),renderPipboyPreview()}}
-        function removeStat(a){currentIndex<0||!items[currentIndex].stats||(delete items[currentIndex].stats[a],renderStats(),renderPipboyPreview())}
-        function updateStatKey(a,b){if(!(currentIndex<0||!items[currentIndex].stats||a===b||!b))if(items[currentIndex].stats.hasOwnProperty(b))alert(`Stat key "${b}" exists!`),renderStats();else{const c=items[currentIndex].stats,d={};for(const e in c)e===a?d[b]=c[e]:d[e]=c[e];items[currentIndex].stats=d,renderStats(),renderPipboyPreview()}}
-        function updateStatValue(key, value){if(!(currentIndex<0||!items[currentIndex].stats)){const stat=items[currentIndex].stats[key];"object"==typeof stat&&null!==stat&&stat.hasOwnProperty("isTimed")?stat.value=value:items[currentIndex].stats[key]=value,renderPipboyPreview()}}
-        function toggleStatIsTimed(key, isChecked){if(!(currentIndex<0||!items[currentIndex].stats)){const currentItem=items[currentIndex];if("consumable"!==currentItem.type)return;const currentStat=currentItem.stats[key],currentValue="object"==typeof currentStat&&null!==currentStat?currentStat.value:currentStat;isChecked?currentItem.stats[key]={value:currentValue||"0",isTimed:!0}:currentItem.stats[key]=currentValue,renderStats(),renderPipboyPreview()}}
-        function updateDamage(index, field, value){currentIndex<0||!items[currentIndex].damages||!items[currentIndex].damages[index]||(items[currentIndex].damages[index][field]=value,renderPipboyPreview())}
-        function updateDefense(index, field, value){currentIndex<0||!items[currentIndex].defenses||!items[currentIndex].defenses[index]||(items[currentIndex].defenses[index][field]=value,renderPipboyPreview())}
-        function addBaseItem(type){const CappedType=type.charAt(0).toUpperCase()+type.slice(1);let baseItem={name:`New ${CappedType}`,type:type,quantity:1,effect:"",stats:{Weight:"1.0",Value:"10"}};switch(type){case"weapon":baseItem.damages=[{type:"attack",value:"5"}],baseItem.ammoType="None",baseItem.stats["Fire Rate"]="10",baseItem.stats.Range="50";break;case"apparel":baseItem.defenses=[{type:"defense",value:"5"}],baseItem.equipSlots=[];break;case"consumable":baseItem.stats.Health="10"}items.push(baseItem),selectItem(items.length-1),document.getElementById("exportBtnHeader").disabled=!1,UART.isConnected()&&(document.getElementById("btnUploadUSB").disabled=!1)}
-        function addPresetItem(presetKey){if(presetKey&&presetItems[presetKey]){const preset=presetItems[presetKey],newItem=JSON.parse(JSON.stringify(preset));items.push(newItem),selectItem(items.length-1),document.getElementById("exportBtnHeader").disabled=!1,UART.isConnected()&&(document.getElementById("btnUploadUSB").disabled=!1)}}
-        function deleteItem(index, event){if(event.stopPropagation(),!(index<0||index>=items.length||!confirm(`Delete "${items[index].name}"?`))){items.splice(index,1);let newIndex=-1;items.length>0&&(newIndex=index>=items.length?items.length-1:currentIndex===index?Math.max(0,index-1):index<currentIndex?currentIndex-1:currentIndex),renderItemList(),newIndex>-1?selectItem(newIndex):(currentIndex=-1,document.getElementById("editor").innerHTML='<div class="empty-state"><h2>No item selected</h2></div>',renderPipboyPreview());const hasItems=items.length>0;document.getElementById("exportBtnHeader").disabled=!hasItems,document.getElementById("btnUploadUSB").disabled=!(UART.isConnected()&&hasItems)}}
-        function addSound(sound){!sound||currentIndex<0||(items[currentIndex].sounds||(items[currentIndex].sounds=[]),items[currentIndex].sounds.includes(sound)||(items[currentIndex].sounds.push(sound),renderSounds()))}
-        function removeSound(index){currentIndex<0||!items[currentIndex].sounds||index<0||index>=items[currentIndex].sounds.length||(items[currentIndex].sounds.splice(index,1),0===items[currentIndex].sounds.length&&delete items[currentIndex].sounds,renderSounds())}
-        function addApparelEquipSlot(slot){!slot||currentIndex<0||"apparel"!==items[currentIndex].type||(items[currentIndex].equipSlots||(items[currentIndex].equipSlots=[]),items[currentIndex].equipSlots.includes(slot)||(items[currentIndex].equipSlots.push(slot),renderApparelEquipSlots()))}
-        function removeApparelEquipSlot(index){currentIndex<0||!items[currentIndex].equipSlots||index<0||index>=items[currentIndex].equipSlots.length||(items[currentIndex].equipSlots.splice(index,1),0===items[currentIndex].equipSlots.length&&delete items[currentIndex].equipSlots,renderApparelEquipSlots())}
-        
-        function renderEditor(){if(currentIndex<0)return void(document.getElementById("editor").innerHTML='<div class="empty-state"><h2>No item selected</h2><p>Connect device to select sounds/images.</p></div>');
-            const item=items[currentIndex];
-            let html='<div class="section-header">Edit Item</div>';
-            const currentSounds=deviceSounds,currentImages=deviceImages,soundSourceLabel=UART.isConnected()?"Sounds (from Device)":"Sounds (Connect Device)",imageSourceLabel=UART.isConnected()?"Image File (from Device)":"Image File (Connect Device)";
+        function renderItemList() { const a = document.getElementById("itemList"); a.innerHTML = ""; items.forEach((b, c) => { const d = document.createElement("li"); d.className = c === currentIndex ? "active" : ""; const e = 0 === c, f = c === items.length - 1; d.innerHTML = `<div class="item-name-wrapper"><span class="item-name">${b.name || "Unnamed"}</span></div> ${b.type ? `<span class="item-type">${b.type}</span>` : ""} <div class="reorder-arrows"><button ${e ? "disabled" : ""} onclick="moveItemUp(${c},event)">▲</button><button ${f ? "disabled" : ""} onclick="moveItemDown(${c},event)">▼</button></div> <button class="delete-btn" onclick="deleteItem(${c},event)">×</button>`, d.onclick = a => { a.target.closest("button,.reorder-arrows") || selectItem(c) }, a.appendChild(d) }) }
+        function renderPipboyPreview() { const a = items[currentIndex], b = document.getElementById("preview-name"), c = document.getElementById("preview-qty"), d = document.getElementById("preview-stats-list"); if (!a) return b.textContent = "ITEM NAME", c.textContent = "0", void (d.innerHTML = ""); b.textContent = (a.name || "NO NAME").toUpperCase(), c.textContent = a.quantity || 0, d.innerHTML = ""; const e = (a, b) => { const c = document.createElement("div"); c.className = "stat-row", c.innerHTML = `<span class="stat-name">${a.toUpperCase()}</span><span class="stat-value bright-bg" style="padding:0 4px">${b}</span>`, d.appendChild(c) }; a.damages?.forEach(a => e(a.type || "?", a.value || "?")), a.defenses?.forEach(a => e(a.type || "?", a.value || "?")), a.stats && Object.entries(a.stats).forEach(([b, c]) => { const e = document.createElement("div"), f = "object" == typeof c && null !== c, g = f ? c.value : c, h = f && c.isTimed, i = b === a.ammoType ? "bright-bg" : "dithered-bg"; e.className = `stat-row ${i}`; const j = h ? "(T) " : ""; e.innerHTML = `<span class="stat-name">${b.toUpperCase()}</span><span class="stat-value">${j}${g}</span>`, d.appendChild(e) }) }
+        function selectItem(a) { currentIndex = a, renderItemList(), renderEditor(), renderPipboyPreview(); document.getElementById('btnSubmitCommunity').disabled = currentIndex < 0; }
+        function updateItem(a, b) { currentIndex < 0 || (items[currentIndex][a] = b, ("name" === a || "quantity" === a || "type" === a) && renderItemList(), "type" === a && renderEditor(), renderPipboyPreview()) }
+        function moveItem(a, b) { if (!(a < 0 || a >= items.length || b < 0 || b >= items.length)) { const [c] = items.splice(a, 1); items.splice(b, 0, c), selectItem(b) } }
+        function moveItemUp(a, b) { b.stopPropagation(), moveItem(a, a - 1) }
+        function moveItemDown(a, b) { b.stopPropagation(), moveItem(a, a + 1) }
+        function moveStat(a, b) { if (!(currentIndex < 0 || !items[currentIndex].stats)) { const c = items[currentIndex].stats, d = Object.entries(c), e = d.findIndex(b => b[0] === a), f = e + b; e < 0 || f < 0 || f >= d.length || ([d[e], d[f]] = [d[f], d[e]], items[currentIndex].stats = Object.fromEntries(d), renderStats(), renderPipboyPreview()) } }
+        function moveStatUp(a) { moveStat(a, -1) }
+        function moveStatDown(a) { moveStat(a, 1) }
+        function addDamage() { currentIndex < 0 || "weapon" !== items[currentIndex].type || (items[currentIndex].damages || (items[currentIndex].damages = []), items[currentIndex].damages.push({ type: "attack", value: "10" }), renderDamages(), renderPipboyPreview()) }
+        function removeDamage(a) { currentIndex < 0 || !items[currentIndex].damages || (items[currentIndex].damages.splice(a, 1), 0 === items[currentIndex].damages.length && delete items[currentIndex].damages, renderDamages(), renderPipboyPreview()) }
+        function addDefense() { currentIndex < 0 || "apparel" !== items[currentIndex].type || (items[currentIndex].defenses || (items[currentIndex].defenses = []), items[currentIndex].defenses.push({ type: "defense", value: "10" }), renderDefenses(), renderPipboyPreview()) }
+        function removeDefense(a) { currentIndex < 0 || !items[currentIndex].defenses || (items[currentIndex].defenses.splice(a, 1), 0 === items[currentIndex].defenses.length && delete items[currentIndex].defenses, renderDefenses(), renderPipboyPreview()) }
+        function addStat() { if (!(currentIndex < 0)) { items[currentIndex].stats || (items[currentIndex].stats = {}); let a = "NewStat", b = 1; for (; items[currentIndex].stats.hasOwnProperty(a);)a = `NewStat${b++}`; items[currentIndex].stats[a] = "0", renderStats(), renderPipboyPreview() } }
+        function removeStat(a) { currentIndex < 0 || !items[currentIndex].stats || (delete items[currentIndex].stats[a], renderStats(), renderPipboyPreview()) }
+        function updateStatKey(a, b) { if (!(currentIndex < 0 || !items[currentIndex].stats || a === b || !b)) if (items[currentIndex].stats.hasOwnProperty(b)) alert(`Stat key "${b}" exists!`), renderStats(); else { const c = items[currentIndex].stats, d = {}; for (const e in c) e === a ? d[b] = c[e] : d[e] = c[e]; items[currentIndex].stats = d, renderStats(), renderPipboyPreview() } }
+        function updateStatValue(key, value) { if (!(currentIndex < 0 || !items[currentIndex].stats)) { const stat = items[currentIndex].stats[key]; "object" == typeof stat && null !== stat && stat.hasOwnProperty("isTimed") ? stat.value = value : items[currentIndex].stats[key] = value, renderPipboyPreview() } }
+        function toggleStatIsTimed(key, isChecked) { if (!(currentIndex < 0 || !items[currentIndex].stats)) { const currentItem = items[currentIndex]; if ("consumable" !== currentItem.type) return; const currentStat = currentItem.stats[key], currentValue = "object" == typeof currentStat && null !== currentStat ? currentStat.value : currentStat; isChecked ? currentItem.stats[key] = { value: currentValue || "0", isTimed: !0 } : currentItem.stats[key] = currentValue, renderStats(), renderPipboyPreview() } }
+        function updateDamage(index, field, value) { currentIndex < 0 || !items[currentIndex].damages || !items[currentIndex].damages[index] || (items[currentIndex].damages[index][field] = value, renderPipboyPreview()) }
+        function updateDefense(index, field, value) { currentIndex < 0 || !items[currentIndex].defenses || !items[currentIndex].defenses[index] || (items[currentIndex].defenses[index][field] = value, renderPipboyPreview()) }
+        function addBaseItem(type) { const CappedType = type.charAt(0).toUpperCase() + type.slice(1); let baseItem = { name: `New ${CappedType}`, type: type, quantity: 1, effect: "", stats: { Weight: "1.0", Value: "10" } }; switch (type) { case "weapon": baseItem.damages = [{ type: "attack", value: "5" }], baseItem.ammoType = "None", baseItem.stats["Fire Rate"] = "10", baseItem.stats.Range = "50"; break; case "apparel": baseItem.defenses = [{ type: "defense", value: "5" }], baseItem.equipSlots = []; break; case "consumable": baseItem.stats.Health = "10" }items.push(baseItem), selectItem(items.length - 1), document.getElementById("exportBtnHeader").disabled = !1, UART.isConnected() && (document.getElementById("btnUploadUSB").disabled = !1) }
+        function addPresetItem(presetKey) { if (presetKey && presetItems[presetKey]) { const preset = presetItems[presetKey], newItem = JSON.parse(JSON.stringify(preset)); items.push(newItem), selectItem(items.length - 1), document.getElementById("exportBtnHeader").disabled = !1, UART.isConnected() && (document.getElementById("btnUploadUSB").disabled = !1) } }
+        function deleteItem(index, event) { if (event.stopPropagation(), !(index < 0 || index >= items.length || !confirm(`Delete "${items[index].name}"?`))) { items.splice(index, 1); let newIndex = -1; items.length > 0 && (newIndex = index >= items.length ? items.length - 1 : currentIndex === index ? Math.max(0, index - 1) : index < currentIndex ? currentIndex - 1 : currentIndex), renderItemList(), newIndex > -1 ? selectItem(newIndex) : (currentIndex = -1, document.getElementById("editor").innerHTML = '<div class="empty-state"><h2>No item selected</h2></div>', renderPipboyPreview()); const hasItems = items.length > 0; document.getElementById("exportBtnHeader").disabled = !hasItems, document.getElementById("btnUploadUSB").disabled = !(UART.isConnected() && hasItems) } }
+        function addSound(sound) { !sound || currentIndex < 0 || (items[currentIndex].sounds || (items[currentIndex].sounds = []), items[currentIndex].sounds.includes(sound) || (items[currentIndex].sounds.push(sound), renderSounds())) }
+        function removeSound(index) { currentIndex < 0 || !items[currentIndex].sounds || index < 0 || index >= items[currentIndex].sounds.length || (items[currentIndex].sounds.splice(index, 1), 0 === items[currentIndex].sounds.length && delete items[currentIndex].sounds, renderSounds()) }
+        function addApparelEquipSlot(slot) { !slot || currentIndex < 0 || "apparel" !== items[currentIndex].type || (items[currentIndex].equipSlots || (items[currentIndex].equipSlots = []), items[currentIndex].equipSlots.includes(slot) || (items[currentIndex].equipSlots.push(slot), renderApparelEquipSlots())) }
+        function removeApparelEquipSlot(index) { currentIndex < 0 || !items[currentIndex].equipSlots || index < 0 || index >= items[currentIndex].equipSlots.length || (items[currentIndex].equipSlots.splice(index, 1), 0 === items[currentIndex].equipSlots.length && delete items[currentIndex].equipSlots, renderApparelEquipSlots()) }
+
+        function renderEditor() {
+            if (currentIndex < 0) return void (document.getElementById("editor").innerHTML = '<div class="empty-state"><h2>No item selected</h2><p>Connect device to select sounds/images.</p></div>');
+            const item = items[currentIndex];
+            let html = '<div class="section-header">Edit Item</div>';
+            const currentSounds = deviceSounds, currentImages = deviceImages, soundSourceLabel = UART.isConnected() ? "Sounds (from Device)" : "Sounds (Connect Device)", imageSourceLabel = UART.isConnected() ? "Image File (from Device)" : "Image File (Connect Device)";
 
             // --- START REPLACEMENT ---
 
             // Basic Info Wrapper (Type, Name, Qty/Sounds) - ALWAYS SHOWN
-            html+=`<div id="tutorial-basic-info-wrapper">`;
-            html+=`<div class="form-row"><div class="form-group"><label>Type</label><select onchange="updateItem('type',this.value)"><option value="" ${item.type?"":"selected"}>None</option><option value="weapon" ${"weapon"===item.type?"selected":""}>Weapon</option><option value="apparel" ${"apparel"===item.type?"selected":""}>Apparel</option><option value="consumable" ${"consumable"===item.type?"selected":""}>Consumable</option></select></div><div class="form-group"><label>Name</label><input type="text" value="${item.name||""}" oninput="updateItem('name',this.value)"></div></div>`; // Type + Name row
-            
-            if("consumable"===item.type){ // Consumable row (Qty + Sounds)
-                html+=` <div class="form-row"><div class="form-group"><label>Quantity</label><input type="number" value="${item.quantity||1}" min="0" step="1" oninput="updateItem('quantity',parseInt(this.value)||0)"></div><div class="form-group"><label>${soundSourceLabel}</label><select onchange="addSound(this.value);this.value='';"><option value="">Select sound...</option>${currentSounds.map(s=>`<option value="${s}">${s}</option>`).join("")}</select><div class="sound-list" id="soundList"></div></div></div>`;
-            }else{ // Weapon/Apparel row (Qty + Empty)
-                html+=` <div class="form-row"><div class="form-group"><label>Quantity</label><input type="number" value="${item.quantity||1}" min="0" step="1" oninput="updateItem('quantity',parseInt(this.value)||0)"></div><div class="form-group"></div></div>`;
+            html += `<div id="tutorial-basic-info-wrapper">`;
+            html += `<div class="form-row"><div class="form-group"><label>Type</label><select onchange="updateItem('type',this.value)"><option value="" ${item.type ? "" : "selected"}>None</option><option value="weapon" ${"weapon" === item.type ? "selected" : ""}>Weapon</option><option value="apparel" ${"apparel" === item.type ? "selected" : ""}>Apparel</option><option value="consumable" ${"consumable" === item.type ? "selected" : ""}>Consumable</option></select></div><div class="form-group"><label>Name</label><input type="text" value="${item.name || ""}" oninput="updateItem('name',this.value)"></div></div>`; // Type + Name row
+
+            if ("consumable" === item.type) { // Consumable row (Qty + Sounds)
+                html += ` <div class="form-row"><div class="form-group"><label>Quantity</label><input type="number" value="${item.quantity || 1}" min="0" step="1" oninput="updateItem('quantity',parseInt(this.value)||0)"></div><div class="form-group"><label>${soundSourceLabel}</label><select onchange="addSound(this.value);this.value='';"><option value="">Select sound...</option>${currentSounds.map(s => `<option value="${s}">${s}</option>`).join("")}</select><div class="sound-list" id="soundList"></div></div></div>`;
+            } else { // Weapon/Apparel row (Qty + Empty)
+                html += ` <div class="form-row"><div class="form-group"><label>Quantity</label><input type="number" value="${item.quantity || 1}" min="0" step="1" oninput="updateItem('quantity',parseInt(this.value)||0)"></div><div class="form-group"></div></div>`;
             }
-            html+=`</div>`; // Close basic tutorial wrapper
+            html += `</div>`; // Close basic tutorial wrapper
 
             // Image File HTML string (we'll use this)
-            const imageFileHtml = `<div class="form-group"><label>${imageSourceLabel}</label><select onchange="updateItem('image',this.value)"><option value="">None</option>${currentImages.map(img=>`<option value="${img}" ${item.image===img?"selected":""}>${img}</option>`).join("")}</select></div>`;
-            
+            const imageFileHtml = `<div class="form-group"><label>${imageSourceLabel}</label><select onchange="updateItem('image',this.value)"><option value="">None</option>${currentImages.map(img => `<option value="${img}" ${item.image === img ? "selected" : ""}>${img}</option>`).join("")}</select></div>`;
+
             // --- Conditionally place Image/Ammo/Equip sections ---
             if ("weapon" === item.type) {
                 // For Weapons: Group Image and Ammo Type in one wrapper (NO form-row)
                 // This makes them stack vertically but highlight as one block
                 html += `<div id="tutorial-weapon-img-ammo-wrapper">
                             ${imageFileHtml} 
-                            <div class="form-group"><label>Ammo Type</label><input type="text" value="${item.ammoType||"None"}" oninput="updateItem('ammoType',this.value||null)" placeholder="e.g., Fusion Cell"></div>
+                            <div class="form-group"><label>Ammo Type</label><input type="text" value="${item.ammoType || "None"}" oninput="updateItem('ammoType',this.value||null)" placeholder="e.g., Fusion Cell"></div>
                          </div>`;
                 // Damages Wrapper
                 html += `<div id="tutorial-damages-wrapper" class="form-group"><label>Damages</label><div class="damages-container" id="damagesContainer"></div><button class="add-stat-btn" onclick="addDamage()">+ Damage</button></div>`;
@@ -1824,7 +2594,7 @@
                 // This makes them stack vertically but highlight as one block
                 html += `<div id="tutorial-apparel-img-equip-wrapper">
                             ${imageFileHtml}
-                            <div class="form-group" style="margin-top: 12px;"><label>Equip Slots</label><select onchange="addApparelEquipSlot(this.value);this.value='';"><option value="">Add slot...</option>${apparelEquipSlots.map(slot=>`<option value="${slot}">${slot}</option>`).join("")}</select><div class="equip-slot-list" id="equipSlotList"></div></div>
+                            <div class="form-group" style="margin-top: 12px;"><label>Equip Slots</label><select onchange="addApparelEquipSlot(this.value);this.value='';"><option value="">Add slot...</option>${apparelEquipSlots.map(slot => `<option value="${slot}">${slot}</option>`).join("")}</select><div class="equip-slot-list" id="equipSlotList"></div></div>
                          </div>`;
                 // Defenses Wrapper
                 html += `<div id="tutorial-defenses-wrapper" class="form-group"><label>Defenses</label><div class="defenses-container" id="defensesContainer"></div><button class="add-stat-btn" onclick="addDefense()">+ Defense</button></div>`;
@@ -1832,32 +2602,32 @@
                 // For Consumable: Image is separate
                 html += `<div id="tutorial-image-file-wrapper">${imageFileHtml}</div>`;
             }
-            
+
             // Stats and Effect (common to all)
-            html+=`<div id="tutorial-stats-wrapper" class="form-group" style="margin-top:15px"><label>Stats</label><div class="stats-container" id="statsContainer"></div><button class="add-stat-btn" onclick="addStat()">+ Stat</button></div>
-                    <div class="form-group"><label>Effect Desc</label><textarea oninput="updateItem('effect',this.value)">${item.effect||""}</textarea></div>`,
-            // --- END REPLACEMENT ---
-            
-            document.getElementById("editor").innerHTML=html,renderDamages(),renderDefenses();
-            
-            if("consumable"===item.type){ // Only render sounds if consumable
-                 renderSounds();
+            html += `<div id="tutorial-stats-wrapper" class="form-group" style="margin-top:15px"><label>Stats</label><div class="stats-container" id="statsContainer"></div><button class="add-stat-btn" onclick="addStat()">+ Stat</button></div>
+                    <div class="form-group"><label>Effect Desc</label><textarea oninput="updateItem('effect',this.value)">${item.effect || ""}</textarea></div>`,
+                // --- END REPLACEMENT ---
+
+                document.getElementById("editor").innerHTML = html, renderDamages(), renderDefenses();
+
+            if ("consumable" === item.type) { // Only render sounds if consumable
+                renderSounds();
             }
-            
-            renderApparelEquipSlots(),renderStats()
+
+            renderApparelEquipSlots(), renderStats()
         }
 
-        function renderDamages(){const container=document.getElementById("damagesContainer");container&&(container.innerHTML="",!(currentIndex<0||!items[currentIndex].damages))&&items[currentIndex].damages.forEach((damage,index)=>{const div=document.createElement("div");div.className="damage-item",div.innerHTML=`<div><label>Type</label><select onchange="updateDamage(${index},'type',this.value)">${damageTypes.map(t=>`<option value="${t}" ${damage.type===t?"selected":""}>${t}</option>`).join("")}</select></div><div><label>Value</label><input type="text" value="${damage.value||""}" oninput="updateDamage(${index},'value',this.value)"></div><button class="remove-stat-btn" onclick="removeDamage(${index})">X</button>`,container.appendChild(div)})}
-        function renderDefenses(){const container=document.getElementById("defensesContainer");container&&(container.innerHTML="",!(currentIndex<0||!items[currentIndex].defenses))&&items[currentIndex].defenses.forEach((defense,index)=>{const div=document.createElement("div");div.className="defense-item",div.innerHTML=`<div><label>Type</label><select onchange="updateDefense(${index},'type',this.value)">${defenseTypes.map(t=>`<option value="${t}" ${defense.type===t?"selected":""}>${t}</option>`).join("")}</select></div><div><label>Value</label><input type="text" value="${defense.value||""}" oninput="updateDefense(${index},'value',this.value)"></div><button class="remove-stat-btn" onclick="removeDefense(${index})">X</button>`,container.appendChild(div)})}
-        function renderSounds(){const container=document.getElementById("soundList");container&&(container.innerHTML="",!(currentIndex<0||!items[currentIndex].sounds))&&items[currentIndex].sounds.forEach((sound,index)=>{const tag=document.createElement("div");tag.className="sound-tag",tag.innerHTML=`${sound} <button onclick="removeSound(${index})">×</button>`,container.appendChild(tag)})}
-        function renderApparelEquipSlots(){const container=document.getElementById("equipSlotList");container&&(container.innerHTML="",!(currentIndex<0||!items[currentIndex].equipSlots))&&items[currentIndex].equipSlots.forEach((slot,index)=>{const tag=document.createElement("div");tag.className="equip-slot-tag",tag.innerHTML=`${slot} <button onclick="removeApparelEquipSlot(${index})">×</button>`,container.appendChild(tag)})}
-        function renderStats(){const container=document.getElementById("statsContainer");if(container&&(container.innerHTML="",!(currentIndex<0||!items[currentIndex].stats))){const item=items[currentIndex],statsArray=Object.entries(item.stats);statsArray.forEach(([key,statData],index)=>{const isObject="object"==typeof statData&&null!==statData&&statData.hasOwnProperty("isTimed"),value=isObject?statData.value:statData,isTimed=isObject&&statData.isTimed,isFirst=0===index,isLast=index===statsArray.length-1,div=document.createElement("div");let timedCheckboxHtml="";"consumable"===item.type?(div.className="stat-item consumable-stat",timedCheckboxHtml=`<div class="checkbox-group"><input type="checkbox" id="timed_${key}" ${isTimed?"checked":""} onchange="toggleStatIsTimed('${key}',this.checked)"><label for="timed_${key}">Timed</label></div>`):div.className="stat-item",div.innerHTML=`<div><label>Name</label><input type="text" value="${key}" onchange="updateStatKey('${key}',this.value)"></div><div><label>Value</label><input type="text" value="${value||""}" oninput="updateStatValue('${key}',this.value)"></div>${timedCheckboxHtml}<div class="reorder-arrows"><button ${isFirst?"disabled":""} onclick="moveStatUp('${key}')">▲</button><button ${isLast?"disabled":""} onclick="moveStatDown('${key}')">▼</button></div><button class="remove-stat-btn" onclick="removeStat('${key}')">X</button>`,container.appendChild(div)})}}
-        function exportJSON(){if(0===items.length)return void alert("No items!");const a=new JSZip,b=9,c=[];for(let d=0;d<items.length;d+=b){const e=Math.floor(d/b),f=items.slice(d,d+b);c.push(f.length),a.file(`items_${e}.json`,JSON.stringify(f,null,2),{date:new Date,compression:"DEFLATE"})}const d={totalItems:items.length,pageCounts:c};a.file("items_meta.json",JSON.stringify(d,null,2),{date:new Date,compression:"DEFLATE"}),a.generateAsync({type:"blob",compression:"DEFLATE",compressionOptions:{level:6}}).then(a=>{const b=URL.createObjectURL(a),c=document.createElement("a");c.href=b,c.download="items_export.zip",document.body.appendChild(c),c.click(),document.body.removeChild(c),URL.revokeObjectURL(b)}).catch(a=>{console.error("ZIP err:",a),alert("Error generating ZIP.")})}
-		
-		function togglePreview() {
+        function renderDamages() { const container = document.getElementById("damagesContainer"); container && (container.innerHTML = "", !(currentIndex < 0 || !items[currentIndex].damages)) && items[currentIndex].damages.forEach((damage, index) => { const div = document.createElement("div"); div.className = "damage-item", div.innerHTML = `<div><label>Type</label><select onchange="updateDamage(${index},'type',this.value)">${damageTypes.map(t => `<option value="${t}" ${damage.type === t ? "selected" : ""}>${t}</option>`).join("")}</select></div><div><label>Value</label><input type="text" value="${damage.value || ""}" oninput="updateDamage(${index},'value',this.value)"></div><button class="remove-stat-btn" onclick="removeDamage(${index})">X</button>`, container.appendChild(div) }) }
+        function renderDefenses() { const container = document.getElementById("defensesContainer"); container && (container.innerHTML = "", !(currentIndex < 0 || !items[currentIndex].defenses)) && items[currentIndex].defenses.forEach((defense, index) => { const div = document.createElement("div"); div.className = "defense-item", div.innerHTML = `<div><label>Type</label><select onchange="updateDefense(${index},'type',this.value)">${defenseTypes.map(t => `<option value="${t}" ${defense.type === t ? "selected" : ""}>${t}</option>`).join("")}</select></div><div><label>Value</label><input type="text" value="${defense.value || ""}" oninput="updateDefense(${index},'value',this.value)"></div><button class="remove-stat-btn" onclick="removeDefense(${index})">X</button>`, container.appendChild(div) }) }
+        function renderSounds() { const container = document.getElementById("soundList"); container && (container.innerHTML = "", !(currentIndex < 0 || !items[currentIndex].sounds)) && items[currentIndex].sounds.forEach((sound, index) => { const tag = document.createElement("div"); tag.className = "sound-tag", tag.innerHTML = `${sound} <button onclick="removeSound(${index})">×</button>`, container.appendChild(tag) }) }
+        function renderApparelEquipSlots() { const container = document.getElementById("equipSlotList"); container && (container.innerHTML = "", !(currentIndex < 0 || !items[currentIndex].equipSlots)) && items[currentIndex].equipSlots.forEach((slot, index) => { const tag = document.createElement("div"); tag.className = "equip-slot-tag", tag.innerHTML = `${slot} <button onclick="removeApparelEquipSlot(${index})">×</button>`, container.appendChild(tag) }) }
+        function renderStats() { const container = document.getElementById("statsContainer"); if (container && (container.innerHTML = "", !(currentIndex < 0 || !items[currentIndex].stats))) { const item = items[currentIndex], statsArray = Object.entries(item.stats); statsArray.forEach(([key, statData], index) => { const isObject = "object" == typeof statData && null !== statData && statData.hasOwnProperty("isTimed"), value = isObject ? statData.value : statData, isTimed = isObject && statData.isTimed, isFirst = 0 === index, isLast = index === statsArray.length - 1, div = document.createElement("div"); let timedCheckboxHtml = ""; "consumable" === item.type ? (div.className = "stat-item consumable-stat", timedCheckboxHtml = `<div class="checkbox-group"><input type="checkbox" id="timed_${key}" ${isTimed ? "checked" : ""} onchange="toggleStatIsTimed('${key}',this.checked)"><label for="timed_${key}">Timed</label></div>`) : div.className = "stat-item", div.innerHTML = `<div><label>Name</label><input type="text" value="${key}" onchange="updateStatKey('${key}',this.value)"></div><div><label>Value</label><input type="text" value="${value || ""}" oninput="updateStatValue('${key}',this.value)"></div>${timedCheckboxHtml}<div class="reorder-arrows"><button ${isFirst ? "disabled" : ""} onclick="moveStatUp('${key}')">▲</button><button ${isLast ? "disabled" : ""} onclick="moveStatDown('${key}')">▼</button></div><button class="remove-stat-btn" onclick="removeStat('${key}')">X</button>`, container.appendChild(div) }) } }
+        function exportJSON() { if (0 === items.length) return void alert("No items!"); const a = new JSZip, b = 9, c = []; for (let d = 0; d < items.length; d += b) { const e = Math.floor(d / b), f = items.slice(d, d + b); c.push(f.length), a.file(`items_${e}.json`, JSON.stringify(f, null, 2), { date: new Date, compression: "DEFLATE" }) } const d = { totalItems: items.length, pageCounts: c }; a.file("items_meta.json", JSON.stringify(d, null, 2), { date: new Date, compression: "DEFLATE" }), a.generateAsync({ type: "blob", compression: "DEFLATE", compressionOptions: { level: 6 } }).then(a => { const b = URL.createObjectURL(a), c = document.createElement("a"); c.href = b, c.download = "items_export.zip", document.body.appendChild(c), c.click(), document.body.removeChild(c), URL.revokeObjectURL(b) }).catch(a => { console.error("ZIP err:", a), alert("Error generating ZIP.") }) }
+
+        function togglePreview() {
             const mainContent = document.querySelector('.main-content');
             const toggleBtn = document.getElementById('togglePreviewBtn');
-            
+
             if (mainContent.classList.toggle('preview-collapsed')) {
                 // Preview is now collapsed
                 toggleBtn.textContent = '«';
@@ -1998,8 +2768,8 @@
                 position: 'left'
             }
         ];
-		
-		// ... (after consumableEditorTutorialSteps array) ...
+
+        // ... (after consumableEditorTutorialSteps array) ...
 
         const dataTutorialSteps = [
             {
@@ -2065,7 +2835,7 @@
             skipTutorial(); // Hide all other modals
             document.getElementById('tutorialGuideOverlay').style.display = 'block';
             document.getElementById('tutorialStepPopup').style.display = 'block';
-            
+
             activeTutorialSteps = dataTutorialSteps;
             currentTutorialStep = 0;
             showTutorialStep(currentTutorialStep);
@@ -2091,7 +2861,7 @@
             skipTutorial(); // Hide all other modals
             document.getElementById('tutorialGuideOverlay').style.display = 'block';
             document.getElementById('tutorialStepPopup').style.display = 'block';
-            
+
             activeTutorialSteps = mainTutorialSteps;
             currentTutorialStep = 0;
             showTutorialStep(currentTutorialStep);
@@ -2106,7 +2876,7 @@
             // Set up and start the new tutorial
             activeTutorialSteps = tutorialArray;
             currentTutorialStep = 0;
-            
+
             // Need a slight delay for the editor to render after addBaseItem
             setTimeout(() => {
                 document.getElementById('tutorialGuideOverlay').style.display = 'block';
@@ -2114,8 +2884,8 @@
                 showTutorialStep(0);
             }, 100); // 100ms delay should be enough
         }
-		
-		function repositionTutorialPopup() {
+
+        function repositionTutorialPopup() {
             if (!currentTutorialTarget || !tutorialStepPopup.style.display || tutorialStepPopup.style.display === 'none') {
                 return; // No target or popup isn't visible
             }
@@ -2151,7 +2921,7 @@
                     popup.classList.add('arrow-left');
                     break;
             }
-            
+
             // Constrain to viewport
             if (top < 0) top = offset;
             if (left < 0) left = offset;
@@ -2163,24 +2933,24 @@
         }
 
         function skipTutorial() {
-        // This function HIDES all tutorial elements
-        document.getElementById('tutorialStartModal').style.display = 'none';
-        document.getElementById('tutorialGuideOverlay').style.display = 'none';
-        document.getElementById('tutorialStepPopup').style.display = 'none';
-        document.getElementById('tutorialEditorModal').style.display = 'none';
-        document.getElementById('tutorialEditorChoiceModal').style.display = 'none';
-        document.getElementById('tutorialDataStartModal').style.display = 'none'; // <-- ADDED
+            // This function HIDES all tutorial elements
+            document.getElementById('tutorialStartModal').style.display = 'none';
+            document.getElementById('tutorialGuideOverlay').style.display = 'none';
+            document.getElementById('tutorialStepPopup').style.display = 'none';
+            document.getElementById('tutorialEditorModal').style.display = 'none';
+            document.getElementById('tutorialEditorChoiceModal').style.display = 'none';
+            document.getElementById('tutorialDataStartModal').style.display = 'none'; // <-- ADDED
 
-        // Remove any existing highlights
-        const highlighted = document.querySelector('.tutorial-highlight');
-        if (highlighted) {
-            highlighted.classList.remove('tutorial-highlight');
+            // Remove any existing highlights
+            const highlighted = document.querySelector('.tutorial-highlight');
+            if (highlighted) {
+                highlighted.classList.remove('tutorial-highlight');
+            }
+
+            // --- MODIFICATION: Remove listener and clear target ---
+            document.getElementById('editor').removeEventListener('scroll', repositionTutorialPopup);
+            currentTutorialTarget = null;
         }
-
-        // --- MODIFICATION: Remove listener and clear target ---
-        document.getElementById('editor').removeEventListener('scroll', repositionTutorialPopup);
-        currentTutorialTarget = null;
-    }
 
         function endTutorialPermanently() {
             // This function skips and sets the "don't show again" flag
@@ -2202,7 +2972,7 @@
 
             // Find the active main tab link
             const activeTabLink = document.querySelector('.tab-nav .tab-link.active');
-            
+
             if (activeTabLink && activeTabLink.getAttribute('onclick') === "openTab('data')") {
                 // --- MODIFICATION ---
                 // If on DATA tab, show the DATA start modal DIRECTLY
@@ -2219,7 +2989,7 @@
         function skipToEditorTutorial() {
             // Manually hide *only* the start modal
             document.getElementById('tutorialStartModal').style.display = 'none';
-            
+
             // --- MODIFICATION ---
             // Show the appropriate next modal based on the active tab
             showNextTutorialStepModal();
@@ -2252,8 +3022,8 @@
                 }
             }
         }
-		
-		function handleSkipClick() {
+
+        function handleSkipClick() {
             // Check if we are in the main tutorial
             if (activeTutorialSteps === mainTutorialSteps) {
                 // --- MODIFICATION ---
@@ -2271,71 +3041,71 @@
         }
 
         function showTutorialStep(index) {
-        // --- MODIFICATION: Remove old scroll listener ---
-        document.getElementById('editor').removeEventListener('scroll', repositionTutorialPopup);
+            // --- MODIFICATION: Remove old scroll listener ---
+            document.getElementById('editor').removeEventListener('scroll', repositionTutorialPopup);
 
-        // Remove old highlight
-        const oldHighlighted = document.querySelector('.tutorial-highlight');
-        if (oldHighlighted) {
-            oldHighlighted.classList.remove('tutorial-highlight');
-        }
+            // Remove old highlight
+            const oldHighlighted = document.querySelector('.tutorial-highlight');
+            if (oldHighlighted) {
+                oldHighlighted.classList.remove('tutorial-highlight');
+            }
 
-        // Use the *active* tutorial step array
-        const step = activeTutorialSteps[index];
+            // Use the *active* tutorial step array
+            const step = activeTutorialSteps[index];
 
-        // --- START MODIFICATION (onShow hook) ---
-        if (step.onShow) {
-            step.onShow();
-        }
-        // --- END MODIFICATION ---
+            // --- START MODIFICATION (onShow hook) ---
+            if (step.onShow) {
+                step.onShow();
+            }
+            // --- END MODIFICATION ---
 
-        let targetElement;
+            let targetElement;
 
-        try {
-             targetElement = document.querySelector(step.element);
-             if (!targetElement) throw new Error("Element not found");
-        } catch (e) {
-            console.warn('Tutorial element not found:', step.element, 'Skipping step.');
-            targetElement = document.getElementById('editor'); // Fallback
-            if (!targetElement.classList.contains('tutorial-highlight')) {
-                targetElement.classList.add('tutorial-highlight');
+            try {
+                targetElement = document.querySelector(step.element);
+                if (!targetElement) throw new Error("Element not found");
+            } catch (e) {
+                console.warn('Tutorial element not found:', step.element, 'Skipping step.');
+                targetElement = document.getElementById('editor'); // Fallback
+                if (!targetElement.classList.contains('tutorial-highlight')) {
+                    targetElement.classList.add('tutorial-highlight');
+                }
+            }
+
+            // Add new highlight
+            targetElement.classList.add('tutorial-highlight');
+
+            // --- MODIFICATION: Store target and position for scroll listener ---
+            currentTutorialTarget = targetElement;
+            currentTutorialPosition = step.position;
+
+            const editorPane = document.getElementById('editor');
+            if (editorPane.contains(targetElement)) {
+                // If the highlighted element is *inside* the editor pane, scroll it into view
+                targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            // Update popup content
+            const popup = document.getElementById('tutorialStepPopup');
+            document.getElementById('tutorialStepTitle').textContent = step.title;
+            document.getElementById('tutorialStepText').textContent = step.text;
+            document.getElementById('tutorialStepIndicator').textContent = `${index + 1} / ${activeTutorialSteps.length}`;
+
+            const nextBtn = document.getElementById('tutorialNext');
+            if (index === activeTutorialSteps.length - 1) {
+                nextBtn.textContent = 'Finish';
+            } else {
+                nextBtn.textContent = 'Next';
+            }
+
+            // Position popup (this will be re-run by the scroll listener)
+            repositionTutorialPopup();
+
+            // --- MODIFICATION: Add new scroll listener ---
+            if (editorPane.contains(targetElement)) {
+                editorPane.addEventListener('scroll', repositionTutorialPopup, { passive: true });
             }
         }
-
-        // Add new highlight
-        targetElement.classList.add('tutorial-highlight');
-
-        // --- MODIFICATION: Store target and position for scroll listener ---
-        currentTutorialTarget = targetElement;
-        currentTutorialPosition = step.position;
-
-        const editorPane = document.getElementById('editor');
-        if (editorPane.contains(targetElement)) {
-            // If the highlighted element is *inside* the editor pane, scroll it into view
-            targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-
-        // Update popup content
-        const popup = document.getElementById('tutorialStepPopup');
-        document.getElementById('tutorialStepTitle').textContent = step.title;
-        document.getElementById('tutorialStepText').textContent = step.text;
-        document.getElementById('tutorialStepIndicator').textContent = `${index + 1} / ${activeTutorialSteps.length}`;
-
-        const nextBtn = document.getElementById('tutorialNext');
-        if (index === activeTutorialSteps.length - 1) {
-            nextBtn.textContent = 'Finish';
-        } else {
-            nextBtn.textContent = 'Next';
-        }
-
-        // Position popup (this will be re-run by the scroll listener)
-        repositionTutorialPopup(); 
-
-        // --- MODIFICATION: Add new scroll listener ---
-        if (editorPane.contains(targetElement)) {
-            editorPane.addEventListener('scroll', repositionTutorialPopup, { passive: true });
-        }
-    }
         // --- End Tutorial Code ---
 
         // --- START MODIFICATION ---
@@ -2350,7 +3120,7 @@
         // --- Initial setup ---
         window.onload = () => {
             if (typeof UART !== "undefined") { UART.ports = ["Web Serial"]; UART.baud = 115200; }
-             else { console.error("UART lib not loaded."); alert("Error: UART library missing."); }
+            else { console.error("UART lib not loaded."); alert("Error: UART library missing."); }
 
             initializePresets(); // Separate presets
             renderPresetLists(); // Render the new lists
@@ -2386,7 +3156,7 @@
             let currentConnection = null;
 
             if (connectButton) {
-                connectButton.addEventListener("click", function() {
+                connectButton.addEventListener("click", function () {
                     if (typeof UART === "undefined") { alert("Error: UART library missing."); return; }
                     if (UART.isConnected()) { UART.close(); return; }
 
@@ -2414,14 +3184,14 @@
                                 if (scanDataButton) scanDataButton.disabled = !isConnected;
                                 const activeSubTab = document.querySelector('.data-sub-content.active');
                                 if (activeSubTab?.id === 'data-sub-content-local') {
-                                     if (uploadLocalDataButton) uploadLocalDataButton.disabled = !(isConnected && hasSelectedLocal);
-                                     if (uploadCommunityDataButton) uploadCommunityDataButton.disabled = true;
+                                    if (uploadLocalDataButton) uploadLocalDataButton.disabled = !(isConnected && hasSelectedLocal);
+                                    if (uploadCommunityDataButton) uploadCommunityDataButton.disabled = true;
                                 } else if (activeSubTab?.id === 'data-sub-content-community') {
-                                     if (uploadCommunityDataButton) uploadCommunityDataButton.disabled = !(isConnected && hasSelectedCommunity);
-                                     if (uploadLocalDataButton) uploadLocalDataButton.disabled = true;
+                                    if (uploadCommunityDataButton) uploadCommunityDataButton.disabled = !(isConnected && hasSelectedCommunity);
+                                    if (uploadLocalDataButton) uploadLocalDataButton.disabled = true;
                                 } else {
-                                     if (uploadLocalDataButton) uploadLocalDataButton.disabled = true;
-                                     if (uploadCommunityDataButton) uploadCommunityDataButton.disabled = true;
+                                    if (uploadLocalDataButton) uploadLocalDataButton.disabled = true;
+                                    if (uploadCommunityDataButton) uploadCommunityDataButton.disabled = true;
                                 }
 
                             }).catch(scanError => {
@@ -2455,14 +3225,14 @@
             // Initial Modal
             document.getElementById('startTutorialBtn').addEventListener('click', startTutorial);
             document.getElementById('skipTutorialBtn').addEventListener('click', skipToEditorTutorial);
-            
+
             // Replay Button
             document.getElementById('replayTutorialBtn').addEventListener('click', replayActiveTutorial);
 
             // Step Popup
-			document.getElementById('tutorialSkip').addEventListener('click', handleSkipClick);
-			document.getElementById('tutorialNext').addEventListener('click', nextTutorialStep);
-            
+            document.getElementById('tutorialSkip').addEventListener('click', handleSkipClick);
+            document.getElementById('tutorialNext').addEventListener('click', nextTutorialStep);
+
             // Editor Prompt Modal
             document.getElementById('tutorialEditorNoBtn').addEventListener('click', endTutorialPermanently);
             document.getElementById('tutorialEditorYesBtn').addEventListener('click', () => {
@@ -2475,16 +3245,19 @@
             document.getElementById('tutorialChoiceApparelBtn').addEventListener('click', () => startSpecificTutorial(apparelEditorTutorialSteps, 'apparel'));
             document.getElementById('tutorialChoiceConsumableBtn').addEventListener('click', () => startSpecificTutorial(consumableEditorTutorialSteps, 'consumable'));
             document.getElementById('tutorialChoiceCancelBtn').addEventListener('click', endTutorialPermanently);
-			
-			document.getElementById('startDataTutorialBtn').addEventListener('click', startDataTutorial);
+
+            document.getElementById('startDataTutorialBtn').addEventListener('click', startDataTutorial);
             document.getElementById('skipDataTutorialBtn').addEventListener('click', skipDataTutorial);
 
+
+            // --- Check for GitHub OAuth Callback ---
+            checkOAuthCallback();
 
             // --- Show Start Modal ---
             showStartModal();
         };
     </script>
-    
+
     <div id="tutorialStartModal" class="tutorial-overlay" style="display: none;">
         <div class="tutorial-modal-content">
             <h2>Welcome!</h2>
@@ -2527,8 +3300,10 @@
             <h2>Which Editor?</h2>
             <p>Please select an item type to explore its specific settings.</p>
             <div class="tutorial-modal-buttons" style="flex-direction: column;">
-                <button id="tutorialChoiceWeaponBtn" class="tutorial-btn-next" style="margin-bottom: 10px;">Weapon Editor</button>
-                <button id="tutorialChoiceApparelBtn" class="tutorial-btn-next" style="margin-bottom: 10px;">Apparel Editor</button>
+                <button id="tutorialChoiceWeaponBtn" class="tutorial-btn-next" style="margin-bottom: 10px;">Weapon
+                    Editor</button>
+                <button id="tutorialChoiceApparelBtn" class="tutorial-btn-next" style="margin-bottom: 10px;">Apparel
+                    Editor</button>
                 <button id="tutorialChoiceConsumableBtn" class="tutorial-btn-next">Consumable Editor</button>
                 <hr style="width: 100%; border-color: var(--pip-green-dim); margin: 15px 0;">
                 <button id="tutorialChoiceCancelBtn" class="tutorial-btn-skip">Cancel</button>
