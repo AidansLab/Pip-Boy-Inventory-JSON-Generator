@@ -1408,6 +1408,104 @@
             background: #4d1a1a;
             color: #ff4e4e;
         }
+
+        /* --- Custom Image Upload Styles --- */
+        .image-input-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .image-input-row select {
+            flex: 1;
+        }
+
+        .upload-image-btn {
+            background: var(--pip-green-dim);
+            color: var(--pip-green);
+            border: 1px solid var(--pip-green);
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            white-space: nowrap;
+            transition: background 0.2s;
+        }
+
+        .upload-image-btn:hover {
+            background: var(--pip-green);
+            color: var(--pip-black);
+        }
+
+        .custom-image-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 6px;
+            padding: 6px 10px;
+            background: var(--pip-green-dim);
+            border: 1px solid var(--pip-green);
+            border-radius: 4px;
+        }
+
+        .custom-image-name {
+            flex: 1;
+            font-family: monospace;
+            font-size: 0.85em;
+            color: var(--pip-green-bright);
+        }
+
+        .remove-custom-image-btn {
+            background: none;
+            border: none;
+            color: #ff6b6b;
+            font-size: 1.2em;
+            cursor: pointer;
+            padding: 0 4px;
+        }
+
+        .remove-custom-image-btn:hover {
+            color: #ff4444;
+        }
+
+        /* --- Custom Sound Upload Styles --- */
+        .sound-input-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .sound-input-row select {
+            flex: 1;
+        }
+
+        .upload-sound-btn {
+            background: var(--pip-green-dim);
+            color: var(--pip-green);
+            border: 1px solid var(--pip-green);
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            white-space: nowrap;
+            transition: background 0.2s;
+        }
+
+        .upload-sound-btn:hover {
+            background: var(--pip-green);
+            color: var(--pip-black);
+        }
+
+        .sound-tag.custom-sound {
+            background: var(--pip-green-dim);
+            border: 1px solid var(--pip-green);
+        }
+
+        .sound-tag .custom-indicator {
+            font-size: 0.8em;
+            opacity: 0.7;
+            margin-left: 2px;
+        }
     </style>
 </head>
 
@@ -1639,6 +1737,132 @@
         let githubToken = localStorage.getItem('github_token') || null;
         let githubUser = null;
 
+        // --- Custom Image Upload Storage ---
+        // Maps item index to { filename: string, content: string }
+        let customImageFiles = {};
+
+        function handleCustomImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // Validate filename ends with _img.js
+            if (!file.name.endsWith('_img.js')) {
+                alert('Image file must end with "_img.js" (e.g., "MyItem_img.js")');
+                event.target.value = '';
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const content = e.target.result;
+                // Store the custom image for the current item
+                customImageFiles[currentIndex] = {
+                    filename: file.name,
+                    content: content
+                };
+                // Update the item's image property to reference this file
+                items[currentIndex].image = file.name;
+                items[currentIndex]._customImage = true; // Mark as custom
+                renderEditor();
+                renderPipboyPreview();
+            };
+            reader.readAsText(file);
+        }
+
+        function removeCustomImage() {
+            if (currentIndex < 0) return;
+            delete customImageFiles[currentIndex];
+            delete items[currentIndex]._customImage;
+            items[currentIndex].image = '';
+            renderEditor();
+            renderPipboyPreview();
+        }
+
+        // --- Custom Sound Upload Storage ---
+        // Maps item index to array of { filename: string, content: ArrayBuffer }
+        let customSoundFiles = {};
+
+        function handleCustomSoundUpload(event) {
+            const files = event.target.files;
+            if (!files || files.length === 0) return;
+
+            // Process each file
+            Array.from(files).forEach(file => {
+                // Validate filename is a .wav file
+                if (!file.name.toLowerCase().endsWith('.wav')) {
+                    alert(`${file.name} is not a .wav file - skipped`);
+                    return;
+                }
+
+                // Initialize array if needed
+                if (!customSoundFiles[currentIndex]) {
+                    customSoundFiles[currentIndex] = [];
+                }
+                // Check if already uploaded
+                if (customSoundFiles[currentIndex].some(s => s.filename === file.name)) {
+                    console.log(`${file.name} already uploaded - skipped`);
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const content = e.target.result;
+                    // Store the custom sound
+                    customSoundFiles[currentIndex].push({
+                        filename: file.name,
+                        content: content // Base64 encoded
+                    });
+                    // Add to item's sounds array
+                    if (!items[currentIndex].sounds) {
+                        items[currentIndex].sounds = [];
+                    }
+                    if (!items[currentIndex].sounds.includes(file.name)) {
+                        items[currentIndex].sounds.push(file.name);
+                    }
+                    // Mark which sounds are custom
+                    if (!items[currentIndex]._customSounds) {
+                        items[currentIndex]._customSounds = [];
+                    }
+                    items[currentIndex]._customSounds.push(file.name);
+                    renderSounds();
+                };
+                reader.readAsDataURL(file); // Read as base64 for binary files
+            });
+
+            event.target.value = ''; // Reset for next upload
+            renderEditor();
+        }
+
+        function removeCustomSound(filename) {
+            if (currentIndex < 0) return;
+            // Remove from custom storage
+            if (customSoundFiles[currentIndex]) {
+                customSoundFiles[currentIndex] = customSoundFiles[currentIndex].filter(s => s.filename !== filename);
+                if (customSoundFiles[currentIndex].length === 0) {
+                    delete customSoundFiles[currentIndex];
+                }
+            }
+            // Remove from item's custom sounds marker
+            if (items[currentIndex]._customSounds) {
+                items[currentIndex]._customSounds = items[currentIndex]._customSounds.filter(s => s !== filename);
+                if (items[currentIndex]._customSounds.length === 0) {
+                    delete items[currentIndex]._customSounds;
+                }
+            }
+            // Remove from item's sounds array
+            if (items[currentIndex].sounds) {
+                items[currentIndex].sounds = items[currentIndex].sounds.filter(s => s !== filename);
+                if (items[currentIndex].sounds.length === 0) {
+                    delete items[currentIndex].sounds;
+                }
+            }
+            renderSounds();
+        }
+
+        function isCustomSound(filename) {
+            return items[currentIndex]?._customSounds?.includes(filename) || false;
+        }
+
         // --- GitHub OAuth Functions ---
         function loginWithGitHub() {
             const authUrl = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CONFIG.clientId}&scope=${GITHUB_CONFIG.scopes}&redirect_uri=${encodeURIComponent(window.location.origin + window.location.pathname)}`;
@@ -1803,6 +2027,16 @@
             const item = items[currentIndex];
             const itemCopy = JSON.parse(JSON.stringify(item));
             itemCopy.quantity = 1;
+            // Remove internal marker before submitting
+            delete itemCopy._customImage;
+            delete itemCopy._customSounds;
+
+            // Check for custom image
+            const hasCustomImage = item._customImage && customImageFiles[currentIndex];
+            const customImage = hasCustomImage ? customImageFiles[currentIndex] : null;
+
+            // Check for custom sounds
+            const customSounds = customSoundFiles[currentIndex] || [];
 
             // Determine preset file based on item type
             let presetFile;
@@ -1837,14 +2071,33 @@
                 // Modify the file content to add the new item
                 const newContent = addItemToPresetFile(fileContent.content, itemCopy);
 
-                // Commit the change
+                // Commit the preset file change
                 await commitFile(fork.owner.login, GITHUB_CONFIG.targetRepo, presetFile, branchName, newContent,
                     `Add ${item.name} to ${item.type} presets`);
+
+                // If there's a custom image, also commit it to community_DATA
+                if (customImage) {
+                    updateSubmitStatus('Uploading custom image file...', 'loading');
+                    const imagePath = `community_DATA/${customImage.filename}`;
+                    await createNewFile(fork.owner.login, GITHUB_CONFIG.targetRepo, imagePath, branchName, customImage.content,
+                        `Add custom image ${customImage.filename}`);
+                }
+
+                // If there are custom sounds, commit them to community_DATA
+                for (let i = 0; i < customSounds.length; i++) {
+                    const sound = customSounds[i];
+                    updateSubmitStatus(`Uploading custom sound ${i + 1}/${customSounds.length}...`, 'loading');
+                    const soundPath = `community_DATA/${sound.filename}`;
+                    // Sound content is base64 data URL, extract just the base64 part
+                    const base64Content = sound.content.split(',')[1];
+                    await createNewFileBinary(fork.owner.login, GITHUB_CONFIG.targetRepo, soundPath, branchName, base64Content,
+                        `Add custom sound ${sound.filename}`);
+                }
 
                 updateSubmitStatus('Creating Pull Request...', 'loading');
 
                 // Create the PR
-                const pr = await createPullRequest(fork.owner.login, branchName, item);
+                const pr = await createPullRequest(fork.owner.login, branchName, item, customImage, customSounds);
 
                 updateSubmitStatus(`Pull Request created! <a href="${pr.html_url}" target="_blank" style="color:#4eff4e">View PR #${pr.number}</a>`, 'success');
                 document.getElementById('submitStatus').innerHTML = document.getElementById('submitStatus').textContent;
@@ -1854,6 +2107,52 @@
                 console.error('PR creation error:', error);
                 updateSubmitStatus('Error: ' + error.message, 'error');
             }
+        }
+
+        // Helper to create a new file (for custom images)
+        async function createNewFile(owner, repo, path, branch, content, message) {
+            const createResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `token ${githubToken}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: message,
+                    content: btoa(unescape(encodeURIComponent(content))),
+                    branch: branch
+                })
+            });
+
+            if (!createResponse.ok) {
+                const error = await createResponse.json();
+                throw new Error(`Failed to create file: ${error.message || 'Unknown error'}`);
+            }
+
+            return await createResponse.json();
+        }
+
+        // Helper to create a new binary file (for custom sounds) - content is already base64
+        async function createNewFileBinary(owner, repo, path, branch, base64Content, message) {
+            const createResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `token ${githubToken}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: message,
+                    content: base64Content, // Already base64 encoded
+                    branch: branch
+                })
+            });
+
+            if (!createResponse.ok) {
+                const error = await createResponse.json();
+                throw new Error(`Failed to create file: ${error.message || 'Unknown error'}`);
+            }
+
+            return await createResponse.json();
         }
 
         async function ensureFork() {
@@ -1987,7 +2286,13 @@
             return await commitResponse.json();
         }
 
-        async function createPullRequest(forkOwner, branchName, item) {
+        async function createPullRequest(forkOwner, branchName, item, customImage = null, customSounds = []) {
+            const customImageSection = customImage ?
+                `\n\n### Custom Image\n- File: \`${customImage.filename}\`\n- Location: \`community_DATA/${customImage.filename}\`` : '';
+
+            const customSoundsSection = customSounds.length > 0 ?
+                `\n\n### Custom Sounds\n${customSounds.map(s => `- \`${s.filename}\` → \`community_DATA/${s.filename}\``).join('\n')}` : '';
+
             const response = await fetch(`https://api.github.com/repos/${GITHUB_CONFIG.targetOwner}/${GITHUB_CONFIG.targetRepo}/pulls`, {
                 method: 'POST',
                 headers: {
@@ -1996,7 +2301,7 @@
                 },
                 body: JSON.stringify({
                     title: `Add ${item.name} to ${item.type} presets`,
-                    body: `## New Item Submission\n\nThis PR adds **${item.name}** to the ${item.type} presets.\n\n### Item Details\n\`\`\`json\n${JSON.stringify(item, null, 2)}\n\`\`\`\n\n---\n*Submitted via the Pip-Boy Inventory Generator*`,
+                    body: `## New Item Submission\n\nThis PR adds **${item.name}** to the ${item.type} presets.\n\n### Item Details\n\`\`\`json\n${JSON.stringify(item, null, 2)}\n\`\`\`${customImageSection}${customSoundsSection}\n\n---\n*Submitted via the Pip-Boy Inventory Generator*`,
                     head: `${forkOwner}:${branchName}`,
                     base: 'main'
                 })
@@ -2371,7 +2676,121 @@
             const meta = { totalItems: items.length, pageCounts: pageCounts };
             filesToSend.push({ name: 'DATA/items_meta.json', content: JSON.stringify(meta, null, 2) });
 
-            console.log(`Sending ${filesToSend.length} item files.`);
+            // Also add custom image files (text/JS files)
+            for (const idx in customImageFiles) {
+                const imgFile = customImageFiles[idx];
+                if (imgFile && imgFile.filename && imgFile.content) {
+                    filesToSend.push({
+                        name: `DATA/${imgFile.filename}`,
+                        content: imgFile.content,
+                        isText: true
+                    });
+                    console.log(`Added custom image: ${imgFile.filename}`);
+                }
+            }
+
+            // Also add custom sound files (binary WAV files as binary strings)
+            const binaryFilesToSend = [];
+            for (const idx in customSoundFiles) {
+                const sounds = customSoundFiles[idx];
+                if (sounds && sounds.length > 0) {
+                    sounds.forEach(sound => {
+                        if (sound.filename && sound.content) {
+                            // Convert base64 data URL to binary string
+                            const base64Data = sound.content.split(',')[1];
+                            const binaryString = atob(base64Data);
+                            binaryFilesToSend.push({
+                                name: `DATA/${sound.filename}`,
+                                content: binaryString, // Binary string, not Uint8Array
+                                isBinary: true
+                            });
+                            console.log(`Added custom sound: ${sound.filename}`);
+                        }
+                    });
+                }
+            }
+
+            // --- Check for missing preset files (sounds/images) not on device & not custom-uploaded ---
+            const missingPresetFiles = []; // { filename, type: 'sound'|'image' }
+            const alreadyQueued = new Set();
+
+            // Collect all custom-uploaded filenames
+            const customFilenames = new Set();
+            for (const idx in customImageFiles) {
+                if (customImageFiles[idx]) customFilenames.add(customImageFiles[idx].filename);
+            }
+            for (const idx in customSoundFiles) {
+                (customSoundFiles[idx] || []).forEach(s => customFilenames.add(s.filename));
+            }
+
+            // Check each item for files not on device and not custom-uploaded
+            items.forEach(item => {
+                // Check image file
+                if (item.image && !deviceImages.includes(item.image) && !customFilenames.has(item.image)) {
+                    if (!alreadyQueued.has(item.image)) {
+                        missingPresetFiles.push({ filename: item.image, type: 'image' });
+                        alreadyQueued.add(item.image);
+                    }
+                }
+                // Check sound files
+                if (item.sounds && Array.isArray(item.sounds)) {
+                    item.sounds.forEach(sound => {
+                        if (!deviceSounds.includes(sound) && !customFilenames.has(sound)) {
+                            if (!alreadyQueued.has(sound)) {
+                                missingPresetFiles.push({ filename: sound, type: 'sound' });
+                                alreadyQueued.add(sound);
+                            }
+                        }
+                    });
+                }
+            });
+
+            console.log(`Found ${missingPresetFiles.length} missing preset files to download.`);
+
+            // Download missing files from GitHub community_DATA
+            if (missingPresetFiles.length > 0) {
+                const uploadBtn = document.getElementById('btnUploadUSB');
+                uploadBtn.textContent = 'Downloading missing files...';
+
+                for (const missing of missingPresetFiles) {
+                    try {
+                        const downloadUrl = `https://raw.githubusercontent.com/AidansLab/Pip-Boy-Inventory-JSON-Generator/main/community_DATA/${missing.filename}`;
+                        console.log(`Downloading: ${downloadUrl}`);
+
+                        const response = await fetch(downloadUrl);
+                        if (!response.ok) {
+                            console.warn(`Failed to download ${missing.filename}: ${response.status}`);
+                            continue;
+                        }
+
+                        if (missing.type === 'image') {
+                            // Text file (JS)
+                            const content = await response.text();
+                            filesToSend.push({
+                                name: `DATA/${missing.filename}`,
+                                content: content,
+                                isText: true
+                            });
+                            console.log(`Downloaded preset image: ${missing.filename}`);
+                        } else if (missing.type === 'sound') {
+                            // Binary file (WAV) - convert to binary string like DATA tab does
+                            const buffer = await response.arrayBuffer();
+                            const bytes = new Uint8Array(buffer);
+                            const binaryString = String.fromCharCode(...bytes);
+                            binaryFilesToSend.push({
+                                name: `DATA/${missing.filename}`,
+                                content: binaryString,
+                                isBinary: true
+                            });
+                            console.log(`Downloaded preset sound: ${missing.filename}`);
+                        }
+                    } catch (err) {
+                        console.error(`Error downloading ${missing.filename}:`, err);
+                    }
+                }
+            }
+
+            console.log(`Sending ${filesToSend.length} text files + ${binaryFilesToSend.length} binary files.`);
             const originalButtonText = "Upload Items to Device";
 
             // 2. Ensure DATA directory exists
@@ -2410,8 +2829,30 @@
                     console.log(`Upload finished: ${devicePath}`);
                 }
 
+                // Upload binary files (sounds)
+                const totalFiles = filesToSend.length + binaryFilesToSend.length;
+                for (let i = 0; i < binaryFilesToSend.length; i++) {
+                    const file = binaryFilesToSend[i];
+                    const devicePath = file.name;
+                    const shortName = devicePath.replace('DATA/', '');
+                    const fileNum = filesToSend.length + i + 1;
+
+                    console.log(`Uploading binary ${devicePath} (${file.content.length}b)...`);
+
+                    await connection.espruinoSendFile(devicePath, file.content, {
+                        fs: true,
+                        noACK: true,
+                        chunkSize: 1024 * 4,
+                        progress: (bytesSent, totalBytes) => {
+                            let percent = totalBytes > 0 ? Math.round((bytesSent / totalBytes) * 100) : 0;
+                            uploadBtn.textContent = `Uploading ${fileNum}/${totalFiles} (${shortName} ${percent}%)...`;
+                        }
+                    });
+                    console.log(`Upload finished: ${devicePath}`);
+                }
+
                 // 4. Success: Reset button and reboot
-                console.log("All items sent!");
+                console.log("All items and custom files sent!");
                 uploadBtn.textContent = originalButtonText;
                 uploadBtn.disabled = !(UART.isConnected() && items.length > 0);
                 console.log("Rebooting...");
@@ -2570,14 +3011,36 @@
             html += `<div class="form-row"><div class="form-group"><label>Type</label><select onchange="updateItem('type',this.value)"><option value="" ${item.type ? "" : "selected"}>None</option><option value="weapon" ${"weapon" === item.type ? "selected" : ""}>Weapon</option><option value="apparel" ${"apparel" === item.type ? "selected" : ""}>Apparel</option><option value="consumable" ${"consumable" === item.type ? "selected" : ""}>Consumable</option></select></div><div class="form-group"><label>Name</label><input type="text" value="${item.name || ""}" oninput="updateItem('name',this.value)"></div></div>`; // Type + Name row
 
             if ("consumable" === item.type) { // Consumable row (Qty + Sounds)
-                html += ` <div class="form-row"><div class="form-group"><label>Quantity</label><input type="number" value="${item.quantity || 1}" min="0" step="1" oninput="updateItem('quantity',parseInt(this.value)||0)"></div><div class="form-group"><label>${soundSourceLabel}</label><select onchange="addSound(this.value);this.value='';"><option value="">Select sound...</option>${currentSounds.map(s => `<option value="${s}">${s}</option>`).join("")}</select><div class="sound-list" id="soundList"></div></div></div>`;
+                html += ` <div class="form-row"><div class="form-group"><label>Quantity</label><input type="number" value="${item.quantity || 1}" min="0" step="1" oninput="updateItem('quantity',parseInt(this.value)||0)"></div><div class="form-group sound-file-group"><label>${soundSourceLabel}</label>
+                    <div class="sound-input-row">
+                        <select onchange="addSound(this.value);this.value='';"><option value="">Select sound...</option>${currentSounds.map(s => `<option value="${s}">${s}</option>`).join("")}</select>
+                        <label class="upload-sound-btn" title="Upload custom sound (.wav file)">
+                            <input type="file" accept=".wav" multiple onchange="handleCustomSoundUpload(event)" style="display:none">
+                            Upload
+                        </label>
+                    </div>
+                    <div class="sound-list" id="soundList"></div>
+                </div></div>`;
             } else { // Weapon/Apparel row (Qty + Empty)
                 html += ` <div class="form-row"><div class="form-group"><label>Quantity</label><input type="number" value="${item.quantity || 1}" min="0" step="1" oninput="updateItem('quantity',parseInt(this.value)||0)"></div><div class="form-group"></div></div>`;
             }
             html += `</div>`; // Close basic tutorial wrapper
 
             // Image File HTML string (we'll use this)
-            const imageFileHtml = `<div class="form-group"><label>${imageSourceLabel}</label><select onchange="updateItem('image',this.value)"><option value="">None</option>${currentImages.map(img => `<option value="${img}" ${item.image === img ? "selected" : ""}>${img}</option>`).join("")}</select></div>`;
+            const hasCustomImage = item._customImage && customImageFiles[currentIndex];
+            const customImageInfo = hasCustomImage ?
+                `<div class="custom-image-info"><span class="custom-image-name">${customImageFiles[currentIndex].filename}</span><button class="remove-custom-image-btn" onclick="removeCustomImage()">×</button></div>` : '';
+            const imageSelectDisabled = hasCustomImage ? 'disabled' : '';
+            const imageFileHtml = `<div class="form-group image-file-group"><label>${imageSourceLabel}</label>
+                <div class="image-input-row">
+                    <select onchange="updateItem('image',this.value)" ${imageSelectDisabled}><option value="">None</option>${currentImages.map(img => `<option value="${img}" ${item.image === img && !hasCustomImage ? "selected" : ""}>${img}</option>`).join("")}</select>
+                    <label class="upload-image-btn" title="Upload custom image (must end with _img.js)">
+                        <input type="file" accept=".js" onchange="handleCustomImageUpload(event)" style="display:none">
+                        Upload
+                    </label>
+                </div>
+                ${customImageInfo}
+            </div>`;
 
             // --- Conditionally place Image/Ammo/Equip sections ---
             if ("weapon" === item.type) {
@@ -2619,7 +3082,24 @@
 
         function renderDamages() { const container = document.getElementById("damagesContainer"); container && (container.innerHTML = "", !(currentIndex < 0 || !items[currentIndex].damages)) && items[currentIndex].damages.forEach((damage, index) => { const div = document.createElement("div"); div.className = "damage-item", div.innerHTML = `<div><label>Type</label><select onchange="updateDamage(${index},'type',this.value)">${damageTypes.map(t => `<option value="${t}" ${damage.type === t ? "selected" : ""}>${t}</option>`).join("")}</select></div><div><label>Value</label><input type="text" value="${damage.value || ""}" oninput="updateDamage(${index},'value',this.value)"></div><button class="remove-stat-btn" onclick="removeDamage(${index})">X</button>`, container.appendChild(div) }) }
         function renderDefenses() { const container = document.getElementById("defensesContainer"); container && (container.innerHTML = "", !(currentIndex < 0 || !items[currentIndex].defenses)) && items[currentIndex].defenses.forEach((defense, index) => { const div = document.createElement("div"); div.className = "defense-item", div.innerHTML = `<div><label>Type</label><select onchange="updateDefense(${index},'type',this.value)">${defenseTypes.map(t => `<option value="${t}" ${defense.type === t ? "selected" : ""}>${t}</option>`).join("")}</select></div><div><label>Value</label><input type="text" value="${defense.value || ""}" oninput="updateDefense(${index},'value',this.value)"></div><button class="remove-stat-btn" onclick="removeDefense(${index})">X</button>`, container.appendChild(div) }) }
-        function renderSounds() { const container = document.getElementById("soundList"); container && (container.innerHTML = "", !(currentIndex < 0 || !items[currentIndex].sounds)) && items[currentIndex].sounds.forEach((sound, index) => { const tag = document.createElement("div"); tag.className = "sound-tag", tag.innerHTML = `${sound} <button onclick="removeSound(${index})">×</button>`, container.appendChild(tag) }) }
+        function renderSounds() {
+            const container = document.getElementById("soundList");
+            if (!container) return;
+            container.innerHTML = "";
+            if (currentIndex < 0 || !items[currentIndex].sounds) return;
+
+            items[currentIndex].sounds.forEach((sound, index) => {
+                const isCustom = isCustomSound(sound);
+                const tag = document.createElement("div");
+                tag.className = "sound-tag" + (isCustom ? " custom-sound" : "");
+                const customIndicator = isCustom ? '<span class="custom-indicator">(uploaded)</span>' : '';
+                const removeAction = isCustom ?
+                    `removeCustomSound('${sound.replace(/'/g, "\\'")}')` :
+                    `removeSound(${index})`;
+                tag.innerHTML = `${sound}${customIndicator} <button onclick="${removeAction}">×</button>`;
+                container.appendChild(tag);
+            });
+        }
         function renderApparelEquipSlots() { const container = document.getElementById("equipSlotList"); container && (container.innerHTML = "", !(currentIndex < 0 || !items[currentIndex].equipSlots)) && items[currentIndex].equipSlots.forEach((slot, index) => { const tag = document.createElement("div"); tag.className = "equip-slot-tag", tag.innerHTML = `${slot} <button onclick="removeApparelEquipSlot(${index})">×</button>`, container.appendChild(tag) }) }
         function renderStats() { const container = document.getElementById("statsContainer"); if (container && (container.innerHTML = "", !(currentIndex < 0 || !items[currentIndex].stats))) { const item = items[currentIndex], statsArray = Object.entries(item.stats); statsArray.forEach(([key, statData], index) => { const isObject = "object" == typeof statData && null !== statData && statData.hasOwnProperty("isTimed"), value = isObject ? statData.value : statData, isTimed = isObject && statData.isTimed, isFirst = 0 === index, isLast = index === statsArray.length - 1, div = document.createElement("div"); let timedCheckboxHtml = ""; "consumable" === item.type ? (div.className = "stat-item consumable-stat", timedCheckboxHtml = `<div class="checkbox-group"><input type="checkbox" id="timed_${key}" ${isTimed ? "checked" : ""} onchange="toggleStatIsTimed('${key}',this.checked)"><label for="timed_${key}">Timed</label></div>`) : div.className = "stat-item", div.innerHTML = `<div><label>Name</label><input type="text" value="${key}" onchange="updateStatKey('${key}',this.value)"></div><div><label>Value</label><input type="text" value="${value || ""}" oninput="updateStatValue('${key}',this.value)"></div>${timedCheckboxHtml}<div class="reorder-arrows"><button ${isFirst ? "disabled" : ""} onclick="moveStatUp('${key}')">▲</button><button ${isLast ? "disabled" : ""} onclick="moveStatDown('${key}')">▼</button></div><button class="remove-stat-btn" onclick="removeStat('${key}')">X</button>`, container.appendChild(div) }) } }
         function exportJSON() { if (0 === items.length) return void alert("No items!"); const a = new JSZip, b = 9, c = []; for (let d = 0; d < items.length; d += b) { const e = Math.floor(d / b), f = items.slice(d, d + b); c.push(f.length), a.file(`items_${e}.json`, JSON.stringify(f, null, 2), { date: new Date, compression: "DEFLATE" }) } const d = { totalItems: items.length, pageCounts: c }; a.file("items_meta.json", JSON.stringify(d, null, 2), { date: new Date, compression: "DEFLATE" }), a.generateAsync({ type: "blob", compression: "DEFLATE", compressionOptions: { level: 6 } }).then(a => { const b = URL.createObjectURL(a), c = document.createElement("a"); c.href = b, c.download = "items_export.zip", document.body.appendChild(c), c.click(), document.body.removeChild(c), URL.revokeObjectURL(b) }).catch(a => { console.error("ZIP err:", a), alert("Error generating ZIP.") }) }
