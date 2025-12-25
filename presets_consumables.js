@@ -200,5 +200,21 @@ const consumablePresets = [
       "Value": "3"
     }
   }
+,
+  {
+    "name": "Stimpak",
+    "type": "consumable",
+    "quantity": 1,
+    "effect": "Restores 30% of your health.",
+    "sounds": [
+      "Stimpak.wav"
+    ],
+    "image": "Stimpak_img.js",
+    "stats": {
+      "Health": "30%",
+      "Weight": "0.1",
+      "Value": "48"
+    }
+  }
 ];
 
