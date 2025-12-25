@@ -200,5 +200,21 @@ const consumablePresets = [
       "Value": "3"
     }
   }
+,
+  {
+    "name": "Test Consumable",
+    "type": "consumable",
+    "quantity": 1,
+    "effect": "",
+    "stats": {
+      "Weight": "1.0",
+      "Value": "10",
+      "Health": "10"
+    },
+    "sounds": [
+      "Soda_03.wav"
+    ],
+    "image": "PurifiedWater_img.js"
+  }
 ];
 
