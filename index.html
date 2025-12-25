@@ -2109,8 +2109,19 @@
             }
         }
 
-        // Helper to create a new file (for custom images)
+        // Helper to create a new file (for custom images) - skips if file already exists
         async function createNewFile(owner, repo, path, branch, content, message) {
+            // First check if file already exists - if so, skip
+            try {
+                const checkResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${branch}`, {
+                    headers: { 'Authorization': `token ${githubToken}` }
+                });
+                if (checkResponse.ok) {
+                    console.log(`File ${path} already exists, skipping.`);
+                    return { skipped: true };
+                }
+            } catch (e) { /* File doesn't exist, proceed with creation */ }
+
             const createResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
                 method: 'PUT',
                 headers: {
@@ -2132,8 +2143,19 @@
             return await createResponse.json();
         }
 
-        // Helper to create a new binary file (for custom sounds) - content is already base64
+        // Helper to create a new binary file (for custom sounds) - skips if file already exists
         async function createNewFileBinary(owner, repo, path, branch, base64Content, message) {
+            // First check if file already exists - if so, skip
+            try {
+                const checkResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${branch}`, {
+                    headers: { 'Authorization': `token ${githubToken}` }
+                });
+                if (checkResponse.ok) {
+                    console.log(`File ${path} already exists, skipping.`);
+                    return { skipped: true };
+                }
+            } catch (e) { /* File doesn't exist, proceed with creation */ }
+
             const createResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
                 method: 'PUT',
                 headers: {
@@ -2142,7 +2164,7 @@
                 },
                 body: JSON.stringify({
                     message: message,
-                    content: base64Content, // Already base64 encoded
+                    content: base64Content,
                     branch: branch
                 })
             });
