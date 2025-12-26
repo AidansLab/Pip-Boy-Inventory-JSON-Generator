@@ -123,4 +123,24 @@ const apparelPresets = [
     ],
     "image": "VaultBoy_img.js"
   }
+,
+  {
+    "name": "new pants!",
+    "type": "apparel",
+    "quantity": 1,
+    "effect": "here for the fun",
+    "stats": {
+      "Weight": "1.0",
+      "Value": "10"
+    },
+    "defenses": [
+      {
+        "type": "fire",
+        "value": "5"
+      }
+    ],
+    "equipSlots": [
+      "clothing"
+    ]
+  }
 ];
