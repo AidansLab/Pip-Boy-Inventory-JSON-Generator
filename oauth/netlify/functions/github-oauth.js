@@ -1,22 +1,25 @@
-// Netlify Function to handle GitHub OAuth token exchange
-// This keeps the client_secret secure on the server side
+// netlify/functions/github-oauth.js
+exports.handler = async (event, context) => {
+    // CORS headers for all responses
+    const corsHeaders = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type'
+    };
 
-exports.handler = async (event) => {
-    // Handle CORS preflight
+    // Handle preflight OPTIONS request
     if (event.httpMethod === 'OPTIONS') {
         return {
-            statusCode: 204,
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Headers': 'Content-Type',
-                'Access-Control-Allow-Methods': 'POST, OPTIONS'
-            }
+            statusCode: 200,
+            headers: corsHeaders,
+            body: ''
         };
     }
 
     if (event.httpMethod !== 'POST') {
         return {
             statusCode: 405,
+            headers: corsHeaders,
             body: JSON.stringify({ error: 'Method not allowed' })
         };
     }
@@ -27,12 +30,12 @@ exports.handler = async (event) => {
         if (!code) {
             return {
                 statusCode: 400,
-                headers: { 'Access-Control-Allow-Origin': '*' },
+                headers: corsHeaders,
                 body: JSON.stringify({ error: 'Missing authorization code' })
             };
         }
 
-        // Exchange authorization code for access token
+        // Exchange the code for an access token
         const response = await fetch('https://github.com/login/oauth/access_token', {
             method: 'POST',
             headers: {
@@ -51,28 +54,22 @@ exports.handler = async (event) => {
         if (data.error) {
             return {
                 statusCode: 400,
-                headers: { 'Access-Control-Allow-Origin': '*' },
+                headers: corsHeaders,
                 body: JSON.stringify({ error: data.error_description || data.error })
             };
         }
 
         return {
             statusCode: 200,
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                access_token: data.access_token,
-                token_type: data.token_type,
-                scope: data.scope
-            })
+            headers: corsHeaders,
+            body: JSON.stringify({ access_token: data.access_token })
         };
+
     } catch (error) {
         console.error('OAuth error:', error);
         return {
             statusCode: 500,
-            headers: { 'Access-Control-Allow-Origin': '*' },
+            headers: corsHeaders,
             body: JSON.stringify({ error: 'Internal server error' })
         };
     }
