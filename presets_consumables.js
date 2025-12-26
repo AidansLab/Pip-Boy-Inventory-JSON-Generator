@@ -200,5 +200,17 @@ const consumablePresets = [
       "Value": "3"
     }
   }
+,
+  {
+    "name": "Test Item",
+    "type": "consumable",
+    "quantity": 1,
+    "effect": "",
+    "stats": {
+      "Weight": "1.0",
+      "Value": "10",
+      "Health": "10"
+    }
+  }
 ];
 
