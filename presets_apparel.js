@@ -123,4 +123,29 @@ const apparelPresets = [
     ],
     "image": "VaultBoy_img.js"
   }
+,
+  {
+    "name": "Leather Right Arm",
+    "type": "apparel",
+    "quantity": 1,
+    "effect": "",
+    "stats": {
+      "Weight": "2.0",
+      "Value": "18"
+    },
+    "defenses": [
+      {
+        "type": "defense",
+        "value": "14"
+      },
+      {
+        "type": "energy",
+        "value": "23"
+      }
+    ],
+    "equipSlots": [
+      "leftArm"
+    ],
+    "image": "LeatherLeftArm_img.js"
+  }
 ];
